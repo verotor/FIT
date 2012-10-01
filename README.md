@@ -1,4 +1,4 @@
-FIT
-===
+FIT VUTBR (http://fit.vutbr.cz)
+===============================
 
-no comment
+School stuff...
