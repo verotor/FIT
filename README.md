@@ -1,4 +1,4 @@
-FIT
-===
+FIT VUTBR (http://www.fit.vutbr.cz)
+===================================
 
-no comment
+Enjoy our boring school stuff!
