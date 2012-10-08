@@ -4,32 +4,31 @@
 	require_once 'config/setup.php';
 	require_once 'config/application.php';
 	date_default_timezone_set($_APPLICATION['default_timezone']);
-	
+
 	if (isset($_POST['page']))
 	{
 		$_GET['page'] = $_POST['page'];
 	}
-	
+
 	if (!isset($_GET['action'])) {
 		$_GET['action'] = 'show';
 	}
-	
+
 	// aktualni stranka
 	require_once 'classes/utilities/common.class.php';
 	Common::setNewLineEscape();
 	$page_part = Common::get_page_part(Common::get_domain_path() . $_APPLICATION['domain_path'] . $_APPLICATION['admin_content_path'], $_APPLICATION['content_extension']);
-	
+
 	// pripojeni k databazi
 	require_once 'config/db_connect.php';
 	require_once 'classes/db/db_connector.class.php';
 	$dbc = new DB_Connector();
-	
+
 	// navigace
 	require_once 'config/navigation_admin.php';
 	require_once 'classes/navigation/navigation.class.php';
 	$navigation_admin = new Navigation($_NAVIGATION_ADMIN, $page_part);
-	
-	
+
 	if ($_SETUP['security']['login'])
 	{
 		require_once 'include/spart/login.php';
@@ -78,7 +77,7 @@
 	if ($adminmenu)
 	{
 		print $navigation_admin->get_navigation_tree();
-		
+
 		if (isset($login))
 		{
 			print $login->getReport();	// jen pro vypis info o uspesnem prihlaseni

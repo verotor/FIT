@@ -1,4 +1,5 @@
-pridat relevantni kostry v PHP/MySQL/JS do repozitare (Lukas)
+rozjet cely subsystem na merlinovi
+includovat paticku namisto kopirovani (admin.php, index.php)
 prepsat Oracle skript do MySQL (data naklikame pres "vyslednou" aplikaci)
 
 zajit nekdy na konzultaci (ma to pozitivni vliv na zaverecne hodnoceni)
