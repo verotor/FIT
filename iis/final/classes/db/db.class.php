@@ -23,12 +23,14 @@
 
 		protected $messages;
 
-		public function __construct($dbhost, $user, $pass, $dbname, $encoding, $flags)
+		public function __construct($dbhost, $user, $pass, $dbname, $dbport, $dbsock, $encoding, $flags)
 		{
 			$this->dbhost	= $dbhost;
 			$this->user		= $user;
 			$this->pass		= $pass;
 			$this->dbname	= $dbname;
+			$this->dbport	= $dbport;
+			$this->dbsock	= $dbsock;
 
 			$this->dbh = null;
 
@@ -40,6 +42,7 @@
 			}
 			else
 			{
+				//FIXME ISO-8859-2, nebo?
 				$this->encoding_iso == 'ISO-8859-1';
 			}
 
@@ -132,13 +135,21 @@
 
 		protected function connect()
 		{
-			$this->dbh = @new MySQLi($this->dbhost, $this->user, $this->pass, $this->dbname);
+			$this->dbh = @new MySQLi($this->dbhost, $this->user, $this->pass, $this->dbname, $this->dbport, $this->dbsock);
 
 			if (mysqli_connect_errno())
 			{
+				//FIXME
+				echo('<h1>DB err ' . mysqli_connect_error() . '</h1>');
+
 				$this->printError('Nemám spojení na MySQL! ' . mysqli_connect_error());
 				$this->dbh = null;
 				exit();
+			}
+			else
+			{
+				//FIXME
+				echo('<h1>DB ok</h1>');
 			}
 		}
 
@@ -155,7 +166,7 @@
 
 
 		public function query($query)
-		{	
+		{
 			$this->printQuery($query);
 
 			if ($this->showstats)

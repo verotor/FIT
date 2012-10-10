@@ -10,20 +10,28 @@
 	$DB_CONNECT = array(
 		'local' => array(
 			'host'	=> 'localhost',
-			'user'	=> 'root',
-			'pass'	=> 'heslo',
-			'name'	=> 'library',
+			'user'	=> 'xpacne00',
+			'pass'	=> '6udefoso',
+			'name'	=> 'xpacne00',
+			'port'	=> ini_get("mysqli.default_port"),
+			//'sock'	=> ini_get("mysqli.default_socket"),
+			'sock'	=> '/var/run/mysql/mysql.sock',
 			'enc'	=> 'utf8',
 			'flag'	=> DB_FLAG_SHOWALL
 		),
 		'live' => array(
-			'host'	=> '',
-			'user'	=> '',
-			'pass'	=> '',
-			'name'	=> '',
+			'host'	=> 'localhost',
+			'user'	=> 'xpacne00',
+			// to bych asi nemel nechavat takhle pristupne kazdemu ze skoly :)
+			'pass'	=> '6udefoso',
+			'name'	=> 'xpacne00',
+			'port'	=> ini_get("mysqli.default_port"),
+			'sock'	=> '/var/run/mysql/mysql.sock',
 			'enc'	=> 'utf8',
-			'flag'	=> DB_FLAG_SHOWNOTHING
+			'flag'	=> DB_FLAG_SHOWALL  //FIXME debug
+			//'flag'	=> DB_FLAG_SHOWNOTHING
 		)
 	);
 
 ?>
+<!-- vim: set wrap nocursorline noexpandtab: -->

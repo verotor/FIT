@@ -23,12 +23,10 @@
 		$_APPLICATION['domain_path'] . $_APPLICATION['content_path'],
 		$_APPLICATION['content_extension']);
 
-	//FIXME fail
-	/* pripojeni k databazi
+	// pripojeni k databazi
 	require_once 'config/db_connect.php';
 	require_once 'classes/db/db_connector.class.php';
 	$dbc = new DB_Connector();
-   */
 
 	// navigace
 	require_once 'config/navigation.php';
@@ -94,10 +92,14 @@
 			</div>
 		</div>
 		<div id="footer">
-			<address>&copy; 2012<a href="mailto:xfrenc00@stud.fit.vutbr.cz">Frencl Lukáš</a></address>
-			<address>&copy; 2012<a href="mailto:xpacne00@stud.fit.vutbr.cz">Pacner Jan</a></address>
-			<p><a href="http://validator.w3.org/check?uri=referer" title="Ověřit XHTML 1.0 Strict">Ověřit XHTML</a>
-			<a href="http://jigsaw.w3.org/css-validator/check/referer" title="Ověřit CSS">Ověřit CSS</a></p>
+			<address>&copy; 2012
+				<a href="mailto:xfrenc00@stud.fit.vutbr.cz">Frencl Lukáš</a> &amp;
+				<a href="mailto:xpacne00@stud.fit.vutbr.cz">Pacner Jan</a>
+			</address>
+			<p>
+				<a href="http://validator.w3.org/check?uri=referer" title="Ověřit XHTML 1.0 Strict">Ověřit XHTML</a>
+				<a href="http://jigsaw.w3.org/css-validator/check/referer" title="Ověřit CSS">Ověřit CSS</a>
+			</p>
 		</div>
 		<div id="db_report">
 <?php print $dbc->databaseReport(); ?>
