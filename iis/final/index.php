@@ -3,6 +3,9 @@
   ini_set('display_errors', 1);
   error_reporting(E_ALL);
 
+  // eva.fit.vutbr.cz has ISO-8859-2 as default :(
+  ini_set("default_charset", "utf-8");
+
 	// nastaveni aplikace
 	require_once 'config/setup.php';
 	require_once 'config/application.php';
@@ -20,10 +23,12 @@
     $_APPLICATION['domain_path'] . $_APPLICATION['content_path'],
     $_APPLICATION['content_extension']);
 
-	// pripojeni k databazi
+  //FIXME fail
+	/* pripojeni k databazi
 	require_once 'config/db_connect.php';
 	require_once 'classes/db/db_connector.class.php';
 	$dbc = new DB_Connector();
+   */
 
 	// navigace
 	require_once 'config/navigation.php';
@@ -57,7 +62,6 @@
 	<title>KNIHOVNA - <?php $navigation->get_page_name(); ?></title>
 </head>
 <body>
-  <h1>DEBUG</h1><!-- FIXME debug -->
 	<div id="page">
 		<div id="header">
 			<noscript><div id="noscript">Váš prohlížeč nepodporuje JavaScript nebo jej máte vypnutý! Stránky proto nebudou fungovat správně!!!</div></noscript>
