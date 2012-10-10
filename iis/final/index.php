@@ -1,10 +1,10 @@
 <?php
-  // FIXME debug
-  ini_set('display_errors', 1);
-  error_reporting(E_ALL);
+	// FIXME debug
+	ini_set('display_errors', 1);
+	error_reporting(E_ALL);
 
-  // eva.fit.vutbr.cz has ISO-8859-2 as default :(
-  ini_set("default_charset", "utf-8");
+	// eva.fit.vutbr.cz has ISO-8859-2 as default :(
+	ini_set("default_charset", "utf-8");
 
 	// nastaveni aplikace
 	require_once 'config/setup.php';
@@ -19,11 +19,11 @@
 	// aktualni stranka
 	require_once 'classes/utilities/common.class.php';
 	Common::setNewLineEscape();
-  $page_part = Common::get_page_part(Common::get_domain_path() .
-    $_APPLICATION['domain_path'] . $_APPLICATION['content_path'],
-    $_APPLICATION['content_extension']);
+	$page_part = Common::get_page_part(Common::get_domain_path() .
+		$_APPLICATION['domain_path'] . $_APPLICATION['content_path'],
+		$_APPLICATION['content_extension']);
 
-  //FIXME fail
+	//FIXME fail
 	/* pripojeni k databazi
 	require_once 'config/db_connect.php';
 	require_once 'classes/db/db_connector.class.php';
@@ -105,5 +105,4 @@
 	</div>
 </body>
 </html>
-
-<!-- vim: set wrap nocursorline: -->
+<!-- vim: set wrap nocursorline noexpandtab: -->

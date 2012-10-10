@@ -1,7 +1,7 @@
 <?php
 
 	require_once 'classes/db/db.class.php';
-	
+
 	class DB_Connector extends DB
 	{
 		public function __construct()
@@ -14,7 +14,7 @@
 			{
 				$type = 'live';
 			}
-			
+
 			parent::__construct(
 				$GLOBALS['DB_CONNECT'][$type]['host'],
 				$GLOBALS['DB_CONNECT'][$type]['user'],
@@ -27,3 +27,4 @@
 	}
 
 ?>
+<!-- vim: set wrap nocursorline noexpandtab: -->

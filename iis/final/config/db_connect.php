@@ -6,7 +6,7 @@
 	define('DB_FLAG_SHOWMSGS', 3);
 	define('DB_FLAG_SHOWSTATS', 4);
 	define('DB_FLAG_SHOWALL', 7);
-	
+
 	$DB_CONNECT = array(
 		'local' => array(
 			'host'	=> 'localhost',
