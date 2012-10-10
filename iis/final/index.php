@@ -1,4 +1,7 @@
 <?php
+  // FIXME debug
+  ini_set('display_errors', 1);
+  error_reporting(E_ALL);
 
 	// nastaveni aplikace
 	require_once 'config/setup.php';
@@ -13,7 +16,9 @@
 	// aktualni stranka
 	require_once 'classes/utilities/common.class.php';
 	Common::setNewLineEscape();
-	$page_part = Common::get_page_part(Common::get_domain_path() . $_APPLICATION['domain_path'] . $_APPLICATION['content_path'], $_APPLICATION['content_extension']);
+  $page_part = Common::get_page_part(Common::get_domain_path() .
+    $_APPLICATION['domain_path'] . $_APPLICATION['content_path'],
+    $_APPLICATION['content_extension']);
 
 	// pripojeni k databazi
 	require_once 'config/db_connect.php';
@@ -52,6 +57,7 @@
 	<title>KNIHOVNA - <?php $navigation->get_page_name(); ?></title>
 </head>
 <body>
+  <h1>DEBUG</h1><!-- FIXME debug -->
 	<div id="page">
 		<div id="header">
 			<noscript><div id="noscript">Váš prohlížeč nepodporuje JavaScript nebo jej máte vypnutý! Stránky proto nebudou fungovat správně!!!</div></noscript>
@@ -85,6 +91,7 @@
 		</div>
 		<div id="footer">
 			<address>&copy; 2012<a href="mailto:xfrenc00@stud.fit.vutbr.cz">Frencl Lukáš</a></address>
+			<address>&copy; 2012<a href="mailto:xpacne00@stud.fit.vutbr.cz">Pacner Jan</a></address>
 			<p><a href="http://validator.w3.org/check?uri=referer" title="Ověřit XHTML 1.0 Strict">Ověřit XHTML</a>
 			<a href="http://jigsaw.w3.org/css-validator/check/referer" title="Ověřit CSS">Ověřit CSS</a></p>
 		</div>
@@ -94,3 +101,5 @@
 	</div>
 </body>
 </html>
+
+<!-- vim: set wrap nocursorline: -->
