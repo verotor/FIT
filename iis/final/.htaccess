@@ -1,7 +1,7 @@
 DefaultCharset UTF-8
 
 RewriteEngine On
-RewriteBase /
+RewriteBase /~xpacne00/
 RewriteRule admin/$ /admin.php [L,QSA]
 RewriteCond %{QUERY_STRING} ^page=([^&]+)$
 RewriteRule ^index\.php$ %1.html? [R=301,L,NE]

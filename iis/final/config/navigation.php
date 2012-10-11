@@ -10,19 +10,19 @@
 		//'clanky'		=> array(
 		//	'page_name'		=> 'Průvodce Wellness'
 		//),
-		'odkazy'		=> array(
+		'odkazy00'		=> array(
 			'page_name'		=> 'Unknown00'
 		),
-		'odkazy'		=> array(
+		'odkazy01'		=> array(
 			'page_name'		=> 'Unknown01'
 		),
-		'odkazy'		=> array(
+		'odkazy02'		=> array(
 			'page_name'		=> 'Unknown02'
 		),
-		'odkazy'		=> array(
+		'odkazy03'		=> array(
 			'page_name'		=> 'Unknown03'
 		),
-		'odkazy'		=> array(
+		'odkazy04'		=> array(
 			'page_name'		=> 'Unknown04'
 		),
 		'404'		=> array(

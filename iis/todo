@@ -1,5 +1,8 @@
 rozjet cely subsystem na merlinovi
 includovat paticku namisto kopirovani (admin.php, index.php)
 prepsat Oracle skript do MySQL (data naklikame pres "vyslednou" aplikaci)
+  unique() pouzit i jinde nez v tabulce admin?
+SELECT column FROM table ORDER BY RAND() LIMIT 1
+sql injection
 
 zajit nekdy na konzultaci (ma to pozitivni vliv na zaverecne hodnoceni)

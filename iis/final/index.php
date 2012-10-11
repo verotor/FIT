@@ -5,6 +5,11 @@
 
 	// eva.fit.vutbr.cz has ISO-8859-2 as default :(
 	ini_set("default_charset", "utf-8");
+	//FIXME
+	//echo('<pre>');
+	//print_r($_SERVER);
+	//print_r($_GET);
+	//echo('</pre>');
 
 	// nastaveni aplikace
 	require_once 'config/setup.php';
@@ -19,7 +24,8 @@
 	// aktualni stranka
 	require_once 'classes/utilities/common.class.php';
 	Common::setNewLineEscape();
-	$page_part = Common::get_page_part(Common::get_domain_path() .
+	//$page_part = Common::get_page_part(Common::get_domain_path() .
+	$page_part = Common::get_page_part(
 		$_APPLICATION['domain_path'] . $_APPLICATION['content_path'],
 		$_APPLICATION['content_extension']);
 

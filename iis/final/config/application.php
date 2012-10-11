@@ -3,7 +3,8 @@
 	$_APPLICATION = array(
 		'session_admin'			=> 'knihovnaadmin',
 
-		'domain_path'			=> 'public_html/_sub/iis/',
+		'domain_path'			=> '',
+		//'domain_path'			=> 'public_html/_sub/iis/',
 		'content_path'			=> 'include/content',
 		'admin_content_path'	=> 'include/admin',
 		'content_extension'		=> 'inc',

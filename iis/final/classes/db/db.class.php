@@ -139,17 +139,9 @@
 
 			if (mysqli_connect_errno())
 			{
-				//FIXME
-				echo('<h1>DB err ' . mysqli_connect_error() . '</h1>');
-
 				$this->printError('Nemám spojení na MySQL! ' . mysqli_connect_error());
 				$this->dbh = null;
 				exit();
-			}
-			else
-			{
-				//FIXME
-				echo('<h1>DB ok</h1>');
 			}
 		}
 
