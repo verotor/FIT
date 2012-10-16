@@ -4,22 +4,22 @@
 	require_once 'config/setup.php';
 	require_once 'config/application.php';
 	date_default_timezone_set($_APPLICATION['default_timezone']);
-	
+
 	if (isset($_POST['page']))
 	{
 		$_GET['page'] = $_POST['page'];
 	}
-	
+
 	// aktualni stranka
 	require_once 'classes/utilities/common.class.php';
 	Common::setNewLineEscape();
 	$page_part = Common::get_page_part(Common::get_domain_path() . $_APPLICATION['domain_path'] . $_APPLICATION['content_path'], $_APPLICATION['content_extension']);
-	
+
 	// pripojeni k databazi
 	require_once 'config/db_connect.php';
 	require_once 'classes/db/db_connector.class.php';
 	$dbc = new DB_Connector();
-	
+
 	// navigace
 	require_once 'config/navigation.php';
 	require_once 'classes/navigation/navigation.class.php';
@@ -69,7 +69,7 @@
 	require_once 'classes/formparser/news.class.php';
 	$news = new News();
 	$news->setDBC($dbc);
-	
+
 	$news->additionalsOff();
 	$news->load_active(5);
 	$news->activeNewsOn();
@@ -84,8 +84,8 @@
 			</div>
 		</div>
 		<div id="footer">
-			<address>&copy; 2012 <a href="mailto:jack.verotor@gmail.com">Jack Verotor</a></address>
-			<p><a href="http://validator.w3.org/check?uri=referer" title="Ověřit XHTML 1.0 Strict">Ověřit XHTML</a> 
+			<address>&copy; 2012<a href="mailto:xfrenc00@stud.fit.vutbr.cz">Frencl Lukáš</a></address>
+			<p><a href="http://validator.w3.org/check?uri=referer" title="Ověřit XHTML 1.0 Strict">Ověřit XHTML</a>
 			<a href="http://jigsaw.w3.org/css-validator/check/referer" title="Ověřit CSS">Ověřit CSS</a></p>
 		</div>
 		<div id="db_report">

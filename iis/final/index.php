@@ -1,4 +1,15 @@
 <?php
+	// FIXME debug
+	ini_set('display_errors', 1);
+	error_reporting(E_ALL);
+
+	// eva.fit.vutbr.cz has ISO-8859-2 as default :(
+	ini_set("default_charset", "utf-8");
+	//FIXME
+	//echo('<pre>');
+	//print_r($_SERVER);
+	//print_r($_GET);
+	//echo('</pre>');
 
 	// nastaveni aplikace
 	require_once 'config/setup.php';
@@ -10,14 +21,13 @@
 		$_GET['page'] = $_POST['page'];
 	}
 
-	if (!isset($_GET['action'])) {
-		$_GET['action'] = 'show';
-	}
-
 	// aktualni stranka
 	require_once 'classes/utilities/common.class.php';
 	Common::setNewLineEscape();
-	$page_part = Common::get_page_part(Common::get_domain_path() . $_APPLICATION['domain_path'] . $_APPLICATION['admin_content_path'], $_APPLICATION['content_extension']);
+	//$page_part = Common::get_page_part(Common::get_domain_path() .
+	$page_part = Common::get_page_part(
+		$_APPLICATION['domain_path'] . $_APPLICATION['content_path'],
+		$_APPLICATION['content_extension']);
 
 	// pripojeni k databazi
 	require_once 'config/db_connect.php';
@@ -25,19 +35,9 @@
 	$dbc = new DB_Connector();
 
 	// navigace
-	require_once 'config/navigation_admin.php';
+	require_once 'config/navigation.php';
 	require_once 'classes/navigation/navigation.class.php';
-	$navigation_admin = new Navigation($_NAVIGATION_ADMIN, $page_part);
-
-	if ($_SETUP['security']['login'])
-	{
-		require_once 'include/spart/login.php';
-	}
-	else
-	{
-		$adminmenu = true;
-		$loginform = false;
-	}
+	$navigation = new Navigation($_NAVIGATION, $page_part);
 
 ?>
 <<?php ?>?xml version="1.0" encoding="utf-8"?>
@@ -63,7 +63,7 @@
 
 	<script type="text/javascript" src="plugin/jquery/jquery-1.7.2.min.js"></script>
 
-	<title>KNIHOVNA - <?php $navigation_admin->get_page_name(); ?></title>
+	<title>KNIHOVNA - <?php $navigation->get_page_name(); ?></title>
 </head>
 <body>
 	<div id="page">
@@ -72,32 +72,40 @@
 			<h1>KNIHOVNA</h1>
 		</div>
 		<div id="menu">
+<?php print $navigation->get_navigation_tree(); ?>
+		</div>
+		<div id="body">
+			<div id="panel">
+				<div id="news">
+					<h3>Novinky</h3>
 <?php
 
-	if ($adminmenu)
-	{
-		print $navigation_admin->get_navigation_tree();
+	require_once 'classes/formparser/news.class.php';
+	$news = new News();
+	$news->setDBC($dbc);
 
-		if (isset($login))
-		{
-			print $login->getReport();	// jen pro vypis info o uspesnem prihlaseni
-		}
-	}
+	$news->additionalsOff();
+	$news->load_active(5);
+	$news->activeNewsOn();
+	$news->publicate(false);
+	$news->activeNewsOff();
 
 ?>
-		</div>
-		<div id="body"><div id="admin">
-			<div id="panel">
-
+				</div>
 			</div>
 			<div id="part">
-<?php include_once "include/admin/$page_part.inc"; ?>
+<?php include_once "include/content/$page_part.inc"; ?>
 			</div>
-		</div></div>
+		</div>
 		<div id="footer">
-			<address>&copy; 2012 <a href="mailto:jack.verotor@gmail.com">Jack Verotor</a></address>
-			<p><a href="http://validator.w3.org/check?uri=referer" title="Ověřit XHTML 1.0 Strict">Ověřit XHTML</a> 
-			<a href="http://jigsaw.w3.org/css-validator/check/referer" title="Ověřit CSS">Ověřit CSS</a></p>
+			<address>&copy; 2012
+				<a href="mailto:xfrenc00@stud.fit.vutbr.cz">Frencl Lukáš</a> &amp;
+				<a href="mailto:xpacne00@stud.fit.vutbr.cz">Pacner Jan</a>
+			</address>
+			<p>
+				<a href="http://validator.w3.org/check?uri=referer" title="Ověřit XHTML 1.0 Strict">Ověřit XHTML</a>
+				<a href="http://jigsaw.w3.org/css-validator/check/referer" title="Ověřit CSS">Ověřit CSS</a>
+			</p>
 		</div>
 		<div id="db_report">
 <?php print $dbc->databaseReport(); ?>
@@ -105,3 +113,4 @@
 	</div>
 </body>
 </html>
+<!-- vim: set wrap nocursorline noexpandtab: -->

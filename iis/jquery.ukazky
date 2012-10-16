@@ -1,0 +1,24 @@
+<script type="text/javascript">
+$(document).ready(function() {
+  $('table#discography td.title a').each(function() {
+    $(this).parents('tr').first().find('td.booklet img').wrap('<a href="' + $(this).attr('href') + '" title="' + $(this).text() + '" />');
+  });
+
+  $('table#discography a').click(function(event) {
+    event.preventDefault();
+
+    $.fancybox(
+      '<div style="width: 920px; height: 500px; position: relative;"><iframe style="border: none; height: 500px; margin: 0; padding: 0; width: 920px;" src="' + $(this).attr('href') + '" /><a href="#" id="close-lightbox"><span>Zavřít</span></a></div>',
+      {
+        showCloseButton : false,
+        padding : 0
+      }
+    );
+
+    $('a#close-lightbox').live('click', function(event) {
+      event.preventDefault();
+      $.fancybox.close();
+    });
+  });
+});
+</script>
