@@ -5,9 +5,9 @@
 			<?php print $login->getReport(); ?>
 		</div>
 		<label>Login</label>
-		<input type="text" name="loginformdata[admin_login]" value="" />
+		<input type="text" name="loginformdata[login]" value="" />
 		<label>Heslo</label>
-		<input type="password" name="loginformdata[admin_password]" value="" />
+		<input type="password" name="loginformdata[password]" value="" />
 	</fieldset>
 	<fieldset>
 		<legend>Dokončení:</legend>

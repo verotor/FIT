@@ -1,5 +1,6 @@
 <?php
 
+	require_once 'config/user_types.php';
 	require_once 'classes/formparser/formparser.class.php';
 	
 	class Login extends FormParser
@@ -10,16 +11,18 @@
 			
 			session_name($GLOBALS['_APPLICATION']['session_admin']);
 		    session_start();
+		    
+		    $user_type = USER_PUBLIC;
 		}
 		
 		protected function validateData()
 		{
-			if ($this->formdata['admin_login'] == '')
+			if ($this->formdata['login'] == '')
 	        {
 				$this->error .= 'Nezadali jste login!<br />';
 	        }
 	        
-	        if ($this->formdata['admin_password'] == '')
+	        if ($this->formdata['password'] == '')
 	        {
 				$this->error .= 'Nezadali jste heslo!<br />';
 	        }
@@ -66,22 +69,52 @@
 			return (isset($_SESSION['logged'])) ? $_SESSION['logged'] : false;
 		}
 		
+		public function getUserType()
+		{
+			return $this->user_type;
+		}
+		
 		private function find_user()
 		{
 			$found = false;
+			$user_type = USER_PUBLIC;
 			
-			if (
-				$stmt = $this->dbc->query("
+			if ($stmt = $this->dbc->query("
 				SELECT admin_id
-				FROM admins
-				WHERE admin_login = '{$this->formdata['admin_login']}'
-				AND admin_password = PASSWORD('{$this->formdata['admin_password']}')")
+				FROM admin
+				WHERE admin_login = '{$this->formdata['login']}'
+				AND admin_pass = PASSWORD('{$this->formdata['password']}')")
 			)
 			{
-				$_SESSION['admin_id'] = $stmt->fetch_single();
-				
 				$found = true;
+				$user_type = USER_ADMIN;
 			}
+			else if ($stmt = $this->dbc->query("
+				SELECT reader_id
+				FROM reader
+				WHERE reader_login = '{$this->formdata['login']}'
+				AND reader_pass = PASSWORD('{$this->formdata['password']}')")
+			)
+			{
+				$found = true;
+				$user_type = USER_READER;
+			}
+			else if ($stmt = $this->dbc->query("
+				SELECT librarian_id
+				FROM librarian
+				WHERE librarian_login = '{$this->formdata['login']}'
+				AND librarian_pass = PASSWORD('{$this->formdata['password']}')")
+			)
+			{
+				$found = true;
+				$user_type = USER_LIBRARIAN;
+			}
+			
+			if ($found) {
+				$_SESSION['user_id'] = $stmt->fetch_single();
+			}
+			
+			$_SESSION['user_type'] = $user_type;
 			
 			return $found;
 		}

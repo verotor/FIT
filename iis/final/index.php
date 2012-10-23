@@ -5,11 +5,6 @@
 
 	// eva.fit.vutbr.cz has ISO-8859-2 as default :(
 	ini_set("default_charset", "utf-8");
-	//FIXME
-	//echo('<pre>');
-	//print_r($_SERVER);
-	//print_r($_GET);
-	//echo('</pre>');
 
 	// nastaveni aplikace
 	require_once 'config/setup.php';
@@ -24,20 +19,55 @@
 	// aktualni stranka
 	require_once 'classes/utilities/common.class.php';
 	Common::setNewLineEscape();
-	//$page_part = Common::get_page_part(Common::get_domain_path() .
-	$page_part = Common::get_page_part(
-		$_APPLICATION['domain_path'] . $_APPLICATION['content_path'],
-		$_APPLICATION['content_extension']);
+	$page_part = Common::get_page_part($_APPLICATION['domain_path'] . $_APPLICATION['content_path'], $_APPLICATION['content_extension']);
 
 	// pripojeni k databazi
 	require_once 'config/db_connect.php';
 	require_once 'classes/db/db_connector.class.php';
 	$dbc = new DB_Connector();
-
+	
 	// navigace
 	require_once 'config/navigation.php';
+	require_once 'config/navigation_admin.php';
+	require_once 'config/navigation_reader.php';
+	require_once 'config/navigation_librarian.php';
 	require_once 'classes/navigation/navigation.class.php';
-	$navigation = new Navigation($_NAVIGATION, $page_part);
+	
+	require_once 'config/user_types.php';
+	
+	if ($_SETUP['security']['login'])
+	{
+		require_once 'include/spart/login.php';
+	}
+	else
+	{
+		$adminmenu = true;
+		$loginform = false;
+	}
+	
+	if (isset($_SESSION['user_type'])) {
+		$user_type = $_SESSION['user_type'];
+	} else {
+		$user_type = USER_PUBLIC;
+	}
+	
+	switch ($user_type) {
+		case USER_ADMIN:
+			$used_navigation = $_NAVIGATION_ADMIN;
+			break;
+		case USER_READER:
+			$used_navigation = $_NAVIGATION_READER;
+			break;
+		case USER_LIBRARIAN:
+			$used_navigation = $_NAVIGATION_LIBRARIAN;
+			break;
+		case USER_PUBLIC:
+		default:
+			$used_navigation = $_NAVIGATION;
+			break;
+	}
+	
+	$navigation = new Navigation($used_navigation, $page_part);
 
 ?>
 <<?php ?>?xml version="1.0" encoding="utf-8"?>
@@ -71,6 +101,22 @@
 			<noscript><div id="noscript">Váš prohlížeč nepodporuje JavaScript nebo jej máte vypnutý! Stránky proto nebudou fungovat správně!!!</div></noscript>
 			<h1>KNIHOVNA</h1>
 		</div>
+<?php
+
+	if ($adminmenu)
+	{
+		if (isset($login))
+		{
+			print $login->getReport();	// jen pro vypis info o uspesnem prihlaseni
+			
+			if ($login->is_logged()) {
+				print '<a href="/muj_ucet.php?user_type='.$_SESSION['user_type'].'&user_id='.$_SESSION['user_id'].'">Můj účet</a>';
+				print '<a href="/odhlasit.html">Odhlásit se</a>';
+			}
+		}
+	}
+
+?>
 		<div id="menu">
 <?php print $navigation->get_navigation_tree(); ?>
 		</div>
@@ -113,4 +159,3 @@
 	</div>
 </body>
 </html>
-<!-- vim: set wrap nocursorline noexpandtab: -->

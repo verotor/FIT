@@ -1,11 +1,11 @@
 <?php
 
-	$_NAVIGATION_ADMIN = array(
+	$_NAVIGATION_READER = array(
 		'index'		=> array(
 			'page_name'		=> 'Vyhledávání',
 		),
-		'knihovnici'		=> array(
-			'page_name'		=> 'Knihovníci',
+		'rezervace'		=> array(
+			'page_name'		=> 'Rezervace',
 		),
 		'404'		=> array(
 			'page_name'		=> 'Stránka nenalezena'

@@ -12,7 +12,7 @@
 		}
 		
 		if ($login->is_logged()) {
-			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/admin.html');
+			header('Location: http://' . $_SERVER['HTTP_HOST']);
 		}
 	}
 	
@@ -28,7 +28,7 @@
 	if ($page_part == 'odhlasit') {
 		$login->logout();
 		
-		header('Location: http://' . $_SERVER['HTTP_HOST'] . '/admin/');
+		header('Location: http://' . $_SERVER['HTTP_HOST']);
 	}
 
 ?>
