@@ -3,14 +3,15 @@ ZADANI 3 GUI strategické hry
 
 art & info materials
   http://opengameart.org/
-  [motivacni ukazka QML] http://doc.qt.digia.com/qt/qml-text.html
-  http://qt-project.org/doc/qt-4.8/qml-intro.html
-  http://en.wikipedia.org/wiki/QML
   [steampunk icons] http://pendragon1966.deviantart.com/
+  [hra] crimson: steam pirates
+  [tlacitko pro hlavni menu] steer icon
 
-inspiration
-  crimson: steam pirates
-  steer icon
+QML
+  [motivacni info] http://en.wikipedia.org/wiki/QML
+  [tutorial] http://qt-project.org/doc/qt-4.8/gettingstartedqml.html
+  [fakt nadupane, jednoduche aplikace] http://qt-project.org/doc/qt-4.8/qdeclarativeexamples.html
+  [prehled QML elementu] http://qt-project.org/doc/qt-4.8/qdeclarativeelements.html
 
 old
   zdrzujici reklamy, videa apod.
@@ -18,8 +19,8 @@ old
     single
       tutorial
       new game
-      skirmish
       load game
+      skirmish
     multi
       zalozit
         jmeno hry
