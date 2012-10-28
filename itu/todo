@@ -1,20 +1,9 @@
-art + info materials
-  http://opengameart.org/
-  [motivacni ukazka QML] http://doc.qt.digia.com/qt/qml-text.html
-  http://qt-project.org/doc/qt-4.8/qml-intro.html
-  http://en.wikipedia.org/wiki/QML
-  [steampunk icons] http://pendragon1966.deviantart.com/
+vyplnit formular
 
-inspiration
-  crimson: steam pirates
-  steer icon
-
-plan and goals
+long-term plan/goals
   style: real time strategy
          steam punk
          navy
-  vytvorit 2 QML projekty A a B (nazvy neutralni, aby to lidi nematlo a
-    nesvadelo pri dotazovani/vyhodnocovani/mereni)
   mereni
     polovina dotazovanych zacne starou a pokracuje novou; druha polovina zacne
       novou a pokracuje starou
@@ -22,28 +11,3 @@ plan and goals
       pouze staticke obrazky a cilem je vyzkouset si ovladani skrze dostupne
       prvky (vic nerikat, nezminovat slovo menu ani nic jineho)
 
-old
-  zdrzujici reklamy, videa apod.
-  menu main [obdelnicky; pozadi staticky obrazek]
-    single
-      tutorial
-      new game
-      skirmish
-      load game
-    multi
-      zalozit
-        jmeno hry
-        heslo
-        mapa + nejake kraviny
-      connect
-    options
-      graphics
-      audio
-        volume ------------------|-------
-        stereo/5.1/...
-      controls
-      switch to advanced mode
-    credits [spusti video s titulkama autoru]
-    exit
-
-vim: set autoindent:

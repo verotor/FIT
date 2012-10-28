@@ -1,0 +1,40 @@
+ZADANI 3 GUI strategické hry
+  Vytvořte GUI k ovládání a nastavování strategické hry. GUI by mělo obsahovat propracované části související se spouštěním hry, úvodem, hlavním menu, nastavením, nápovědou a ukončením. Samotná hra být implementována nemusí. (Beran)
+
+art & info materials
+  http://opengameart.org/
+  [steampunk icons] http://pendragon1966.deviantart.com/
+  [hra] crimson: steam pirates
+  [tlacitko pro hlavni menu] steer icon
+
+QML
+  [motivacni info] http://en.wikipedia.org/wiki/QML
+  [tutorial] http://qt-project.org/doc/qt-4.8/gettingstartedqml.html
+  [fakt nadupane, jednoduche aplikace] http://qt-project.org/doc/qt-4.8/qdeclarativeexamples.html
+  [prehled QML elementu] http://qt-project.org/doc/qt-4.8/qdeclarativeelements.html
+
+old
+  zdrzujici reklamy, videa apod.
+  menu main [obdelnicky; pozadi staticky obrazek]
+    single
+      tutorial
+      new game
+      load game
+      skirmish
+    multi
+      zalozit
+        jmeno hry
+        heslo
+        mapa + nejake kraviny
+      connect
+    options
+      graphics
+      audio
+        volume ------------------|-------
+        stereo/5.1/...
+      controls
+      switch to advanced mode
+    credits [spusti video s titulkama autoru]
+    exit
+
+vim: set autoindent wrap:
