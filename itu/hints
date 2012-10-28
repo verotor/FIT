@@ -13,6 +13,9 @@ QML
   [fakt nadupane, jednoduche aplikace] http://qt-project.org/doc/qt-4.8/qdeclarativeexamples.html
   [prehled QML elementu] http://qt-project.org/doc/qt-4.8/qdeclarativeelements.html
 
+obhajoba ohledne bodu "navrh zpusobu vyhodnoceni"
+nejvetsi problem je asi ten zpusob vyhodnoceni - tam nejprve ve dvou vetach rekneme o co jde (viz. todo v gitu), pak nahodne vybereme kterou variantou zacit testovani, pak bez naseho pricineni dotycny osaha program a az bude mit dost, tak skonci a my se ho zeptame na celkovy dojem a jeho postrehy, pak mu dame nas maly, pripraveny formular s dotazy, kde budou hodnotici kriteria a nakonec se ho znovu zeptame, zdali by nechtel neco doplnit (casto totiz cloveka neco napadne v souvislosti s temi natvrdo zadanymi otazkami na formulari)
+
 old
   zdrzujici reklamy, videa apod.
   menu main [obdelnicky; pozadi staticky obrazek]
