@@ -7,3 +7,6 @@ SELECT column FROM table ORDER BY RAND() LIMIT 1
 sql injection
 
 zajit nekdy na konzultaci (ma to pozitivni vliv na zaverecne hodnoceni)
+
+dokumentace
+  periodicke skripty pouze simulovane
