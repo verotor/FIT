@@ -1,22 +1,87 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.0
+import "menu/"
 
-// qsTr("some text") used for translation
+/*
+  property string my_var0: "neco"  // bool real string
+  qsTr("some text") used for translation
+*/
 
-//FIXME todo
-//  PAUSE red bold text
-//  bitmap background with random selection
-//  buttons from icons (with transparency around non-transparent pixels)
-//  animations
-//    button hover
-//    PAUSE text pulsing
+Rectangle {
+  id: win_main
+  width: 1; height: 1;
+  color: "#CC77FF"
 
-// value >0 needed (although not used because of fullscreen)
+  Column {
+    anchors.centerIn: parent
+    spacing: 10
+    Text {
+      anchors.horizontalCenter: parent.horizontalCenter
+      color: "red"
+      font.bold: true
+      font.pixelSize: 80
+      style: Text.Outline
+      styleColor: "brown"
+      //font.pointSize: 40.78
+      text: "PAUSE"
+      smooth: true
+    }
+    Text {
+      anchors.horizontalCenter: parent.horizontalCenter
+      smooth: true
+      text: "press any keybord key or mouse button to play"
+    }
+  }
 
+  //FIXME pridat bublinovou napovedu (ta by vsak byla na skodu -
+  //  prekazela by - na mobilnich zarizenich
+  MyMenu {
+    id: menu_exit;
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    width: 140; height: 140;
+    icon: "menu_exit"
+    onMouseClick: {
+      console.log("exit button pressed from main window")
+      Qt.quit();
+    }
+  }
+
+  Text {
+    //id: copyright_msg;
+    //anchors.horizontalCenter: parent
+    anchors.bottomMargin: 30
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    smooth: true
+    text: "(c) Radek, Lukas, Honza"
+  }
+
+  //FIXME rotace
+  MyMenu {
+    id: menu_main;
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    width: 140; height: 140;
+    icon: "menu_main"
+  }
+
+  // pozadi == zasedla fotka (stretch)
+  // vlevo, uprostred, vpravo dole obrazky
+  //   pruhlednost zachovana
+  // uprostred (horizontalne, vertikalne) <bold red big pulsing text>PAUSE</><small black text>maly</>
+  // mouse hover
+  //   na ikony menu_exit/menu_main -> priblizeni/???
+  // mouse click
+  //   na obrazek -> zmizet (menu_exit + copyright + PAUSE)
+  //   na ikony menu_exit/menu_main spusti animaci a otevre prislusna submenu
+}
+
+/*
 Rectangle {
   id: flashingblob
 
-  // value >0 needed (although not used because of fullscreen)
+  // value >0 mandatory (although not used because of fullscreen)
   width: 75; height: 75
   color: "blue"
   opacity: 1.0
@@ -44,35 +109,6 @@ Rectangle {
     easing {
       type: Easing.OutBack
       overshoot: 500
-    }
-  }
-}
-
-/*
-Rectangle {
-  // value >0 needed (although not used because of fullscreen)
-  width: 1; height: 1
-
-  Row {
-    anchors.centerIn: parent
-    spacing: parent.width/6
-
-    Text {
-      text: "dalsi text"
-      anchors.centerIn: parent
-    }
-
-    Text {
-      //text: "<span foreground=\"red\" size=\"x-large\">PAUSE</span><br>" +
-      text: "<span foreground=\"#FF0000\" size=\"50\">PAUSE</span><br>" +
-      "press any keybord key or mouse button to play"
-      anchors.centerIn: parent
-    }
-  }
-  MouseArea {
-    anchors.fill: parent
-    onClicked: {
-      Qt.quit();
     }
   }
 }
