@@ -11,9 +11,9 @@
 		<div class="new_active">
 			<label>Aktivní: </label>
 			<?php
-			
+
 				require_once 'classes/utilities/form.class.php';
-			
+
 			?>
 			<?php print Form::form_list($news->getActiveOptions(), 'formdata[new_active]', (isset($_POST['formdata']) && isset($_POST['formdata']['new_active'])) ? $_POST['formdata']['new_active'] : ''); ?>
 		</div>
@@ -33,7 +33,7 @@
 				}
 			?>" />
 			<?php
-			
+
 				if ($news->isFormDataItem('new_id'))
 				{
 					print '<input type="hidden" name="formdata[new_id]" value="' . $news->getFormDataItem('new_id') . '" />';
@@ -45,7 +45,7 @@
 					print '<input type="submit" name="formdata[btnSave]" value="Přidat" />';
 					print '<input type="submit" name="formdata[btnClear]" value="Vymazat" />';
 				}
-			
+
 			?>
 		</div>
 	</fieldset>

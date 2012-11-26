@@ -7,5 +7,8 @@
 		include_once 'include/form/loginform.inc';
 	}
 
+  $legend = 'Vyhledavani';
+  include_once 'include/form/searchform.inc';
+
 ?>
 </div>

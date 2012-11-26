@@ -102,22 +102,22 @@
 			<noscript><div id="noscript">Váš prohlížeč nepodporuje JavaScript nebo jej máte vypnutý! Stránky proto nebudou fungovat správně!!!</div></noscript>
 			<h1>KNIHOVNA</h1>
 		</div>
+<div id="admin_menu">
 <?php
-
 	if ($adminmenu)
 	{
 		if (isset($login))
 		{
 			print $login->getReport();	// jen pro vypis info o uspesnem prihlaseni
-			
+
 			if ($login->is_logged()) {
-				print '<a href="http://' . $_SERVER['HTTP_HOST'] . Common::getFolderFromURI() . 'muj_ucet.php?user_type='.$_SESSION['user_type'].'&user_id='.$_SESSION['user_id'].'">Můj účet</a>';
 				print '<a href="http://' . $_SERVER['HTTP_HOST'] . Common::getFolderFromURI() . 'odhlasit.html">Odhlásit se</a>';
+				print '<a href="http://' . $_SERVER['HTTP_HOST'] . Common::getFolderFromURI() . 'muj_ucet.php?user_type='.$_SESSION['user_type'].'&user_id='.$_SESSION['user_id'].'">Můj účet</a>';
 			}
 		}
 	}
-
 ?>
+</div>
 		<div id="body">
 			<div id="panel">
         <div id="menu">

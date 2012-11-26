@@ -8,10 +8,41 @@ zbytek pozicuj absolutně a nastav tomu width a height
 */
 
 /* my máme vlastně dva sloupce, takže */
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 #panel {
   width: 20%;
   height: 200px;
   float: right;
+}
+
+#login_form, #admin_menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  /* margin-top: 8px; */
+}
+
+#admin_menu a {
+  display: inline;
+  margin-right: 20px;
+  float: right;
+}
+
+#menu ul {
+  margin: 0;
+  padding: 0;
+}
+
+#menu li {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 6px;
 }
 
 #content {
