@@ -106,7 +106,8 @@ create table librarian (
   librarian_email VARCHAR(256),
   librarian_entrydate DATE NOT NULL,  # datum nastupu
   librarian_login VARCHAR(30) NOT NULL,
-  librarian_pass CHAR(41) NOT NULL);
+  librarian_pass CHAR(41) NOT NULL,
+  UNIQUE (librarian_login));
 
 create table section (
   section_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -136,7 +137,8 @@ create table reader (
   reader_ticket INT UNSIGNED NOT NULL,  # library ticket
   reader_validity DATE NOT NULL,
   reader_login VARCHAR(30) NOT NULL,
-  reader_pass CHAR(41) NOT NULL);
+  reader_pass CHAR(41) NOT NULL,
+  UNIQUE (reader_login));
 
 create table reservation (
   reservation_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

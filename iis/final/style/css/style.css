@@ -28,6 +28,18 @@ body {
   /* margin-top: 8px; */
 }
 
+label {
+  display: inline-block;
+}
+
+#login_form label {
+  display: inline;
+}
+
+#content label {
+  width: 130px;
+}
+
 #admin_menu a {
   display: inline;
   margin-right: 20px;

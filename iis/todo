@@ -1,12 +1,17 @@
-sloucit admin.php a index.php
 skript MySQL
   unique() pouzit i jinde nez v tabulce admin?
-  hashe nebude generovat databaze, nybrz jiz JS (MD5) na strane klienta
-    protoze nechceme posilat po siti plain heslo
-SELECT column FROM table ORDER BY RAND() LIMIT 1
-sql injection
+
+tituly
+  ajax
+  nova trida
+dalsi 3 tydy
+  ajax - autori, vydavatelstvi, klicova slova
 
 zajit nekdy na konzultaci (ma to pozitivni vliv na zaverecne hodnoceni)
 
 dokumentace
   periodicke skripty pouze simulovane
+  neresime
+    sql injection
+    hashe nebude generovat databaze, nybrz jiz JS (MD5) na strane klienta
+      protoze nechceme posilat po siti plain heslo
