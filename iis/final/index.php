@@ -28,16 +28,16 @@
 	require_once 'config/db_connect.php';
 	require_once 'classes/db/db_connector.class.php';
 	$dbc = new DB_Connector();
-	
+
 	// navigace
 	require_once 'config/navigation.php';
 	require_once 'config/navigation_admin.php';
 	require_once 'config/navigation_reader.php';
 	require_once 'config/navigation_librarian.php';
 	require_once 'classes/navigation/navigation.class.php';
-	
+
 	require_once 'config/user_types.php';
-	
+
 	if ($_SETUP['security']['login'])
 	{
 		require_once 'include/spart/login.php';

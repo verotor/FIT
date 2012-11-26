@@ -1,4 +1,5 @@
-<form action="<?php print $page_part.".html"; ?>" method="post">
+<form action="<?php print 'http://' . $_SERVER['SERVER_NAME'] . Common::getFolderFromURI() . $page_part.".html"; ?>" method="post">
+<!--form action="<?php print $page_part.".html"; ?>" method="post"--->
 	<fieldset>
 		<legend><span><?php print $legend ?>:</span></legend>
 		<div class="report">
@@ -11,13 +12,13 @@
       ?>" />
 		</div>
 		<div class="search_author_name">
-			<label>Autor: </label>
+			<label>Jmeno autora: </label>
       <input type="text" name="formdata[search_author_name]" value="<?php
         if (isset($_POST['formdata']) && isset($_POST['formdata']['search_author_name'])) echo $_POST['formdata']['search_author_name'];
       ?>" />
 		</div>
 		<div class="search_author_surname">
-			<label>Autor: </label>
+			<label>Prijmeni autora: </label>
       <input type="text" name="formdata[search_author_surname]" value="<?php
         if (isset($_POST['formdata']) && isset($_POST['formdata']['search_author_surname'])) echo $_POST['formdata']['search_author_surname'];
       ?>" />
@@ -30,14 +31,18 @@
 		</div>
 		<div class="tlacitka">
 			<input type="hidden" name="page" value="<?php
-				if (($_GET['page']))
+				if (isset($_GET['page']))
 				{
 					echo $_GET['page'];
 				}
-				else if (($_POST['page']))
+				else if (isset($_POST['page']))
 				{
 					echo $_POST['page'];
 				}
+        else
+        {
+          echo 'index';
+        }
 			?>" />
     <input type="submit" name="formdata[btnSearch]" value="Hledat"/>
 		</div>

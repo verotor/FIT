@@ -2,7 +2,7 @@
 
 	require_once 'classes/formparser/formparser.class.php';
 
-	class Searchs extends FormParser
+	class Search extends FormParser
 	{
 		private $active_options;
 
@@ -77,13 +77,10 @@
 			$this->result .= '<table>';
 			$this->result .= '<tr>';
 
-			$this->result .= '<th class="search_title">Titulek</th>';
-			$this->result .= '<th class="search_author">Autor</th>';
-			//$this->result .= '<th class="search_text">Text</th>';
-			$this->result .= '<th class="search_date">Datum</th>';
-			$this->result .= '<th class="search_active">Aktivní</th>';
-
-			$this->result .= '<th class="edit">Úpravy</th>';
+			$this->result .= '<th class="search_title">Titul</th>';
+			$this->result .= '<th class="search_author">Prijmeni</th>';
+			$this->result .= '<th class="search_author">Jmeno</th>';
+			$this->result .= '<th class="search_author">ISBN/ISSN</th>';
 
 			$this->result .= '</tr>';
 
@@ -91,18 +88,12 @@
 			{
 				$i++;
 
-				$row['search_date'] = date('d. m. Y', strtotime($row['search_date']));
-
 				$this->result .= '<tr class="'.(($i % 2 != 0) ? 'odd' : 'even').'">';
 
-				$this->result .= '<td class="search_title"><a href="/admin/clanky.html?action=show&amp;id='.$row['search_id'].'">'.$row['search_title'].'</a></td>';
-				$this->result .= '<td class="search_author">'.$row['search_author'].'</td>';
-				//$this->result .= '<td class="search_text">'.htmlspecialchars_decode($row['search_text']).'</td>';
-				$this->result .= '<td class="search_date">'.$row['search_date'].'</td>';
-				$this->result .= '<td class="search_active">'.$this->active_options[$row['search_active']]['name'].'</td>';
-
-				$this->result .= '<td class="edit"><a href="/admin/clanky.html?action=edit&amp;id='.$row['search_id'].'">Editovat</a> ';
-				$this->result .= '<a href="/admin/clanky.html?action=delete&amp;id='.$row['search_id'].'">Odstranit</a></td>';
+				$this->result .= '<td class="search_title"><a href="http://' . $_SERVER['SERVER_NAME'] . Common::getFolderFromURI() . 'tituly.html?action=show&amp;id='.$row['title_id'].'">'.$row['title_title'].'</a></td>';
+				$this->result .= '<td class="search_author_surname">'.$row['author_surname'].'</td>';
+				$this->result .= '<td class="search_author_name">'.$row['author_name'].'</td>';
+				$this->result .= '<td class="search_isbn">'.(($row['title_isbn'] == null) ? $row['title_issn'] : $row['title_isbn']).'</td>';
 
 				$this->result .= '</tr>';
 			}
@@ -111,27 +102,8 @@
 			$this->result .= '</div>';
 		}
 
-    //FIXME bude to potreba k zobrazeni info o titulu pro uzivatele
-    //  (rezervace) a nebo librarian ()
 		protected function createResultOne($admin)
 		{
-			$row = $this->item;
-
-			$this->result .= '<div id="searchs_result">';
-
-			$row['search_date'] = date('d. m. Y', strtotime($row['search_date']));
-
-			$this->result .= '<div class="search">';
-
-			$this->result .= '<div class="search_title">'.$row['search_title'].'</div>';
-			$this->result .= '<div class="search_text">'.htmlspecialchars_decode($row['search_text']).'</div>';
-
-			$this->result .= '<div class="search_author">'.$row['search_author'].'</div>';
-			$this->result .= '<div class="search_date">'.$row['search_date'].'</div>';
-
-			$this->result .= '</div>';
-
-			$this->result .= '</div>';
 		}
 
 		protected function createAdditionals($admin)
@@ -140,8 +112,6 @@
 
 		public function load()
 		{
-      t
-
       if ($this->formdata['search_isbn'] == '')
         $isbn = 'TRUE';
       else
