@@ -1,0 +1,19 @@
+/* h1 {
+  margin: 50px 70px 90px 120px;
+}
+*/
+
+/* body nebo #page dej position: relative
+zbytek pozicuj absolutně a nastav tomu width a height
+*/
+
+/* my máme vlastně dva sloupce, takže */
+#panel {
+  width: 20%;
+  height: 200px;
+  float: right;
+}
+
+#content {
+  width: 80%;
+}

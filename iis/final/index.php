@@ -1,3 +1,6 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- <?php ?>?xml version="1.0" encoding="utf-8"? -->
+
 <?php
 	// FIXME debug
 	ini_set('display_errors', 1);
@@ -68,10 +71,8 @@
 	}
 	
 	$navigation = new Navigation($used_navigation, $page_part);
-
 ?>
-<<?php ?>?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml" lang="cs" xml:lang="cs">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -110,34 +111,32 @@
 			print $login->getReport();	// jen pro vypis info o uspesnem prihlaseni
 			
 			if ($login->is_logged()) {
-				print '<a href="/muj_ucet.php?user_type='.$_SESSION['user_type'].'&user_id='.$_SESSION['user_id'].'">Můj účet</a>';
-				print '<a href="/odhlasit.html">Odhlásit se</a>';
+				print '<a href="http://' . $_SERVER['HTTP_HOST'] . Common::getFolderFromURI() . 'muj_ucet.php?user_type='.$_SESSION['user_type'].'&user_id='.$_SESSION['user_id'].'">Můj účet</a>';
+				print '<a href="http://' . $_SERVER['HTTP_HOST'] . Common::getFolderFromURI() . 'odhlasit.html">Odhlásit se</a>';
 			}
 		}
 	}
 
 ?>
-		<div id="menu">
-<?php print $navigation->get_navigation_tree(); ?>
-		</div>
 		<div id="body">
 			<div id="panel">
-				<div id="news">
-					<h3>Novinky</h3>
-<?php
+        <div id="menu">
+<?php print $navigation->get_navigation_tree(); ?>
+        </div>
+        <div id="news">
+          <h3>Novinky</h3>
+  <?php
+    require_once 'classes/formparser/news.class.php';
+    $news = new News();
+    $news->setDBC($dbc);
 
-	require_once 'classes/formparser/news.class.php';
-	$news = new News();
-	$news->setDBC($dbc);
-
-	$news->additionalsOff();
-	$news->load_active(5);
-	$news->activeNewsOn();
-	$news->publicate(false);
-	$news->activeNewsOff();
-
-?>
-				</div>
+    $news->additionalsOff();
+    $news->load_active(5);
+    $news->activeNewsOn();
+    $news->publicate(false);
+    $news->activeNewsOff();
+  ?>
+        </div>
 			</div>
 			<div id="part">
 <?php include_once "include/content/$page_part.inc"; ?>

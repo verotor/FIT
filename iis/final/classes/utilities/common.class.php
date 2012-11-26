@@ -163,7 +163,12 @@ class Common
 		define('NL', Common::getNewLineEscape());
 
 	}
+
+  public static function getFolderFromURI() {
+    $parts = explode('/', $_SERVER['REQUEST_URI']);
+    array_pop($parts);
+    return implode('/', $parts) . '/';
+  }
 }
 
 ?>
-<!-- vim: set wrap nocursorline noexpandtab: -->

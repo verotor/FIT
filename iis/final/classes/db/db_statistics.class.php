@@ -83,4 +83,3 @@
 	}
 
 ?>
-<!-- vim: set wrap nocursorline noexpandtab: -->

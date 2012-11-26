@@ -21,8 +21,8 @@ class Navigation
 	private function create_navigation_tree($navigation, $actual, $id = '') {
 
 		//FIXME
-		//$thispage = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-		$thispage = 'http://' . $_SERVER['SERVER_NAME'];
+		$thispage = 'http://' . $_SERVER['SERVER_NAME'] . Common::getFolderFromURI();
+		//$thispage = 'http://' . $_SERVER['SERVER_NAME'];
 
 		($id != '') ? $id_attr = " id=\"$id\"" : $id_attr = '';
 
@@ -100,4 +100,3 @@ class Navigation
 }
 
 ?>
-<!-- vim: set wrap nocursorline noexpandtab: -->
