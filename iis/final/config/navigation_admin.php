@@ -4,6 +4,9 @@
 		'index'		=> array(
 			'page_name'		=> 'Vyhledávání',
 		),
+		'sekce'		=> array(
+			'page_name'		=> 'Sekce',
+		),
 		'knihovnici'		=> array(
 			'page_name'		=> 'Knihovníci',
 		),

@@ -18,6 +18,10 @@
 	{
 		$_GET['page'] = $_POST['page'];
 	}
+	
+	if (!isset($_GET['action'])) {
+		$_GET['action'] = 'show';
+	}
 
 	// aktualni stranka
 	require_once 'classes/utilities/common.class.php';
@@ -102,7 +106,7 @@
 			<noscript><div id="noscript">Váš prohlížeč nepodporuje JavaScript nebo jej máte vypnutý! Stránky proto nebudou fungovat správně!!!</div></noscript>
 			<h1>KNIHOVNA</h1>
 		</div>
-<div id="admin_menu">
+		<div id="admin_menu">
 <?php
 	if ($adminmenu)
 	{
@@ -117,26 +121,26 @@
 		}
 	}
 ?>
-</div>
+		</div>
 		<div id="body">
 			<div id="panel">
-        <div id="menu">
+        		<div id="menu">
 <?php print $navigation->get_navigation_tree(); ?>
-        </div>
-        <div id="news">
-          <h3>Novinky</h3>
-  <?php
-    require_once 'classes/formparser/news.class.php';
-    $news = new News();
-    $news->setDBC($dbc);
+        		</div>
+		        <div id="news">
+		          <h3>Novinky</h3>
+<?php
+	/*require_once 'classes/formparser/news.class.php';
+	$news = new News();
+	$news->setDBC($dbc);
 
-    $news->additionalsOff();
-    $news->load_active(5);
-    $news->activeNewsOn();
-    $news->publicate(false);
-    $news->activeNewsOff();
-  ?>
-        </div>
+	$news->additionalsOff();
+	$news->load_active(5);
+	$news->activeNewsOn();
+	$news->publicate(false);
+	$news->activeNewsOff();*/
+?>
+		        </div>
 			</div>
 			<div id="part">
 <?php include_once "include/content/$page_part.inc"; ?>
