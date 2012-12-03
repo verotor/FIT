@@ -41,19 +41,21 @@
 				$this->error .= 'Nezadali jste adresu!<br />';
 			}
 			
-			if ($this->formdata['librarian_entrydate'] == '')
-			{
-				$this->error .= 'Nezadali jste datum nástupu!<br />';
-			}
-			else if (Common::checkStrDate($this->formdata['librarian_entrydate']))
-			{
-				$this->error .= 'Zadali jste neplatné datum nástupu!<br />';
-			}
-			// TODO: mozna pridat kontrolu jestli je datum nastupu mensi nebo rovno datu narozeni (to by byla hovadina) nebo mensi nez osmnact let (nezletile knihovniky neprijmame)
-			
 			if ($this->formdata['librarian_login'] == '')
 			{
 				$this->error .= 'Nezadali jste login!<br />';
+			}
+			else if (!($stmt = $this->dbc->query("SELECT COUNT(*) FROM librarian WHERE librarian_login = '".$this->formdata['librarian_login']."'")))
+			{
+				$this->error .= 'Zadaný login už existuje! Zadejte prosím jiný.<br />';
+			}
+			else if (!($stmt = $this->dbc->query("SELECT COUNT(*) FROM reader WHERE reader_login = '".$this->formdata['librarian_login']."'")))
+			{
+				$this->error .= 'Zadaný login už existuje! Zadejte prosím jiný.<br />';
+			}
+			else if (!($stmt = $this->dbc->query("SELECT COUNT(*) FROM admin WHERE admin_login = '".$this->formdata['librarian_login']."'")))
+			{
+				$this->error .= 'Zadaný login už existuje! Zadejte prosím jiný.<br />';
 			}
 			
 			if ($this->formdata['librarian_pass'] == '')
@@ -96,7 +98,7 @@
 				", ".$this->dbc->sql_string($this->formdata['librarian_contactaddr']).
 				", ".$this->dbc->sql_string($this->formdata['librarian_phone']).
 				", ".$this->dbc->sql_string($this->formdata['librarian_email']).
-				", ".$this->dbc->sql_string(Common::getDBDateFromStrDate($this->formdata['librarian_entrydate'])).
+				", NOW()".
 				", ".$this->dbc->sql_string($this->formdata['librarian_login']).
 				", PASSWORD(".$this->dbc->sql_string($this->formdata['librarian_pass']).")".
 				")"))
@@ -112,17 +114,16 @@
 		protected function updateData()
 		{
 			if ($this->dbc->execute(
-				"UPDATE librarian SET librarian_name = ".$this->dbc->sql_string($this->formdata['librarian_name']).
+				"UPDATE librarian SET librarian_birthnumber = ".$this->dbc->sql_string($this->formdata['librarian_birthnumber']).
 				", librarian_birthday = ".$this->dbc->sql_string(Common::getDBDateFromStrDate($this->formdata['librarian_birthday']).
-				", librarian_birthday = ".$this->dbc->sql_string($this->formdata['librarian_name']).
-				", librarian_birthday = ".$this->dbc->sql_string($this->formdata['librarian_surname']).
-				", librarian_birthday = ".$this->dbc->sql_string($this->formdata['librarian_addr']).
-				", librarian_birthday = ".$this->dbc->sql_string($this->formdata['librarian_contactaddr']).
-				", librarian_birthday = ".$this->dbc->sql_string($this->formdata['librarian_phone']).
-				", librarian_birthday = ".$this->dbc->sql_string($this->formdata['librarian_email']).
-				", librarian_birthday = ".$this->dbc->sql_string(Common::getDBDateFromStrDate($this->formdata['librarian_entrydate'])).
-				", librarian_birthday = ".$this->dbc->sql_string($this->formdata['librarian_login']).
-				", librarian_birthday = PASSWORD(".$this->dbc->sql_string($this->formdata['librarian_pass']).")".
+				", librarian_name = ".$this->dbc->sql_string($this->formdata['librarian_name']).
+				", librarian_surname = ".$this->dbc->sql_string($this->formdata['librarian_surname']).
+				", librarian_addr = ".$this->dbc->sql_string($this->formdata['librarian_addr']).
+				", librarian_contactaddr = ".$this->dbc->sql_string($this->formdata['librarian_contactaddr']).
+				", librarian_phone = ".$this->dbc->sql_string($this->formdata['librarian_phone']).
+				", librarian_email = ".$this->dbc->sql_string($this->formdata['librarian_email']).
+				", librarian_login = ".$this->dbc->sql_string($this->formdata['librarian_login']).
+				", librarian_pass = PASSWORD(".$this->dbc->sql_string($this->formdata['librarian_pass']).")".
 				" WHERE librarian_id = {$this->formdata['librarian_id']}")))
 			{
 				return true;

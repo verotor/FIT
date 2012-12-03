@@ -36,10 +36,6 @@
 			<label>Email: </label>
 			<input type="text" name="formdata[librarian_email]" value="<?php if (isset($_POST['formdata']) && isset($_POST['formdata']['librarian_email'])) echo $_POST['formdata']['librarian_email']; ?>" />
 		</div>
-		<div class="librarian_entrydate">
-			<label>Datum nástupu: </label>
-			<input type="text" name="formdata[librarian_entrydate]" value="<?php if (isset($_POST['formdata']) && isset($_POST['formdata']['librarian_entrydate'])) echo Common::getStrDateFromDBDate($_POST['formdata']['librarian_entrydate']); ?>" />
-		</div>
 		<div class="librarian_login">
 			<label>Login: </label>
 			<input type="text" name="formdata[librarian_login]" value="<?php if (isset($_POST['formdata']) && isset($_POST['formdata']['librarian_login'])) echo $_POST['formdata']['librarian_login']; ?>" />

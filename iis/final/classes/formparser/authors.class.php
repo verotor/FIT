@@ -73,7 +73,7 @@
 				"UPDATE author SET author_name = ".$this->dbc->sql_string($this->formdata['author_name']).
 				", author_surname = ".$this->dbc->sql_string($this->formdata['author_surname']).
 				", author_birthdate = ".$this->dbc->sql_string(Common::getDBDateFromStrDate($this->formdata['author_birthdate'])).
-				", author_birthdate = ".$this->dbc->sql_string($this->formdata['author_desc']).
+				", author_desc = ".$this->dbc->sql_string($this->formdata['author_desc']).
 				" WHERE author_id = {$this->formdata['author_id']}"))
 			{
 				return true;
