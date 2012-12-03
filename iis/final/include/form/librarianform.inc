@@ -10,7 +10,7 @@
 		</div>
 		<div class="librarian_birthday">
 			<label>Datum narození: </label>
-			<input type="text" name="formdata[librarian_birthday]" value="<?php if (isset($_POST['formdata']) && isset($_POST['formdata']['librarian_birthday'])) echo $_POST['formdata']['librarian_birthday']; ?>" />
+			<input type="text" name="formdata[librarian_birthday]" value="<?php if (isset($_POST['formdata']) && isset($_POST['formdata']['librarian_birthday'])) echo Common::getStrDateFromDBDate($_POST['formdata']['librarian_birthday']); ?>" />
 		</div>
 		<div class="librarian_name">
 			<label>Jméno: </label>
@@ -38,7 +38,7 @@
 		</div>
 		<div class="librarian_entrydate">
 			<label>Datum nástupu: </label>
-			<input type="text" name="formdata[librarian_entrydate]" value="<?php if (isset($_POST['formdata']) && isset($_POST['formdata']['librarian_entrydate'])) echo $_POST['formdata']['librarian_entrydate']; ?>" />
+			<input type="text" name="formdata[librarian_entrydate]" value="<?php if (isset($_POST['formdata']) && isset($_POST['formdata']['librarian_entrydate'])) echo Common::getStrDateFromDBDate($_POST['formdata']['librarian_entrydate']); ?>" />
 		</div>
 		<div class="librarian_login">
 			<label>Login: </label>

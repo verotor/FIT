@@ -178,6 +178,7 @@ class Common
 		// tyto části nejlépe převést na celá čísla funkcí intval()
 		// a nakonec ověřit platnost přes funkci checkdate(), viz www.php.net
 		// pozor na možné nuly u dne a měsíce
+		// pro datum v DB formatu nebo anglickem vraci samozrejme false
 		
 		return true;
 	}
@@ -185,8 +186,29 @@ class Common
 	public static function getDBDateFromStrDate($date)
 	{
 		// provede obdobné jako předchozí funkce, akorát vrátí datum ve formátu pro DB yyyy-mm-dd
+		// pri prazdnem retezci vraci prazdny retezec
 		
 		return $date;
+	}
+	
+	public static function getStrDateFromDBDate($date)
+	{
+		// z datumu v DB formatu udela datum ceskeho formatu (s teckama)
+		// pri prazdnem retezci nebo null, vraci prazdny retezec
+		// pokud uz datum je v ceskem formatu, vraci bez uprav
+		
+		if ($date == null || $date == '')
+		{
+			return '';
+		}
+		else if (Common::checkStrDate($date))
+		{
+			return $date;
+		}
+		else
+		{
+			return date('d.m.Y', strtotime($date));
+		}
 	}
 }
 
