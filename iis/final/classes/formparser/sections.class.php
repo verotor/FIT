@@ -88,8 +88,8 @@
 				$this->result .= '<table>';
 				$this->result .= '<tr>';
 
-				$this->result .= '<th class="section_name">Titulek</th>';
-				$this->result .= '<th class="section_location">Datum</th>';
+				$this->result .= '<th class="section_name">Název</th>';
+				$this->result .= '<th class="section_location">Umístění</th>';
 
 				$this->result .= '<th class="edit">Úpravy</th>';
 
@@ -166,7 +166,7 @@
 
 		public function load()
 		{
-			if ($stmt = $this->dbc->query("SELECT * FROM section ORDER BY section_name"))
+			if ($stmt = $this->dbc->query("SELECT * FROM section ORDER BY section_name COLLATE utf8_czech_ci"))
 			{
 				$this->items = $stmt->fetch_all_array();
 

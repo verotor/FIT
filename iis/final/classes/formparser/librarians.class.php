@@ -147,16 +147,12 @@
 				$this->result .= '<table>';
 				$this->result .= '<tr>';
 
+				$this->result .= '<th class="librarian_name">Příjmení, jméno</th>';
 				$this->result .= '<th class="librarian_birthnumber">Rodné číslo</th>';
 				$this->result .= '<th class="librarian_birthday">Datum narození</th>';
-				$this->result .= '<th class="librarian_name">Jméno</th>';
-				$this->result .= '<th class="librarian_surname">Příjmení</th>';
-				$this->result .= '<th class="librarian_addr">Adresa</th>';
-				$this->result .= '<th class="librarian_contactaddr">Kontaktní adresa</th>';
 				$this->result .= '<th class="librarian_phone">Telefon</th>';
 				$this->result .= '<th class="librarian_email">Email</th>';
 				$this->result .= '<th class="librarian_entrydate">Datum nástupu</th>';
-				$this->result .= '<th class="librarian_login">Login</th>';
 
 				$this->result .= '<th class="edit">Úpravy</th>';
 
@@ -171,16 +167,12 @@
 				{
 					$this->result .= '<tr class="'.(($i % 2 != 0) ? 'odd' : 'even').'">';
 
-					$this->result .= '<td class="librarian_birthnumber"><a href="/knihovnici.html?action=show&amp;id='.$row['librarian_id'].'">'.$row['librarian_birthnumber'].'</a></td>';
+					$this->result .= '<td class="librarian_name"><a href="/knihovnici.html?action=show&amp;id='.$row['librarian_id'].'">'.$row['librarian_surname'].', '.$row['librarian_name'].'</a></td>';
+					$this->result .= '<td class="librarian_birthnumber">'.$row['librarian_birthnumber'].'</td>';
 					$this->result .= '<td class="librarian_birthday">'.$row['librarian_birthday'].'</td>';
-					$this->result .= '<td class="librarian_name">'.$row['librarian_name'].'</td>';
-					$this->result .= '<td class="librarian_surname">'.$row['librarian_surname'].'</td>';
-					$this->result .= '<td class="librarian_addr">'.$row['librarian_addr'].'</td>';
-					$this->result .= '<td class="librarian_contactaddr">'.$row['librarian_contactaddr'].'</td>';
 					$this->result .= '<td class="librarian_phone">'.$row['librarian_phone'].'</td>';
 					$this->result .= '<td class="librarian_email">'.$row['librarian_email'].'</td>';
-					$this->result .= '<td class="librarian_entrydate">'.$row['librarian_entrydate'].'</td>';
-					$this->result .= '<td class="librarian_login">'.$row['librarian_login'].'</td>';
+					$this->result .= '<td class="librarian_entrydate">'.Common::getStrDateFromDBDate($row['librarian_entrydate']).'</td>';
 
 					$this->result .= '<td class="edit"><a href="/knihovnici.html?action=edit&amp;id='.$row['librarian_id'].'">Editovat</a> ';
 
@@ -211,7 +203,7 @@
 			
 			$this->result .= '<tr>';
 			$this->result .= '<td class="property">Datum narození</td>';
-			$this->result .= '<td class="value">'.$row['librarian_birthday'].'</td>';
+			$this->result .= '<td class="value">'.Common::getStrDateFromDBDate($row['librarian_birthday']).'</td>';
 			$this->result .= '</tr>';
 			
 			$this->result .= '<tr>';
@@ -246,7 +238,7 @@
 			
 			$this->result .= '<tr>';
 			$this->result .= '<td class="property">Datum nástupu</td>';
-			$this->result .= '<td class="value">'.$row['librarian_entrydate'].'</td>';
+			$this->result .= '<td class="value">'.Common::getStrDateFromDBDate($row['librarian_entrydate']).'</td>';
 			$this->result .= '</tr>';
 			
 			$this->result .= '<tr>';
