@@ -19,6 +19,7 @@
 			if (!$titletypes->updateItem())
 			{
 				$_GET['action'] = 'edit';
+				$_GET['id'] = $titletypes->getFormDataItem('titletype_id');
 			}
 		}
 		else if ($titletypes->isFormDataItem('btnSave'))

@@ -19,6 +19,7 @@
 			if (!$authors->updateItem())
 			{
 				$_GET['action'] = 'edit';
+				$_GET['id'] = $authors->getFormDataItem('author_id');
 			}
 		}
 		else if ($authors->isFormDataItem('btnSave'))

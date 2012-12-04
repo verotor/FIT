@@ -19,6 +19,7 @@
 			if (!$publishers->updateItem())
 			{
 				$_GET['action'] = 'edit';
+				$_GET['id'] = $publishers->getFormDataItem('publisher_id');
 			}
 		}
 		else if ($publishers->isFormDataItem('btnSave'))
