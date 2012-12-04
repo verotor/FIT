@@ -1,7 +1,7 @@
 DefaultCharset UTF-8
 
 RewriteEngine On
-RewriteBase /~xpacne00/
+RewriteBase /~xpacne00/IIS/
 RewriteCond %{QUERY_STRING} ^page=([^&]+)$
 RewriteRule ^index\.php$ %1.html? [R=301,L,NE]
 RewriteRule ^([^/]+)\.html index.php?rw=1&page=$1 [L,QSA]

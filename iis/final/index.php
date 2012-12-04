@@ -53,7 +53,9 @@
 	}
 	
   //FIXME debug
-  print_r($_SESSION);
+  //print_r($_SESSION);
+  //print_r($_SERVER);
+  //print_r($GLOBALS);
 
 	if (isset($_SESSION['user_type'])) {
 		$user_type = $_SESSION['user_type'];

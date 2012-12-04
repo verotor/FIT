@@ -167,6 +167,7 @@ class Common
 	public static function getFolderFromURI() {
 	$parts = explode('/', $_SERVER['REQUEST_URI']);
 	array_pop($parts);
+	//array_pop($parts);
 	return implode('/', $parts) . '/';
 	}
 
