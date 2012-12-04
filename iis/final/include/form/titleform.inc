@@ -59,11 +59,11 @@
 		</div>
 		<div class="title_annotation">
 			<label class="textarea">Anotace: </label>
-			<textarea id="editor" name="formdata[title_annotation]" cols="50" rows="5"><?php if (isset($_POST['formdata']) && isset($_POST['formdata']['title_annotation'])) echo $_POST['formdata']['title_annotation']; ?></textarea>
+			<textarea name="formdata[title_annotation]" cols="50" rows="5"><?php if (isset($_POST['formdata']) && isset($_POST['formdata']['title_annotation'])) echo $_POST['formdata']['title_annotation']; ?></textarea>
 		</div>
 		<div class="title_desc">
 			<label class="textarea">Popis: </label>
-			<textarea id="editor" name="formdata[title_desc]" cols="50" rows="5"><?php if (isset($_POST['formdata']) && isset($_POST['formdata']['title_desc'])) echo $_POST['formdata']['title_desc']; ?></textarea>
+			<textarea name="formdata[title_desc]" cols="50" rows="5"><?php if (isset($_POST['formdata']) && isset($_POST['formdata']['title_desc'])) echo $_POST['formdata']['title_desc']; ?></textarea>
 		</div>
 		<div class="tlacitka">
 			<input type="hidden" name="page" value="<?php

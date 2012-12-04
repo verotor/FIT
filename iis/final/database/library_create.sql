@@ -362,6 +362,7 @@ insert into section values (
   NULL, 'Periodika', '1. patro - pred sekci Beletrie, dvere 207');
 
 insert into is_manager values (1, 1);
+insert into is_manager values (1, 2);
 insert into is_manager values (2, 1);
 insert into is_manager values (3, 2);
 insert into is_manager values (4, 2);

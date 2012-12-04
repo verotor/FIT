@@ -6,7 +6,7 @@
 	{
 		public function __construct()
 		{
-			parent::__construct();
+			parent::__construct('author_surname');
 		}
 
 		protected function validateData()

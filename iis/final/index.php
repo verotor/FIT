@@ -97,6 +97,7 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="style/css/style.css" />
 
 	<script type="text/javascript" src="plugin/jquery/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="script/formactions.js"></script>
 
 	<title>KNIHOVNA - <?php $navigation->get_page_name(); ?></title>
 </head>

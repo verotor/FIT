@@ -23,14 +23,12 @@
 
 		protected $messages;
 
-		public function __construct($dbhost, $user, $pass, $dbname, $dbport, $dbsock, $encoding, $flags)
+		public function __construct($dbhost, $user, $pass, $dbname, $encoding, $flags)
 		{
 			$this->dbhost	= $dbhost;
 			$this->user		= $user;
 			$this->pass		= $pass;
 			$this->dbname	= $dbname;
-			$this->dbport	= $dbport;
-			$this->dbsock	= $dbsock;
 
 			$this->dbh = null;
 

@@ -71,3 +71,7 @@ textarea {
 #content {
   width: 80%;
 }
+
+td {
+  vertical-align: top;
+}

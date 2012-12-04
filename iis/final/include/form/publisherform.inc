@@ -30,7 +30,7 @@
 		</div>
 		<div class="publisher_desc">
 			<label class="textarea">Popis: </label>
-			<textarea id="editor" name="formdata[publisher_desc]" cols="50" rows="5"><?php if (isset($_POST['formdata']) && isset($_POST['formdata']['publisher_desc'])) echo $_POST['formdata']['publisher_desc']; ?></textarea>
+			<textarea name="formdata[publisher_desc]" cols="50" rows="5"><?php if (isset($_POST['formdata']) && isset($_POST['formdata']['publisher_desc'])) echo $_POST['formdata']['publisher_desc']; ?></textarea>
 		</div>
 		<div class="tlacitka">
 			<input type="hidden" name="page" value="<?php

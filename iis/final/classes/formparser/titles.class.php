@@ -8,7 +8,7 @@
 		
 		public function __construct()
 		{
-			parent::__construct();
+			parent::__construct('title_title');
 			
 			$this->langs = array(
 				'cz' => array('name' => 'Čeština'),

@@ -16,7 +16,7 @@
 			}
 		}
 		
-		public static function form_list($options, $name = '', $selected = '', $id = '', $class = '')
+		public static function form_list($options, $name = '', $selected = '', $id = '', $class = '', $disabled = false)
 		{
 			if ($selected == '')
 			{
@@ -29,11 +29,18 @@
 			$select .= Common::html_attribute('id', $id);
 			$select .= Common::html_attribute('class', $class);
 			$select .= Common::html_attribute('name', $name);
+			
+			if ($disabled)
+			{
+				$select .= Common::html_attribute('disabled', 'disabled');
+			}
+			
 			$select .= '>';
 			
 			$select .= '<option';
 			$select .= Common::html_attribute('value', 'none');
 			$select .= Form::value_select('none', $selected);
+			//$select .= '>'.$GLOBALS['LANG']['forms']['select_first_item'].'</option>';
 			$select .= '>(vyberte)</option>';
 			
 			foreach ($options as $key => $value)
@@ -72,23 +79,15 @@
 			}
 			
 			$select = '<select';
-			
-			if ($class != '')
-			{
-				$select .= Common::html_attribute('class', $class);
-			}
-			
-			if ($id != '')
-			{
-				$select .= Common::html_attribute('id', $id);
-			}
+			$select .= Common::html_attribute('id', $id);
+			$select .= Common::html_attribute('class', $class);
+			$select .= Common::html_attribute('name', $name);
 			
 			if ($disabled)
 			{
-				$select .= ' disabled="disabled"';
+				$select .= Common::html_attribute('disabled', 'disabled');
 			}
 			
-			$select .= Common::html_attribute('name', $name);
 			$select .= '>';
 			
 			$select .= '<option';

@@ -18,7 +18,7 @@
 		</div>
 		<div class="author_desc">
 			<label class="textarea">Popis: </label>
-			<textarea id="editor" name="formdata[author_desc]"><?php if (isset($_POST['formdata']) && isset($_POST['formdata']['author_desc'])) echo $_POST['formdata']['author_desc']; ?></textarea>
+			<textarea name="formdata[author_desc]"><?php if (isset($_POST['formdata']) && isset($_POST['formdata']['author_desc'])) echo $_POST['formdata']['author_desc']; ?></textarea>
 		</div>
 		<div class="tlacitka">
 			<input type="hidden" name="page" value="<?php

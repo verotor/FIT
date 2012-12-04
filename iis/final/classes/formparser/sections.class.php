@@ -6,7 +6,7 @@
 	{
 		public function __construct()
 		{
-			parent::__construct();
+			parent::__construct('section_name');
 		}
 
 		protected function validateData()
@@ -139,6 +139,11 @@
 			$this->result .= '<td class="value">'.$row['section_location'].'</td>';
 			$this->result .= '</tr>';
 			
+			$this->result .= '<tr>';
+			$this->result .= '<td class="property">Knihovníci</td>';
+			$this->result .= '<td class="value">'.$this->getLibrariansInSection().'</td>';
+			$this->result .= '</tr>';
+			
 			$this->result .= '</table>';
 			
 			$this->result .= '</div>';
@@ -176,6 +181,56 @@
 			{
 				return false;
 			}
+		}
+		
+		public function getLibrarians()
+		{
+			$librarians = array();
+			
+			if ($stmt = $this->dbc->query("SELECT librarian_id, librarian_login, CONCAT(librarian_surname, ', ', librarian_name) AS librarian_wholename FROM librarian ORDER BY librarian_surname COLLATE utf8_czech_ci, librarian_name COLLATE utf8_czech_ci"))
+			{
+				$rows = $stmt->fetch_all_array();
+				
+				foreach ($rows as $row)
+				{
+					$librarians[$row['librarian_id']] = array('name' => $row['librarian_wholename'], 'title' => $row['librarian_login']);
+				}
+			}
+			
+			return $librarians;
+		}
+		
+		public function getIsManagers()
+		{
+			$rows = array();
+			
+			if ($stmt = $this->dbc->query("SELECT * FROM is_manager WHERE section_id = ".$this->formdata['section_id']))
+			{
+				$rows = $stmt->fetch_all_array();
+			}
+			
+			return $rows;
+		}
+		
+		private function getLibrariansInSection()
+		{
+			$librarians_string = '';
+			
+			if ($stmt = $this->dbc->query("SELECT CONCAT(librarian_surname, ', ', librarian_name) AS librarian_wholename FROM librarian, is_manager WHERE is_manager.librarian_id = librarian.librarian_id AND section_id = ".$this->formdata['section_id']." ORDER BY librarian_surname COLLATE utf8_czech_ci, librarian_name COLLATE utf8_czech_ci"))
+			{
+				$rows = $stmt->fetch_all_array();
+				
+				$librarians = array();
+				
+				foreach ($rows as $row)
+				{
+					$librarians[] = $row['librarian_wholename'];
+				}
+				
+				$librarians_string = implode('<br />', $librarians);
+			}
+			
+			return $librarians_string;
 		}
 	}
 
