@@ -52,6 +52,9 @@
 		$loginform = false;
 	}
 	
+  //FIXME debug
+  print_r($_SESSION);
+
 	if (isset($_SESSION['user_type'])) {
 		$user_type = $_SESSION['user_type'];
 	} else {
