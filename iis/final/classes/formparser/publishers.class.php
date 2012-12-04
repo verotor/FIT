@@ -110,10 +110,10 @@
 				{
 					$this->result .= '<tr class="'.(($i % 2 != 0) ? 'odd' : 'even').'">';
 
-					$this->result .= '<td class="publisher_name"><a href="/vydavatele.html?action=show&amp;id='.$row['publisher_id'].'">'.$row['publisher_name'].'</a></td>';
+					$this->result .= '<td class="publisher_name"><a href="'.Common::$URI.'vydavatele.html?action=show&amp;id='.$row['publisher_id'].'">'.$row['publisher_name'].'</a></td>';
 					$this->result .= '<td class="publisher_desc">'.$row['publisher_desc'].'</td>';
 
-					$this->result .= '<td class="edit"><a href="/vydavatele.html?action=edit&amp;id='.$row['publisher_id'].'">Editovat</a> ';
+					$this->result .= '<td class="edit"><a href="'.Common::$URI.'vydavatele.html?action=edit&amp;id='.$row['publisher_id'].'">Editovat</a> ';
 
 					$this->result .= '</tr>';
 				}
@@ -181,14 +181,14 @@
 
 			if ($admin && $this->item == null)
 			{
-				$this->result .= '<div id="add_link"><a href="/vydavatele.html?action=add" title="Přidat vydavatele">Přidat vydavatele</a></div>';
+				$this->result .= '<div id="add_link"><a href="'.Common::$URI.'vydavatele.html?action=add" title="Přidat vydavatele">Přidat vydavatele</a></div>';
 			}
 
 			if ($this->show_single)
 			{
 				if ($admin)
 				{
-					$this->result .= '<div id="back_link"><a href="/vydavatele.html?action=show" title="Zobrazit vydavatele">Zpět</a></div>';
+					$this->result .= '<div id="back_link"><a href="'.Common::$URI.'vydavatele.html?action=show" title="Zobrazit vydavatele">Zpět</a></div>';
 				}
 			}
 

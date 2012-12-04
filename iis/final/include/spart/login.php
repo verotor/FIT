@@ -12,9 +12,7 @@
 		}
 		
 		if ($login->is_logged()) {
-    //FIXME
-			//header('Location: http://' . $_SERVER['HTTP_HOST']);
-			header('Location: http://' . $_SERVER['HTTP_HOST'] . Common::getFolderFromURI());
+			header('Location: '.Common::$URI);
 		}
 	}
 	
@@ -30,9 +28,7 @@
 	if ($page_part == 'odhlasit') {
 		$login->logout();
 		
-		//header('Location: http://' . $_SERVER['HTTP_HOST']);
-    //FIXME
-		header('Location: http://' . $_SERVER['HTTP_HOST'] . Common::getFolderFromURI());
+		header('Location: '.Common::$URI);
 	}
 
 ?>

@@ -186,7 +186,7 @@
 				{
 					$this->result .= '<tr class="'.(($i % 2 != 0) ? 'odd' : 'even').'">';
 
-					$this->result .= '<td class="reader_name"><a href="/ctenari.html?action=show&amp;id='.$row['reader_id'].'">'.$row['reader_surname'].', '.$row['reader_name'].'</a></td>';
+					$this->result .= '<td class="reader_name"><a href="'.Common::$URI.'ctenari.html?action=show&amp;id='.$row['reader_id'].'">'.$row['reader_surname'].', '.$row['reader_name'].'</a></td>';
 					$this->result .= '<td class="reader_birthnumber">'.$row['reader_birthnumber'].'</td>';
 					$this->result .= '<td class="reader_birthday">'.$row['reader_birthday'].'</td>';
 					$this->result .= '<td class="reader_phone">'.$row['reader_phone'].'</td>';
@@ -195,7 +195,7 @@
 					$this->result .= '<td class="reader_ticket">'.$row['reader_ticket'].'</td>';
 					$this->result .= '<td class="reader_validity">'.Common::getStrDateFromDBDate($row['reader_validity']).'</td>';
 
-					$this->result .= '<td class="edit"><a href="/ctenari.html?action=edit&amp;id='.$row['reader_id'].'">Editovat</a> ';
+					$this->result .= '<td class="edit"><a href="'.Common::$URI.'ctenari.html?action=edit&amp;id='.$row['reader_id'].'">Editovat</a> ';
 
 					$this->result .= '</tr>';
 				}
@@ -288,14 +288,14 @@
 
 			if ($admin && $this->item == null)
 			{
-				$this->result .= '<div id="add_link"><a href="/ctenari.html?action=add" title="Přidat čtenáře">Přidat čtenáře</a></div>';
+				$this->result .= '<div id="add_link"><a href="'.Common::$URI.'ctenari.html?action=add" title="Přidat čtenáře">Přidat čtenáře</a></div>';
 			}
 
 			if ($this->show_single)
 			{
 				if ($admin)
 				{
-					$this->result .= '<div id="back_link"><a href="/ctenari.html?action=show" title="Zobrazit čtenáře">Zpět</a></div>';
+					$this->result .= '<div id="back_link"><a href="'.Common::$URI.'ctenari.html?action=show" title="Zobrazit čtenáře">Zpět</a></div>';
 				}
 			}
 

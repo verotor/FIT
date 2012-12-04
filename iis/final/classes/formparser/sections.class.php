@@ -104,10 +104,10 @@
 				{
 					$this->result .= '<tr class="'.(($i % 2 != 0) ? 'odd' : 'even').'">';
 
-					$this->result .= '<td class="section_name"><a href="/sekce.html?action=show&amp;id='.$row['section_id'].'">'.$row['section_name'].'</a></td>';
+					$this->result .= '<td class="section_name"><a href="'.Common::$URI.'sekce.html?action=show&amp;id='.$row['section_id'].'">'.$row['section_name'].'</a></td>';
 					$this->result .= '<td class="section_location">'.$row['section_location'].'</td>';
 
-					$this->result .= '<td class="edit"><a href="/sekce.html?action=edit&amp;id='.$row['section_id'].'">Editovat</a> ';
+					$this->result .= '<td class="edit"><a href="'.Common::$URI.'sekce.html?action=edit&amp;id='.$row['section_id'].'">Editovat</a> ';
 
 					$this->result .= '</tr>';
 				}
@@ -155,14 +155,14 @@
 
 			if ($admin && $this->item == null)
 			{
-				$this->result .= '<div id="add_link"><a href="/sekce.html?action=add" title="Přidat sekci">Přidat sekci</a></div>';
+				$this->result .= '<div id="add_link"><a href="'.Common::$URI.'sekce.html?action=add" title="Přidat sekci">Přidat sekci</a></div>';
 			}
 
 			if ($this->show_single)
 			{
 				if ($admin)
 				{
-					$this->result .= '<div id="back_link"><a href="/sekce.html?action=show" title="Zobrazit sekce">Zpět</a></div>';
+					$this->result .= '<div id="back_link"><a href="'.Common::$URI.'sekce.html?action=show" title="Zobrazit sekce">Zpět</a></div>';
 				}
 			}
 

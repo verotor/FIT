@@ -95,9 +95,9 @@
 				{
 					$this->result .= '<tr class="'.(($i % 2 != 0) ? 'odd' : 'even').'">';
 
-					$this->result .= '<td class="keyword_word"><a href="/klicova_slova.html?action=show&amp;id='.$row['keyword_id'].'">'.$row['keyword_word'].'</a></td>';
+					$this->result .= '<td class="keyword_word"><a href="'.Common::$URI.'klicova_slova.html?action=show&amp;id='.$row['keyword_id'].'">'.$row['keyword_word'].'</a></td>';
 
-					$this->result .= '<td class="edit"><a href="/klicova_slova.html?action=edit&amp;id='.$row['keyword_id'].'">Editovat</a> ';
+					$this->result .= '<td class="edit"><a href="'.Common::$URI.'klicova_slova.html?action=edit&amp;id='.$row['keyword_id'].'">Editovat</a> ';
 
 					$this->result .= '</tr>';
 				}
@@ -135,14 +135,14 @@
 
 			if ($admin && $this->item == null)
 			{
-				$this->result .= '<div id="add_link"><a href="/klicova_slova.html?action=add" title="Přidat klíčové slovo">Přidat klíčové slovo</a></div>';
+				$this->result .= '<div id="add_link"><a href="'.Common::$URI.'klicova_slova.html?action=add" title="Přidat klíčové slovo">Přidat klíčové slovo</a></div>';
 			}
 
 			if ($this->show_single)
 			{
 				if ($admin)
 				{
-					$this->result .= '<div id="back_link"><a href="/klicova_slova.html?action=show" title="Zobrazit klíčová slova">Zpět</a></div>';
+					$this->result .= '<div id="back_link"><a href="'.Common::$URI.'klicova_slova.html?action=show" title="Zobrazit klíčová slova">Zpět</a></div>';
 				}
 			}
 
