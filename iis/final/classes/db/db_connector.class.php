@@ -20,8 +20,6 @@
 				$GLOBALS['DB_CONNECT'][$type]['user'],
 				$GLOBALS['DB_CONNECT'][$type]['pass'],
 				$GLOBALS['DB_CONNECT'][$type]['name'],
-				$GLOBALS['DB_CONNECT'][$type]['port'],
-				$GLOBALS['DB_CONNECT'][$type]['sock'],
 				$GLOBALS['DB_CONNECT'][$type]['enc'],
 				$GLOBALS['DB_CONNECT'][$type]['flag']
 			);

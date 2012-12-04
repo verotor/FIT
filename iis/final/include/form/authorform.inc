@@ -17,8 +17,8 @@
 			<input type="text" name="formdata[author_birthdate]" value="<?php if (isset($_POST['formdata']) && isset($_POST['formdata']['author_birthdate'])) echo Common::getStrDateFromDBDate($_POST['formdata']['author_birthdate']); ?>" />
 		</div>
 		<div class="author_desc">
-			<label>Popis: </label><br />
-			<textarea id="editor" name="formdata[author_desc]" cols="100" rows="20"><?php if (isset($_POST['formdata']) && isset($_POST['formdata']['author_desc'])) echo $_POST['formdata']['author_desc']; ?></textarea>
+			<label class="textarea">Popis: </label>
+			<textarea name="formdata[author_desc]"><?php if (isset($_POST['formdata']) && isset($_POST['formdata']['author_desc'])) echo $_POST['formdata']['author_desc']; ?></textarea>
 		</div>
 		<div class="tlacitka">
 			<input type="hidden" name="page" value="<?php

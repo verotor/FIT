@@ -40,6 +40,17 @@ label {
   width: 130px;
 }
 
+textarea {
+  width: 400px;
+  height: 80px;
+  margin-left: 4px;
+}
+
+.textarea {
+  height: 80px;
+  float: left;
+}
+
 #admin_menu a {
   display: inline;
   margin-right: 20px;
@@ -59,4 +70,8 @@ label {
 
 #content {
   width: 80%;
+}
+
+td {
+  vertical-align: top;
 }

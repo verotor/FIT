@@ -6,7 +6,7 @@
 	{
 		public function __construct()
 		{
-			parent::__construct();
+			parent::__construct('keyword_word');
 		}
 
 		protected function validateData()
