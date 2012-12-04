@@ -188,7 +188,7 @@
 
 		public function load()
 		{
-			if ($stmt = $this->dbc->query("SELECT * FROM author ORDER BY author_surname COLLATE utf8_czech_ci, author_name COLLATE utf8_czech_ci"))
+			if ($stmt = $this->dbc->query("SELECT * FROM author ORDER BY author_surname, author_name"))
 			{
 				$this->items = $stmt->fetch_all_array();
 

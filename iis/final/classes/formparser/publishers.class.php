@@ -197,7 +197,7 @@
 
 		public function load()
 		{
-			if ($stmt = $this->dbc->query("SELECT * FROM publisher ORDER BY publisher_name COLLATE utf8_czech_ci"))
+			if ($stmt = $this->dbc->query("SELECT * FROM publisher ORDER BY publisher_name"))
 			{
 				$this->items = $stmt->fetch_all_array();
 

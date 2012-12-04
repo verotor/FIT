@@ -151,7 +151,7 @@
 
 		public function load()
 		{
-			if ($stmt = $this->dbc->query("SELECT * FROM keyword ORDER BY keyword_word COLLATE utf8_czech_ci"))
+			if ($stmt = $this->dbc->query("SELECT * FROM keyword ORDER BY keyword_word"))
 			{
 				$this->items = $stmt->fetch_all_array();
 

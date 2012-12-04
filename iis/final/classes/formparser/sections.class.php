@@ -171,7 +171,7 @@
 
 		public function load()
 		{
-			if ($stmt = $this->dbc->query("SELECT * FROM section ORDER BY section_name COLLATE utf8_czech_ci"))
+			if ($stmt = $this->dbc->query("SELECT * FROM section ORDER BY section_name"))
 			{
 				$this->items = $stmt->fetch_all_array();
 
@@ -187,7 +187,7 @@
 		{
 			$librarians = array();
 			
-			if ($stmt = $this->dbc->query("SELECT librarian_id, librarian_login, CONCAT(librarian_surname, ', ', librarian_name) AS librarian_wholename FROM librarian ORDER BY librarian_surname COLLATE utf8_czech_ci, librarian_name COLLATE utf8_czech_ci"))
+			if ($stmt = $this->dbc->query("SELECT librarian_id, librarian_login, CONCAT(librarian_surname, ', ', librarian_name) AS librarian_wholename FROM librarian ORDER BY librarian_surname, librarian_name"))
 			{
 				$rows = $stmt->fetch_all_array();
 				
@@ -216,7 +216,7 @@
 		{
 			$librarians_string = '';
 			
-			if ($stmt = $this->dbc->query("SELECT CONCAT(librarian_surname, ', ', librarian_name) AS librarian_wholename FROM librarian, is_manager WHERE is_manager.librarian_id = librarian.librarian_id AND section_id = ".$this->formdata['section_id']." ORDER BY librarian_surname COLLATE utf8_czech_ci, librarian_name COLLATE utf8_czech_ci"))
+			if ($stmt = $this->dbc->query("SELECT CONCAT(librarian_surname, ', ', librarian_name) AS librarian_wholename FROM librarian, is_manager WHERE is_manager.librarian_id = librarian.librarian_id AND section_id = ".$this->formdata['section_id']." ORDER BY librarian_surname, librarian_name"))
 			{
 				$rows = $stmt->fetch_all_array();
 				
