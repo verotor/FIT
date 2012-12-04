@@ -9,8 +9,8 @@
 			<input type="text" name="formdata[titletype_type]" value="<?php if (isset($_POST['formdata']) && isset($_POST['formdata']['titletype_type'])) echo $_POST['formdata']['titletype_type']; ?>" />
 		</div>
 		<div class="titletype_desc">
-			<label>Popis: </label><br />
-			<textarea id="editor" name="formdata[titletype_desc]" cols="100" rows="20"><?php if (isset($_POST['formdata']) && isset($_POST['formdata']['titletype_desc'])) echo $_POST['formdata']['titletype_desc']; ?></textarea>
+			<label class="textarea">Popis: </label>
+			<textarea id="editor" name="formdata[titletype_desc]" cols="50" rows="5"><?php if (isset($_POST['formdata']) && isset($_POST['formdata']['titletype_desc'])) echo $_POST['formdata']['titletype_desc']; ?></textarea>
 		</div>
 		<div class="tlacitka">
 			<input type="hidden" name="page" value="<?php

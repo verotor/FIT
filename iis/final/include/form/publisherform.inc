@@ -29,8 +29,8 @@
 			<input type="text" name="formdata[publisher_email]" value="<?php if (isset($_POST['formdata']) && isset($_POST['formdata']['publisher_email'])) echo $_POST['formdata']['publisher_email']; ?>" />
 		</div>
 		<div class="publisher_desc">
-			<label>Popis: </label><br />
-			<textarea id="editor" name="formdata[publisher_desc]" cols="100" rows="20"><?php if (isset($_POST['formdata']) && isset($_POST['formdata']['publisher_desc'])) echo $_POST['formdata']['publisher_desc']; ?></textarea>
+			<label class="textarea">Popis: </label>
+			<textarea id="editor" name="formdata[publisher_desc]" cols="50" rows="5"><?php if (isset($_POST['formdata']) && isset($_POST['formdata']['publisher_desc'])) echo $_POST['formdata']['publisher_desc']; ?></textarea>
 		</div>
 		<div class="tlacitka">
 			<input type="hidden" name="page" value="<?php
