@@ -161,7 +161,7 @@
 
 		public function load()
 		{
-			if ($stmt = $this->dbc->query("SELECT * FROM titletype ORDER BY titletype_type COLLATE utf8_czech_ci"))
+			if ($stmt = $this->dbc->query("SELECT * FROM titletype ORDER BY titletype_type"))
 			{
 				$this->items = $stmt->fetch_all_array();
 
