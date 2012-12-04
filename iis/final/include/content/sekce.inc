@@ -19,6 +19,7 @@
 			if (!$sections->updateItem())
 			{
 				$_GET['action'] = 'edit';
+				$_GET['id'] = $sections->getFormDataItem('section_id');
 			}
 		}
 		else if ($sections->isFormDataItem('btnSave'))

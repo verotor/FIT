@@ -19,6 +19,7 @@
 			if (!$librarians->updateItem())
 			{
 				$_GET['action'] = 'edit';
+				$_GET['id'] = $librarians->getFormDataItem('librarian_id');
 			}
 		}
 		else if ($librarians->isFormDataItem('btnSave'))

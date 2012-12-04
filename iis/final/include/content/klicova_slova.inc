@@ -19,6 +19,7 @@
 			if (!$keywords->updateItem())
 			{
 				$_GET['action'] = 'edit';
+				$_GET['id'] = $keywords->getFormDataItem('keyword_id');
 			}
 		}
 		else if ($keywords->isFormDataItem('btnSave'))

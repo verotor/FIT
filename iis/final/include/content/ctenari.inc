@@ -19,6 +19,7 @@
 			if (!$readers->updateItem())
 			{
 				$_GET['action'] = 'edit';
+				$_GET['id'] = $readers->getFormDataItem('reader_id');
 			}
 		}
 		else if ($readers->isFormDataItem('btnSave'))
