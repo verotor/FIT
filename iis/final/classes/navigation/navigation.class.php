@@ -18,12 +18,8 @@ class Navigation
 
 	}
 
-	private function create_navigation_tree($navigation, $actual, $id = '') {
-
-		//FIXME
-		$thispage = 'http://' . $_SERVER['SERVER_NAME'] . Common::getFolderFromURI();
-		//$thispage = 'http://' . $_SERVER['SERVER_NAME'];
-
+	private function create_navigation_tree($navigation, $actual, $id = '')
+	{
 		($id != '') ? $id_attr = " id=\"$id\"" : $id_attr = '';
 
 		$this->navigation_tree .= "<ul$id_attr>\n";
@@ -33,7 +29,7 @@ class Navigation
 				continue;
 			}
 
-			($key == 'index') ? $url = $thispage : $url = $key . '.html';
+			$url = ($key == 'index') ? Common::$URI : $key . '.html';
 
 			if (isset($value['page_query'])) {
 				$url .= '?'.$value['page_query'];

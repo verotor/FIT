@@ -99,10 +99,10 @@
 				{
 					$this->result .= '<tr class="'.(($i % 2 != 0) ? 'odd' : 'even').'">';
 
-					$this->result .= '<td class="titletype_type"><a href="/typy_titulu.html?action=show&amp;id='.$row['titletype_id'].'">'.$row['titletype_type'].'</a></td>';
+					$this->result .= '<td class="titletype_type"><a href="'.Common::$URI.'typy_titulu.html?action=show&amp;id='.$row['titletype_id'].'">'.$row['titletype_type'].'</a></td>';
 					$this->result .= '<td class="titletype_desc">'.$row['titletype_desc'].'</td>';
 
-					$this->result .= '<td class="edit"><a href="/typy_titulu.html?action=edit&amp;id='.$row['titletype_id'].'">Editovat</a> ';
+					$this->result .= '<td class="edit"><a href="'.Common::$URI.'typy_titulu.html?action=edit&amp;id='.$row['titletype_id'].'">Editovat</a> ';
 
 					$this->result .= '</tr>';
 				}
@@ -145,14 +145,14 @@
 
 			if ($admin && $this->item == null)
 			{
-				$this->result .= '<div id="add_link"><a href="/typy_titulu.html?action=add" title="Přidat typ titulu">Přidat typ titulu</a></div>';
+				$this->result .= '<div id="add_link"><a href="'.Common::$URI.'typy_titulu.html?action=add" title="Přidat typ titulu">Přidat typ titulu</a></div>';
 			}
 
 			if ($this->show_single)
 			{
 				if ($admin)
 				{
-					$this->result .= '<div id="back_link"><a href="/typy_titulu.html?action=show" title="Zobrazit typy titulu">Zpět</a></div>';
+					$this->result .= '<div id="back_link"><a href="'.Common::$URI.'typy_titulu.html?action=show" title="Zobrazit typy titulu">Zpět</a></div>';
 				}
 			}
 

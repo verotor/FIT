@@ -168,14 +168,14 @@
 				{
 					$this->result .= '<tr class="'.(($i % 2 != 0) ? 'odd' : 'even').'">';
 
-					$this->result .= '<td class="librarian_name"><a href="/knihovnici.html?action=show&amp;id='.$row['librarian_id'].'">'.$row['librarian_surname'].', '.$row['librarian_name'].'</a></td>';
+					$this->result .= '<td class="librarian_name"><a href="'.Common::$URI.'knihovnici.html?action=show&amp;id='.$row['librarian_id'].'">'.$row['librarian_surname'].', '.$row['librarian_name'].'</a></td>';
 					$this->result .= '<td class="librarian_birthnumber">'.$row['librarian_birthnumber'].'</td>';
 					$this->result .= '<td class="librarian_birthday">'.$row['librarian_birthday'].'</td>';
 					$this->result .= '<td class="librarian_phone">'.$row['librarian_phone'].'</td>';
 					$this->result .= '<td class="librarian_email">'.$row['librarian_email'].'</td>';
 					$this->result .= '<td class="librarian_entrydate">'.Common::getStrDateFromDBDate($row['librarian_entrydate']).'</td>';
 
-					$this->result .= '<td class="edit"><a href="/knihovnici.html?action=edit&amp;id='.$row['librarian_id'].'">Editovat</a> ';
+					$this->result .= '<td class="edit"><a href="'.Common::$URI.'knihovnici.html?action=edit&amp;id='.$row['librarian_id'].'">Editovat</a> ';
 
 					$this->result .= '</tr>';
 				}
@@ -258,14 +258,14 @@
 
 			if ($admin && $this->item == null)
 			{
-				$this->result .= '<div id="add_link"><a href="/knihovnici.html?action=add" title="Přidat knihovnika">Přidat knihovnika</a></div>';
+				$this->result .= '<div id="add_link"><a href="'.Common::$URI.'knihovnici.html?action=add" title="Přidat knihovnika">Přidat knihovnika</a></div>';
 			}
 
 			if ($this->show_single)
 			{
 				if ($admin)
 				{
-					$this->result .= '<div id="back_link"><a href="/knihovnici.html?action=show" title="Zobrazit knihovniky">Zpět</a></div>';
+					$this->result .= '<div id="back_link"><a href="'.Common::$URI.'knihovnici.html?action=show" title="Zobrazit knihovniky">Zpět</a></div>';
 				}
 			}
 

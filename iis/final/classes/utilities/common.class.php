@@ -2,6 +2,13 @@
 
 class Common
 {
+	public static $URI;
+	
+	public static function init()
+	{
+		self::$URI = self::getURI();
+	}
+	
 	public static function is_array_item($array, $item)
 	{
 		if (is_array($array) && array_key_exists($item, $array) && $array[$item] != null)
@@ -160,7 +167,7 @@ class Common
 
 	public static function setNewLineEscape() {
 
-		define('NL', Common::getNewLineEscape());
+		define('NL', self::getNewLineEscape());
 
 	}
 
@@ -202,7 +209,7 @@ class Common
 		{
 			return '';
 		}
-		else if (Common::checkStrDate($date))
+		else if (self::checkStrDate($date))
 		{
 			return $date;
 		}
@@ -212,5 +219,7 @@ class Common
 		}
 	}
 }
+
+Common::init();
 
 ?>

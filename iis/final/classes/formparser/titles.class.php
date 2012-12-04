@@ -118,12 +118,12 @@
 				{
 					$this->result .= '<tr class="'.(($i % 2 != 0) ? 'odd' : 'even').'">';
 
-					$this->result .= '<td class="title_title"><a href="/tituly.html?action=show&amp;id='.$row['title_id'].'">'.$row['title_title'].'</a></td>';
+					$this->result .= '<td class="title_title"><a href="'.Common::$URI.'tituly.html?action=show&amp;id='.$row['title_id'].'">'.$row['title_title'].'</a></td>';
 					$this->result .= '<td class="title_year">'.$row['title_year'].'</td>';
 					$this->result .= '<td class="title_isbn">'.$row['title_isbn'].'</td>';
 					$this->result .= '<td class="title_issn">'.$row['title_issn'].'</td>';
 
-					$this->result .= '<td class="edit"><a href="/tituly.html?action=edit&amp;id='.$row['title_id'].'">Editovat</a> ';
+					$this->result .= '<td class="edit"><a href="'.Common::$URI.'tituly.html?action=edit&amp;id='.$row['title_id'].'">Editovat</a> ';
 
 					$this->result .= '</tr>';
 				}
@@ -176,14 +176,14 @@
 
 			if ($admin && $this->item == null)
 			{
-				$this->result .= '<div id="add_link"><a href="/tituly.html?action=add" title="Přidat titul">Přidat titul</a></div>';
+				$this->result .= '<div id="add_link"><a href="'.Common::$URI.'tituly.html?action=add" title="Přidat titul">Přidat titul</a></div>';
 			}
 
 			if ($this->show_single)
 			{
 				if ($admin)
 				{
-					$this->result .= '<div id="back_link"><a href="/tituly.html?action=show" title="Zobrazit tituly">Zpět</a></div>';
+					$this->result .= '<div id="back_link"><a href="'.Common::$URI.'tituly.html?action=show" title="Zobrazit tituly">Zpět</a></div>';
 				}
 			}
 

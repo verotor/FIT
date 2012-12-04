@@ -115,11 +115,11 @@
 				{
 					$this->result .= '<tr class="'.(($i % 2 != 0) ? 'odd' : 'even').'">';
 
-					$this->result .= '<td class="author_name"><a href="/autori.html?action=show&amp;id='.$row['author_id'].'">'.$row['author_surname'].', '.$row['author_name'].'</a></td>';
+					$this->result .= '<td class="author_name"><a href="'.Common::$URI.'autori.html?action=show&amp;id='.$row['author_id'].'">'.$row['author_surname'].', '.$row['author_name'].'</a></td>';
 					$this->result .= '<td class="author_birthdate">'.Common::getStrDateFromDBDate($row['author_birthdate']).'</td>';
 					$this->result .= '<td class="author_desc">'.$row['author_desc'].'</td>';
 
-					$this->result .= '<td class="edit"><a href="/autori.html?action=edit&amp;id='.$row['author_id'].'">Editovat</a> ';
+					$this->result .= '<td class="edit"><a href="'.Common::$URI.'autori.html?action=edit&amp;id='.$row['author_id'].'">Editovat</a> ';
 
 					$this->result .= '</tr>';
 				}
@@ -172,14 +172,14 @@
 
 			if ($admin && $this->item == null)
 			{
-				$this->result .= '<div id="add_link"><a href="/autori.html?action=add" title="Přidat autora">Přidat autora</a></div>';
+				$this->result .= '<div id="add_link"><a href="'.Common::$URI.'autori.html?action=add" title="Přidat autora">Přidat autora</a></div>';
 			}
 
 			if ($this->show_single)
 			{
 				if ($admin)
 				{
-					$this->result .= '<div id="back_link"><a href="/autori.html?action=show" title="Zobrazit autory">Zpět</a></div>';
+					$this->result .= '<div id="back_link"><a href="'.Common::$URI.'autori.html?action=show" title="Zobrazit autory">Zpět</a></div>';
 				}
 			}
 

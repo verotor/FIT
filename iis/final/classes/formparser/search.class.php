@@ -90,7 +90,7 @@
 
 				$this->result .= '<tr class="'.(($i % 2 != 0) ? 'odd' : 'even').'">';
 
-				$this->result .= '<td class="search_title"><a href="http://' . $_SERVER['SERVER_NAME'] . Common::getFolderFromURI() . 'tituly.html?action=show&amp;id='.$row['title_id'].'">'.$row['title_title'].'</a></td>';
+				$this->result .= '<td class="search_title"><a href="'.Common::$URI.'tituly.html?action=show&amp;id='.$row['title_id'].'">'.$row['title_title'].'</a></td>';
 				$this->result .= '<td class="search_author_surname">'.$row['author_surname'].'</td>';
 				$this->result .= '<td class="search_author_name">'.$row['author_name'].'</td>';
 				$this->result .= '<td class="search_isbn">'.(($row['title_isbn'] == null) ? $row['title_issn'] : $row['title_isbn']).'</td>';
