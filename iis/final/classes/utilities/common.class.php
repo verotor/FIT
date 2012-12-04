@@ -164,11 +164,52 @@ class Common
 
 	}
 
-  public static function getFolderFromURI() {
-    $parts = explode('/', $_SERVER['REQUEST_URI']);
-    array_pop($parts);
-    return implode('/', $parts) . '/';
-  }
+	public static function getFolderFromURI() {
+	$parts = explode('/', $_SERVER['REQUEST_URI']);
+	array_pop($parts);
+	return implode('/', $parts) . '/';
+	}
+
+	public static function checkStrDate($date)
+	{
+		// funkce zkontroluje format a platnost data zadaneho v české tečkové notaci (tu bude předpokládat)
+		// nebo lomítkovou notaci apod.
+		// případné mezery nejdříve odstranit, pak funkcí explode() rozdělit datum na jednotlivé části
+		// tyto části nejlépe převést na celá čísla funkcí intval()
+		// a nakonec ověřit platnost přes funkci checkdate(), viz www.php.net
+		// pozor na možné nuly u dne a měsíce
+		// pro datum v DB formatu nebo anglickem vraci samozrejme false
+		
+		return true;
+	}
+	
+	public static function getDBDateFromStrDate($date)
+	{
+		// provede obdobné jako předchozí funkce, akorát vrátí datum ve formátu pro DB yyyy-mm-dd
+		// pri prazdnem retezci vraci prazdny retezec
+		
+		return $date;
+	}
+	
+	public static function getStrDateFromDBDate($date)
+	{
+		// z datumu v DB formatu udela datum ceskeho formatu (s teckama)
+		// pri prazdnem retezci nebo null, vraci prazdny retezec
+		// pokud uz datum je v ceskem formatu, vraci bez uprav
+		
+		if ($date == null || $date == '')
+		{
+			return '';
+		}
+		else if (Common::checkStrDate($date))
+		{
+			return $date;
+		}
+		else
+		{
+			return date('d.m.Y', strtotime($date));
+		}
+	}
 }
 
 ?>

@@ -68,7 +68,27 @@
 				
 				foreach ($formdata as $key => $value)
 				{
-					$this->formdata[$key] = stripslashes(trim($value));
+					if (is_array($value))
+					{
+						foreach ($value as $key2 => $value2)
+						{
+							if (is_array($value2))
+							{
+								foreach ($value2 as $key3 => $value3)
+								{
+									$formdata[$key][$key2][$key3] = stripslashes(trim($value3));
+								}
+							}
+							else
+							{
+								$formdata[$key][$key2] = stripslashes(trim($value2));
+							}
+						}
+					}
+					else
+					{
+						$formdata[$key] = stripslashes(trim($value));
+					}
 				}
 			}
 			
@@ -220,7 +240,7 @@
 		{
 			$this->item = $this->formdata;
 			
-			$this->getItems(true);
+			$this->getItem(true);
 			
 			if ($report)
 			{

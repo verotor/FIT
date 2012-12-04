@@ -346,9 +346,9 @@ insert into is_author values (8, 10);
 insert into is_author values (9, 11);
 
 insert into librarian values (
-  NULL, '900227/3478', '1990-02-27', 'Jan', 'Pacner', 'Poricska 58, 54932 Velke Porici', NULL, '731251966', 'xpacne00@stud.fit.vutbr.cz', '2000-12-24', 'xpacne00', 'xpacne00pass');
+  NULL, '900227/3478', '1990-02-27', 'Jan', 'Pacner', 'Poricska 58, 54932 Velke Porici', NULL, '731251966', 'xpacne00@stud.fit.vutbr.cz', '2000-12-24', 'xpacne00', PASSWORD('xpacne00pass'));
 insert into librarian values (
-  NULL, '860118/1642', '1986-01-18', 'Frantisek', 'Maly', 'Ulice0, 12345 Zname mesto', NULL, '956346274', NULL, '2010-10-05', 'framal02', 'framal02pass');
+  NULL, '860118/1642', '1986-01-18', 'Frantisek', 'Maly', 'Ulice0, 12345 Zname mesto', NULL, '956346274', NULL, '2010-10-05', 'framal02', PASSWORD('framal02pass'));
 
 insert into section values (
   NULL, 'Beletrie', '1. patro - na chodbe vzadu, dvere 256');
@@ -368,11 +368,11 @@ insert into is_manager values (4, 2);
 insert into is_manager values (5, 1);
 
 insert into reader values (
-  NULL, '501218/4355', '1954-11-20', 'Jana', 'Bohdanova', 'K Rybniku 2, 09874 Vesnice00', 'Poricska 9, 10003 Praha 14', 246246246, 'janbog@email.com', '2000-02-20', 345, '2014-12-12', 'jbogda00', 'jbogda00pass');
+  NULL, '501218/4355', '1954-11-20', 'Jana', 'Bohdanova', 'K Rybniku 2, 09874 Vesnice00', 'Poricska 9, 10003 Praha 14', 246246246, 'janbog@email.com', '2000-02-20', 345, '2014-12-12', 'jbogda00', PASSWORD('jbogda00pass'));
 insert into reader values (
-  NULL, '481914/4557', '1980-09-04', 'Petr', 'Marsik', 'Masarykova 34, 63473 Mesto00', NULL, 234254564, 'petr@marsik.cz', '2007-10-11', 354, '2015-01-01', 'pmarsi00', 'pmarsi00pass');
+  NULL, '481914/4557', '1980-09-04', 'Petr', 'Marsik', 'Masarykova 34, 63473 Mesto00', NULL, 234254564, 'petr@marsik.cz', '2007-10-11', 354, '2015-01-01', 'pmarsi00', PASSWORD('pmarsi00pass'));
 insert into reader values (
-  NULL, '000101/1234', '2000-01-01', 'Josef', 'Velky', 'Pricna 458, 98743 Neznamy zapadakov', NULL, NULL, NULL, '2011-07-03', 45, '2013-07-03', 'josvel20', 'josvel20pass');
+  NULL, '000101/1234', '2000-01-01', 'Josef', 'Velky', 'Pricna 458, 98743 Neznamy zapadakov', NULL, NULL, NULL, '2011-07-03', 45, '2013-07-03', 'josvel20', PASSWORD('josvel20pass'));
 
 insert into copy values (
   NULL, 'y', 'n', '40 0:0:0', 1, 3);
