@@ -134,7 +134,7 @@ $(function()
 			}
 			else if ($element.hasClass('librarian_delete'))
 			{
-				if (confirm('Opravdu chcete odstranit knihovníka "' + $librarian.val() + '"?'))
+				if (confirm('Opravdu chcete odstranit knihovníka "' + $librarian.find('option:selected').text() + '"?'))
 				{
 					params = {
 						'action': 'librarian_delete',
