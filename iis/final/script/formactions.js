@@ -45,13 +45,17 @@ $(function()
 			{
 				librarianHandler($element);
 			}
+			else if ($parent.hasClass('author_item'))
+			{
+				authorHandler($element);
+			}
+			else if ($parent.hasClass('keyword_item'))
+			{
+				keywordHandler($element);
+			}
 			/*else if ($parent.hasClass('question_item'))
 			{
 				questionHandler($element);
-			}
-			else if ($parent.hasClass('answer_item'))
-			{
-				answerHandler($element);
 			}*/
 		},
 		
@@ -155,6 +159,214 @@ $(function()
 					});
 					
 					$librarians_counter.val(--i);
+				}
+			}
+		},
+		
+		authorHandler = function($element)
+		{
+			var $parent = $element.parent();
+			
+			var $authors_counter = $('#authors_counter');
+			
+			var $author_new = $('#author_new');
+			
+			var
+				$author_number = $parent.find('.author_number'),
+				$author = $parent.find('.author'),
+				$author_id = $parent.find('.author_id'),
+				$title_id = $('#title_id');
+			
+			var params = null;
+			var result = '';
+			
+			if ($element.hasClass('author_add'))
+			{
+				params = {
+					'action': 'author_add',
+					'author_number': $author_number.html(),
+					'author': $author.val(),
+					'title_id': $title_id.val()
+				};
+				
+				result = performAction(params);
+				
+				if (result != '')
+				{
+					$author_new.before(result.html);
+					
+					$author_new.prev().find('input[type="submit"]').click(clickHandler);
+					
+					var number = parseInt($authors_counter.val());
+					$authors_counter.val(++number);
+					
+					// nastavit vychozi hodnoty
+					$author_number.html(number);
+					$author.val('none');
+				}
+			}
+			else if ($element.hasClass('author_edit'))
+			{
+				// umoznit editaci
+				$author.attr('disabled', false);
+				
+				$element.toggleClass('author_edit author_confirm');
+				$element.val(BUTTON_TEXT_CONFIRM);
+			}
+			else if ($element.hasClass('author_confirm'))
+			{
+				params = {
+					'action': 'author_edit',
+					'author': $author.val(),
+					'author_id' : $author_id.val(),
+					'title_id': $title_id.val()
+				};
+				
+				if (params.author == params.author_id)
+				{
+					result = 'OK'; // zmena na puvodni
+				}
+				else
+				{
+					result = performAction(params);
+				}
+				
+				if (result != '')
+				{
+					// zakazat editaci
+					$author.attr('disabled', true);
+					
+					$element.toggleClass('author_edit author_confirm');
+					$element.val(BUTTON_TEXT_EDIT);
+				}
+			}
+			else if ($element.hasClass('author_delete'))
+			{
+				if (confirm('Opravdu chcete odstranit autora "' + $author.find('option:selected').text() + '"?'))
+				{
+					params = {
+						'action': 'author_delete',
+						'author_id' : $author_id.val(),
+						'title_id': $title_id.val()
+					};
+					
+					result = performAction(params);
+					
+					$parent.remove();
+					
+					// precislovat
+					var i = 1;
+					
+					$('.author_item').each(function()
+					{
+						$(this).find('.author_number').html(i++);
+					});
+					
+					$authors_counter.val(--i);
+				}
+			}
+		},
+		
+		keywordHandler = function($element)
+		{
+			var $parent = $element.parent();
+			
+			var $keywords_counter = $('#keywords_counter');
+			
+			var $keyword_new = $('#keyword_new');
+			
+			var
+				$keyword_number = $parent.find('.keyword_number'),
+				$keyword = $parent.find('.keyword'),
+				$keyword_id = $parent.find('.keyword_id'),
+				$title_id = $('#title_id');
+			
+			var params = null;
+			var result = '';
+			
+			if ($element.hasClass('keyword_add'))
+			{
+				params = {
+					'action': 'keyword_add',
+					'keyword_number': $keyword_number.html(),
+					'keyword': $keyword.val(),
+					'title_id': $title_id.val()
+				};
+				
+				result = performAction(params);
+				
+				if (result != '')
+				{
+					$keyword_new.before(result.html);
+					
+					$keyword_new.prev().find('input[type="submit"]').click(clickHandler);
+					
+					var number = parseInt($keywords_counter.val());
+					$keywords_counter.val(++number);
+					
+					// nastavit vychozi hodnoty
+					$keyword_number.html(number);
+					$keyword.val('none');
+				}
+			}
+			else if ($element.hasClass('keyword_edit'))
+			{
+				// umoznit editaci
+				$keyword.attr('disabled', false);
+				
+				$element.toggleClass('keyword_edit keyword_confirm');
+				$element.val(BUTTON_TEXT_CONFIRM);
+			}
+			else if ($element.hasClass('keyword_confirm'))
+			{
+				params = {
+					'action': 'keyword_edit',
+					'keyword': $keyword.val(),
+					'keyword_id' : $keyword_id.val(),
+					'title_id': $title_id.val()
+				};
+				
+				if (params.keyword == params.keyword_id)
+				{
+					result = 'OK'; // zmena na puvodni
+				}
+				else
+				{
+					result = performAction(params);
+				}
+				
+				if (result != '')
+				{
+					// zakazat editaci
+					$keyword.attr('disabled', true);
+					
+					$element.toggleClass('keyword_edit keyword_confirm');
+					$element.val(BUTTON_TEXT_EDIT);
+				}
+			}
+			else if ($element.hasClass('keyword_delete'))
+			{
+				if (confirm('Opravdu chcete odstranit klíčové slovo "' + $keyword.find('option:selected').text() + '"?'))
+				{
+					params = {
+						'action': 'keyword_delete',
+						'keyword_id' : $keyword_id.val(),
+						'title_id': $title_id.val()
+					};
+					
+					result = performAction(params);
+					
+					$parent.remove();
+					
+					// precislovat
+					var i = 1;
+					
+					$('.keyword_item').each(function()
+					{
+						$(this).find('.keyword_number').html(i++);
+					});
+					
+					$keywords_counter.val(--i);
 				}
 			}
 		}/*,
@@ -280,139 +492,25 @@ $(function()
 					$questions_counter.val(--i);
 				}
 			}
-		},
-		
-		answerHandler = function($element)
-		{
-			var $parent = $element.parent();
-			var $question = $element.parent().parent().parent();
-			
-			var $answers_counter = $question.find('.answers_counter');
-			
-			var $answer_new = $question.find('.answer_new');
-			
-			var
-				$answer_number = $parent.find('.answer_number'),
-				$answer_title = $parent.find('.answer_title'),
-				$answer_correct = $parent.find('.answer_correct'),
-				$answer_id = $parent.find('.answer_id'),
-				$question_id = $question.find('.question_id'),
-				$question_type = $question.find('.question_type'),
-				$competition_id = $('#competition_id');
-			
-			var params = null;
-			var result = '';
-			
-			var correct = 'N';
-			
-			if ($element.hasClass('answer_add'))
-			{
-				if ($answer_correct.is(':checked'))
-				{
-					correct = 'Y';
-				}
-				
-				params = {
-					'action': 'answer_add',
-					'answer_number': $answer_number.html(),
-					'answer_title': $answer_title.val(),
-					'answer_correct': correct,
-					'question_id': $question_id.val(),
-					'question_type': $question_type.val(),
-					'competition_id': $competition_id.val()
-				};
-				
-				result = performAction(params);
-				
-				if (result != '')
-				{
-					$answer_new.before(result.html);
-					
-					$answer_new.prev().find('input[type="submit"]').click(clickHandler);
-					
-					var number = parseInt($answers_counter.val());
-					$answers_counter.val(++number);
-					
-					// nastavit vychozi hodnoty
-					$answer_number.html(number);
-					$answer_title.val('');
-					$answer_correct.val('none');
-				}
-			}
-			else if ($element.hasClass('answer_edit'))
-			{
-				// umoznit editaci
-				$answer_title.attr('disabled', false);
-				$answer_correct.attr('disabled', false);
-				
-				$element.toggleClass('answer_edit answer_confirm');
-				$element.val(BUTTON_TEXT_CONFIRM);
-			}
-			else if ($element.hasClass('answer_confirm'))
-			{
-				if ($answer_correct.is(':checked'))
-				{
-					correct = 'Y';
-				}
-				
-				params = {
-					'action': 'answer_edit',
-					'answer_title': $answer_title.val(),
-					'answer_correct': correct,
-					'answer_id' : $answer_id.val(),
-					'question_id': $question_id.val(),
-					'question_type': $question_type.val()
-				};
-				
-				result = performAction(params);
-				
-				if (result != '')
-				{
-					// zakazat editaci
-					$answer_title.attr('disabled', true);
-					$answer_correct.attr('disabled', true);
-					
-					$element.toggleClass('answer_edit answer_confirm');
-					$element.val(BUTTON_TEXT_EDIT);
-				}
-			}
-			else if ($element.hasClass('answer_delete'))
-			{
-				if (confirm('Opravdu chcete odstranit odpověď "' + $answer_title.val() + '"?'))
-				{
-					params = {
-						'action': 'answer_delete',
-						'answer_id' : $answer_id.val()
-					};
-					
-					result = performAction(params);
-					
-					$parent.remove();
-					
-					// precislovat
-					var i = 1;
-					
-					$question.find('.answer_item').each(function()
-					{
-						$(this).find('.answer_number').html(i++);
-					});
-					
-					$answers_counter.val(--i);
-				}
-			}
 		};*/
 	
 	$('#librarian_items input[type="submit"]').click(clickHandler);
+	$('#author_items input[type="submit"]').click(clickHandler);
+	$('#keyword_items input[type="submit"]').click(clickHandler);
 	//$('#question_items input[type="submit"]').click(clickHandler);
 	
 	if (location.search.indexOf('add') != -1)
 	{
 		// vychozi nastaveni, po par akcich a obnoveni stranky zustavaly polozky z neznamych duvodu disablovane
 		$('#librarian_new').find('select').attr('disabled', false).val('none');
+		$('#author_new').find('select').attr('disabled', false).val('none');
+		$('#keyword_new').find('select').attr('disabled', false).val('none');
 		/*$('#question_new').find('input').not('input[type="submit"]').attr('disabled', false).val('');
 		$('#question_new').find('select').attr('disabled', false).val('none');*/
 		
 		$('#librarian_items').hide();
+		$('#author_items').hide();
+		$('#keyword_items').hide();
 		//$('#question_items').hide();
 	}
 });
