@@ -182,6 +182,8 @@ class Common
 		return 'http://' . $_SERVER['HTTP_HOST'] . self::getFolderFromURI();
 	}
 
+	private static $dateDelim = "([.:-])";
+
 	public static function checkStrDate($date)
 	{
 		// funkce zkontroluje format a platnost data zadaneho v české tečkové notaci (tu bude předpokládat)
@@ -191,18 +193,23 @@ class Common
 		// a nakonec ověřit platnost přes funkci checkdate(), viz www.php.net
 		// pozor na možné nuly u dne a měsíce
 		// pro datum v DB formatu nebo anglickem vraci samozrejme false
-		
+
+		//array preg_split ( string $pattern , string $subject [, int $limit = -1 [, int $flags = 0 ]] )
+		//x = preg_match("([1-2][0-9]|[1-9]|)", $date);
+		//int preg_match ( string $pattern , string $subject [, array &$matches [, int $flags = 0 [, int $offset = 0 ]]] )
+
 		return true;
 	}
-	
+
 	public static function getDBDateFromStrDate($date)
 	{
 		// provede obdobné jako předchozí funkce, akorát vrátí datum ve formátu pro DB yyyy-mm-dd
 		// pri prazdnem retezci vraci prazdny retezec
-		
+
+		//x = preg_split ("[[:space:].:-]", $date);
 		return $date;
 	}
-	
+
 	public static function getStrDateFromDBDate($date)
 	{
 		// z datumu v DB formatu udela datum ceskeho formatu (s teckama)
