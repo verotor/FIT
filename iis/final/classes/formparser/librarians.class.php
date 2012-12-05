@@ -170,7 +170,7 @@
 
 					$this->result .= '<td class="librarian_name"><a href="'.Common::$URI.'knihovnici.html?action=show&amp;id='.$row['librarian_id'].'">'.$row['librarian_surname'].', '.$row['librarian_name'].'</a></td>';
 					$this->result .= '<td class="librarian_birthnumber">'.$row['librarian_birthnumber'].'</td>';
-					$this->result .= '<td class="librarian_birthday">'.$row['librarian_birthday'].'</td>';
+					$this->result .= '<td class="librarian_birthday">'.Common::getStrDateFromDBDate($row['librarian_birthday']).'</td>';
 					$this->result .= '<td class="librarian_phone">'.$row['librarian_phone'].'</td>';
 					$this->result .= '<td class="librarian_email">'.$row['librarian_email'].'</td>';
 					$this->result .= '<td class="librarian_entrydate">'.Common::getStrDateFromDBDate($row['librarian_entrydate']).'</td>';

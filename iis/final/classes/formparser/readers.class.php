@@ -188,7 +188,7 @@
 
 					$this->result .= '<td class="reader_name"><a href="'.Common::$URI.'ctenari.html?action=show&amp;id='.$row['reader_id'].'">'.$row['reader_surname'].', '.$row['reader_name'].'</a></td>';
 					$this->result .= '<td class="reader_birthnumber">'.$row['reader_birthnumber'].'</td>';
-					$this->result .= '<td class="reader_birthday">'.$row['reader_birthday'].'</td>';
+					$this->result .= '<td class="reader_birthday">'.Common::getStrDateFromDBDate($row['reader_birthday']).'</td>';
 					$this->result .= '<td class="reader_phone">'.$row['reader_phone'].'</td>';
 					$this->result .= '<td class="reader_email">'.$row['reader_email'].'</td>';
 					$this->result .= '<td class="reader_regdate">'.Common::getStrDateFromDBDate($row['reader_regdate']).'</td>';
