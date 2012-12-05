@@ -53,10 +53,10 @@ $(function()
 			{
 				keywordHandler($element);
 			}
-			/*else if ($parent.hasClass('question_item'))
+			else if ($parent.hasClass('copy_item'))
 			{
-				questionHandler($element);
-			}*/
+				copyHandler($element);
+			}
 		},
 		
 		librarianHandler = function($element)
@@ -369,135 +369,96 @@ $(function()
 					$keywords_counter.val(--i);
 				}
 			}
-		}/*,
+		},
 		
-		questionHandler = function($element)
+		copyHandler = function($element)
 		{
 			var $parent = $element.parent();
 			
-			var $questions_counter = $('#questions_counter');
+			var $copies_counter = $('#copies_counter');
 			
-			var $question_new = $('#question_new');
+			var $copy_new = $('#copy_new');
 			
 			var
-				$question_number = $parent.find('.question_number'),
-				$question_title = $parent.find('.question_title'),
-				$question_type = $parent.find('.question_type'),
-				$question_id = $parent.find('.question_id'),
-				$competition_id = $('#competition_id');
+				$copy_number = $parent.find('.copy_number'),
+				$copy_condition = $parent.find('.copy_condition'),
+				$copy_loanperiod = $parent.find('.copy_loanperiod'),
+				$section_id = $parent.find('.section_id'),
+				$copy_id = $parent.find('.copy_id'),
+				$title_id = $('#title_id');
 			
 			var params = null;
 			var result = '';
 			
-			if ($element.hasClass('question_add'))
+			if ($element.hasClass('copy_add'))
 			{
 				params = {
-					'action': 'question_add',
-					'question_number': $question_number.html(),
-					'question_title': $question_title.val(),
-					'question_type': $question_type.val(),
-					'competition_id': $competition_id.val()
+					'action': 'copy_add',
+					'copy_number': $copy_number.html(),
+					'copy_condition': $copy_condition.val(),
+					'copy_loanperiod': $copy_loanperiod.val(),
+					'section_id': $section_id.val(),
+					'title_id': $title_id.val()
 				};
 				
 				result = performAction(params);
 				
 				if (result != '')
 				{
-					$question_new.before(result.html);
+					$copy_new.before(result.html);
 					
-					$question_new.prev().find('input[type="submit"]').click(clickHandler);
+					$copy_new.prev().find('input[type="submit"]').click(clickHandler);
 					
-					var number = parseInt($questions_counter.val());
-					$questions_counter.val(++number);
+					var number = parseInt($copies_counter.val());
+					$copies_counter.val(++number);
 					
 					// nastavit vychozi hodnoty
-					$question_number.html(number);
-					$question_title.val('');
-					$question_type.val('none');
+					$copy_number.html(number);
+					$copy_condition.val('none');
+					$copy_loanperiod.val('');
+					$section_id.val('none');
 				}
 			}
-			else if ($element.hasClass('question_edit'))
+			else if ($element.hasClass('copy_edit'))
 			{
 				// umoznit editaci
-				$question_title.attr('disabled', false);
-				$question_type.attr('disabled', false);
+				$copy_condition.attr('disabled', false);
+				$copy_loanperiod.attr('disabled', false);
+				$section_id.attr('disabled', false);
 				
-				$element.toggleClass('question_edit question_confirm');
+				$element.toggleClass('copy_edit copy_confirm');
 				$element.val(BUTTON_TEXT_CONFIRM);
 			}
-			else if ($element.hasClass('question_confirm'))
+			else if ($element.hasClass('copy_confirm'))
 			{
 				params = {
-					'action': 'question_edit',
-					'question_title': $question_title.val(),
-					'question_type': $question_type.val(),
-					'question_id' : $question_id.val(),
-					'competition_id': $competition_id.val()
+					'action': 'copy_edit',
+					'copy_condition': $copy_condition.val(),
+					'copy_loanperiod': $copy_loanperiod.val(),
+					'section_id': $section_id.val(),
+					'copy_id' : $copy_id.val(),
+					'title_id': $title_id.val()
 				};
 				
 				result = performAction(params);
 				
 				if (result != '')
 				{
-					// pri zmene typu otazky zmenit typ odpovedi a oznacit vsechny za nespravne
-					var type = ($question_type.val() == 'S') ? 'radio' : 'checkbox';
-					
-					$parent.find('.answer_item .answer_correct').each(function()
-					{
-						var $answer_correct = $(this);
-						
-						if ($answer_correct.attr('type') != type)
-						{
-							var disabled = ($answer_correct.parent().hasClass('answer_new')) ? '' : ' disabled="disabled"';
-							
-							$('<input type="' + type +
-								'" name="' + $answer_correct.attr('name') +
-								'" class="answer_correct" value=""' +
-								disabled + ' />'
-							).insertBefore($answer_correct);
-							
-							$answer_correct.remove();
-						}
-					});
-					
 					// zakazat editaci
-					$question_title.attr('disabled', true);
-					$question_type.attr('disabled', true);
+					$copy_condition.attr('disabled', true);
+					$copy_loanperiod.attr('disabled', true);
+					$section_id.attr('disabled', true);
 					
-					$element.toggleClass('question_edit question_confirm');
+					$element.toggleClass('copy_edit copy_confirm');
 					$element.val(BUTTON_TEXT_EDIT);
 				}
 			}
-			else if ($element.hasClass('question_delete'))
-			{
-				if (confirm('Opravdu chcete odstranit otázku "' + $question_title.val() + '"?'))
-				{
-					params = {
-						'action': 'question_delete',
-						'question_id' : $question_id.val()
-					};
-					
-					result = performAction(params);
-					
-					$parent.remove();
-					
-					// precislovat
-					var i = 1;
-					
-					$('.question_item').each(function()
-					{
-						$(this).find('.question_number').html(i++);
-					});
-					
-					$questions_counter.val(--i);
-				}
-			}
-		};*/
+		};
 	
 	$('#librarian_items input[type="submit"]').click(clickHandler);
 	$('#author_items input[type="submit"]').click(clickHandler);
 	$('#keyword_items input[type="submit"]').click(clickHandler);
-	//$('#question_items input[type="submit"]').click(clickHandler);
+	$('#copy_items input[type="submit"]').click(clickHandler);
 	
 	if (location.search.indexOf('add') != -1)
 	{
@@ -505,12 +466,12 @@ $(function()
 		$('#librarian_new').find('select').attr('disabled', false).val('none');
 		$('#author_new').find('select').attr('disabled', false).val('none');
 		$('#keyword_new').find('select').attr('disabled', false).val('none');
-		/*$('#question_new').find('input').not('input[type="submit"]').attr('disabled', false).val('');
-		$('#question_new').find('select').attr('disabled', false).val('none');*/
+		$('#copy_new').find('input').not('input[type="submit"]').attr('disabled', false).val('');
+		$('#copy_new').find('select').attr('disabled', false).val('none');
 		
 		$('#librarian_items').hide();
 		$('#author_items').hide();
 		$('#keyword_items').hide();
-		//$('#question_items').hide();
+		$('#copy_items').hide();
 	}
 });

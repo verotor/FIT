@@ -171,6 +171,78 @@ KEYWORD;
 				}
 
 ?>
+<?php
+			
+				if ($titles->isFormDataItem('title_id'))
+				{
+					$copies = $titles->getCopies();
+					$conditions = $titles->getConditions();
+					$sections = $titles->getSections();
+					
+					print
+<<< COPY
+<div id="copy_items">
+	<div>Výtisky:</div>
+COPY;
+					
+					$copies_counter = 1;
+					
+					if (isset($copies) && !empty($copies) && isset($sections) && !empty($sections))
+					{
+						if (isset($_POST['formdata']))
+						{
+							$disabled = ' disabled="disabled"';
+						}
+						else
+						{
+							$disabled = '';
+						}
+						
+						foreach ($copies as $copy)
+						{
+							$condition_select = Form::form_list($conditions, '', $copy['copy_condition'], '', 'copy_condition', true);
+							$section_select = Form::form_list($sections, '', $copy['section_id'], '', 'section_id', true);
+							
+							print
+<<< COPY
+<div class="copy_item">
+	<label>Výtisk <span class="copy_number">$copies_counter</span>:</label>
+	<label>Fyzický stav</label>
+	$condition_select
+	<label>Výpůjční doba</label>
+	<input type="text" class="copy_loanperiod" value="{$copy['copy_loanperiod']}"$disabled />
+	<label>Sekce</label>
+	$section_select
+	<input type="submit" class="copy_edit" value="Editovat" />
+	<input type="hidden" class="copy_id" value="{$copy['copy_id']}" />
+</div>
+COPY;
+							
+							$copies_counter++;
+						}
+					}
+					
+					$condition_select = Form::form_list($conditions, '', '', '', 'copy_condition');
+					$section_select = Form::form_list($sections, '', '', '', 'section_id');
+					
+					print
+<<< COPY
+	<div id="copy_new" class="copy_item">
+		<label>Výtisk <span class="copy_number">$copies_counter</span>:</label>
+		<label>Fyzický stav</label>
+		$condition_select
+		<label>Výpůjční doba</label>
+		<input type="text" class="copy_loanperiod" value="" />
+		<label>Sekce</label>
+		$section_select
+		<input type="submit" class="copy_add" value="Přidat" />
+	</div>
+	<input type="hidden" id="copies_counter" value="$copies_counter" />
+</div>
+COPY;
+				}
+
+?>
 		<div class="tlacitka">
 			<input type="hidden" name="page" value="<?php
 				if (($_GET['page']))

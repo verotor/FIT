@@ -7,16 +7,6 @@
 	require_once 'classes/db/db_connector.class.php';
 	$dbc = new DB_Connector();
 	
-	$lang_options = array(
-		'cz' => array('name' => 'Čeština'),
-		'en' => array('name' => 'Angličtina'),
-		'de' => array('name' => 'Němčina'),
-		'sk' => array('name' => 'Slovenština'),
-		'pl' => array('name' => 'Polština'),
-		'es' => array('name' => 'Španělština'),
-		'fr' => array('name' => 'Francouzština')
-	);
-	
 	$result = array('error' => '', 'html' => '');
 	
 	if (isset($_GET['action']))
@@ -268,6 +258,121 @@ KEYWORD;
 			else
 			{
 				$result['error'] = 'Nepodařilo se data uložit do databáze!\nZkuste prosím akci zopakovat.\n';
+			}
+		}
+		else if ($_GET['action'] == 'copy_add')
+		{
+			if ($_GET['copy_condition'] == 'none')
+			{
+				$result['error'] .= 'Nevybrali jste fyzický stav!\n';
+			}
+			
+			if ($_GET['copy_loanperiod'] == '')
+			{
+				$result['error'] .= 'Nezadali jste výpůjční dobu!\n';
+			}
+			else if (!is_numeric($_GET['copy_loanperiod']))
+			{
+				$result['error'] .= 'Zadali jste neplatnou výpůjční dobu!\n';
+			}
+			else
+			{
+				$loanperiod = intval($_GET['copy_loanperiod']);
+				
+				if ($loanperiod < 0 || $loanperiod > 65535)
+				{
+					$result['error'] .= 'Zadali jste nepovolenou výpůjční dobu!\n';
+				}
+			}
+			
+			if ($_GET['section_id'] == 'none')
+			{
+				$result['error'] .= 'Nevybrali jste sekci!\n';
+			}
+			
+			if ($result['error'] == '')
+			{
+				if ($dbc->execute("INSERT INTO copy VALUES (NULL, 'y', '".$_GET['copy_condition']."', ".$_GET['copy_loanperiod'].", ".$_GET['title_id'].", ".$_GET['section_id'].")"))
+				{
+					$copy_id = $dbc->insertID();
+				}
+				else
+				{
+					$result['error'] = 'Nepodařilo se data uložit do databáze!\nZkuste prosím akci zopakovat.\n';
+				}
+			}
+			
+			if ($result['error'] == '')
+			{
+				$result['error'] = 'OK';
+				
+				require_once 'classes/formparser/titles.class.php';
+				$titles = new Titles();
+				$titles->setDBC($dbc);
+				$titles->setFormDataItem('title_id', $_GET['title_id']);
+				
+				$conditions = $titles->getConditions();
+				$sections = $titles->getSections();
+				
+				$condition_select = Form::form_list($conditions, '', $_GET['copy_condition'], '', 'copy_condition', true);
+				$section_select = Form::form_list($sections, '', $_GET['section_id'], '', 'section_id', true);
+		
+				$result['html'] =
+<<< COPY
+<div class="copy_item">
+	<label>Výtisk <span class="copy_number">{$_GET['copy_number']}</span>:</label>
+	<label>Fyzický stav</label>
+	$condition_select
+	<label>Výpůjční doba</label>
+	<input type="text" class="copy_loanperiod" value="{$_GET['copy_loanperiod']}" disabled="disabled" />
+	<label>Sekce</label>
+	$section_select
+	<input type="submit" class="copy_edit" value="Editovat" />
+	<input type="hidden" class="copy_id" value="$copy_id" />
+</div>
+COPY;
+			}
+		}
+		else if ($_GET['action'] == 'copy_edit')
+		{
+			if ($_GET['copy_condition'] == 'none')
+			{
+				$result['error'] .= 'Nevybrali jste fyzický stav!\n';
+			}
+			
+			if ($_GET['copy_loanperiod'] == '')
+			{
+				$result['error'] .= 'Nezadali jste výpůjční dobu!\n';
+			}
+			else if (!is_numeric($_GET['copy_loanperiod']))
+			{
+				$result['error'] .= 'Zadali jste neplatnou výpůjční dobu!\n';
+			}
+			else
+			{
+				$loanperiod = intval($_GET['copy_loanperiod']);
+				
+				if ($loanperiod < 0 || $loanperiod > 65535)
+				{
+					$result['error'] .= 'Zadali jste nepovolenou výpůjční dobu!\n';
+				}
+			}
+			
+			if ($_GET['section_id'] == 'none')
+			{
+				$result['error'] .= 'Nevybrali jste sekci!\n';
+			}
+			
+			if ($result['error'] == '')
+			{
+				if ($dbc->execute("UPDATE copy SET copy_condition = '".$_GET['copy_condition']."', copy_loanperiod = ".$_GET['copy_loanperiod'].", section_id = ".$_GET['section_id']." WHERE copy_id = ".$_GET['copy_id']))
+				{
+					$result['error'] = 'OK';
+				}
+				else
+				{
+					$result['error'] = 'Nepodařilo se data uložit do databáze!\nZkuste prosím akci zopakovat.\n';
+				}
 			}
 		}
 	}

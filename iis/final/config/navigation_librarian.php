@@ -19,9 +19,6 @@
 		'tituly'			=> array(
 			'page_name'		=> 'Tituly',
 		),
-		'vytisky'			=> array(
-			'page_name'		=> 'Výtisky',
-		),
 		'vypujcky'			=> array(
 			'page_name'		=> 'Výpůjčky',
 		),

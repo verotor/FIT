@@ -5,6 +5,8 @@
 	class Titles extends FormParser
 	{
 		private $langs;
+		private $states;
+		private $conditions;
 		
 		public function __construct()
 		{
@@ -19,11 +21,33 @@
 				'es' => array('name' => 'Španělština'),
 				'fr' => array('name' => 'Francouzština')
 			);
+			
+			$this->states = array(
+				'y' => array('name' => 'K dispozici'),
+				'n' => array('name' => 'Vypůjčený')
+			);
+			
+			$this->conditions = array(
+				'n' => array('name' => 'Nový'),
+				'o' => array('name' => 'Běžně opotřebený'),
+				'p' => array('name' => 'Poškozený'),
+				'v' => array('name' => 'K vyřazení')
+			);
 		}
 		
 		public function getLangs()
 		{
 			return $this->langs;
+		}
+		
+		public function getStates()
+		{
+			return $this->states;
+		}
+		
+		public function getConditions()
+		{
+			return $this->conditions;
 		}
 
 		protected function validateData()
@@ -377,6 +401,11 @@
 			$this->result .= '<td class="value">'.$row['title_copycountavail'].'</td>';
 			$this->result .= '</tr>';
 			
+			$this->result .= '<tr>';
+			$this->result .= '<td class="property">Výtisky</td>';
+			$this->result .= '<td class="value">'.$this->getCopiesOfTitle().'</td>';
+			$this->result .= '</tr>';
+			
 			$this->result .= '</table>';
 			
 			$this->result .= '</div>';
@@ -484,6 +513,35 @@
 			return $keywords;
 		}
 		
+		public function getSections()
+		{
+			$sections = array();
+			
+			if ($stmt = $this->dbc->query("SELECT section_id, section_name, section_location FROM section ORDER BY section_name"))
+			{
+				$rows = $stmt->fetch_all_array();
+				
+				foreach ($rows as $row)
+				{
+					$sections[$row['section_id']] = array('name' => $row['section_name'], 'title' => $row['section_location']);
+				}
+			}
+			
+			return $sections;
+		}
+		
+		public function getCopies()
+		{
+			$copies = array();
+			
+			if ($stmt = $this->dbc->query("SELECT * FROM copy WHERE title_id = ".$this->formdata['title_id']." ORDER BY copy_id"))
+			{
+				$copies = $stmt->fetch_all_array();
+			}
+			
+			return $copies;
+		}
+		
 		public function getIsAuthors()
 		{
 			$rows = array();
@@ -548,6 +606,66 @@
 			}
 			
 			return $keywords_string;
+		}
+		
+		private function getCopiesOfTitle()
+		{
+			$copies_string = '';
+			
+			if ($stmt = $this->dbc->query("SELECT * FROM copy, section WHERE copy.section_id = section.section_id AND title_id = ".$this->formdata['title_id']." ORDER BY section_name, copy_id"))
+			{
+				$rows = $stmt->fetch_all_array();
+				
+				$states = $this->getStates();
+				$conditions = $this->getConditions();
+				
+				$copies_string .= '<table>';
+				
+				$copies_string .= '<tr>';
+				
+				$copies_string .= '<th class="section_name">Sekce</th>';
+				$copies_string .= '<th class="copy_condition">Fyzický stav</th>';
+				$copies_string .= '<th class="copy_state">Dostupnost</th>';
+				$copies_string .= '<th class="copy_loanperiod">Výpůjční doba</th>';
+				
+				$copies_string .= '</tr>';
+				
+				foreach ($rows as $row)
+				{
+					$copies_string .= '<tr>';
+					
+					$days = '';
+					
+					if ($row['copy_loanperiod'] != null)
+					{
+						$loanperiod = intval($row['copy_loanperiod']);
+						
+						if ($loanperiod == 1)
+						{
+							$days = ' den';
+						}
+						else if ($loanperiod > 1 && $loanperiod < 5)
+						{
+							$day = ' dny';
+						}
+						else
+						{
+							$days = ' dnů';
+						}
+					}
+					
+					$copies_string .= '<td class="section_name">'.$row['section_name'].'</td>';
+					$copies_string .= '<td class="copy_condition">'.$conditions[$row['copy_condition']]['name'].'</td>';
+					$copies_string .= '<td class="copy_state">'.$states[$row['copy_state']]['name'].'</td>';
+					$copies_string .= '<td class="copy_loanperiod">'.$row['copy_loanperiod'].$days.'</td>';
+					
+					$copies_string .= '</tr>';
+				}
+				
+				$copies_string .= '</table>';
+			}
+			
+			return $copies_string;
 		}
 	}
 
