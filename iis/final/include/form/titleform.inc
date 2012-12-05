@@ -4,6 +4,7 @@
 		<div class="report">
 			<?php print $titles->getReport(); ?>
 		</div>
+		<?php require_once 'classes/utilities/form.class.php'; ?>
 		<div class="title_title">
 			<label>Titul: </label>
 			<input type="text" name="formdata[title_title]" value="<?php if (isset($_POST['formdata']) && isset($_POST['formdata']['title_title'])) echo $_POST['formdata']['title_title']; ?>" />
@@ -11,6 +12,14 @@
 		<div class="title_subtitle">
 			<label>Podtitul: </label>
 			<input type="text" name="formdata[title_subtitle]" value="<?php if (isset($_POST['formdata']) && isset($_POST['formdata']['title_subtitle'])) echo $_POST['formdata']['title_subtitle']; ?>" />
+		</div>
+		<div class="titletype_id">
+			<label>Typ: </label>
+			<?php print Form::form_list($titles->getTitletypes(), 'formdata[titletype_id]', (isset($_POST['formdata']) && isset($_POST['formdata']['titletype_id'])) ? $_POST['formdata']['titletype_id'] : ''); ?>
+		</div>
+		<div class="publisher_id">
+			<label>Vydavatel: </label>
+			<?php print Form::form_list($titles->getPublishers(), 'formdata[publisher_id]', (isset($_POST['formdata']) && isset($_POST['formdata']['publisher_id'])) ? $_POST['formdata']['publisher_id'] : ''); ?>
 		</div>
 		<div class="title_series">
 			<label>Edice: </label>
@@ -50,11 +59,6 @@
 		</div>
 		<div class="title_lang">
 			<label>Jazyk: </label>
-			<?php
-			
-				require_once 'classes/utilities/form.class.php';
-			
-			?>
 			<?php print Form::form_list($titles->getLangs(), 'formdata[title_lang]', (isset($_POST['formdata']) && isset($_POST['formdata']['title_lang'])) ? $_POST['formdata']['title_lang'] : ''); ?>
 		</div>
 		<div class="title_annotation">
@@ -65,6 +69,108 @@
 			<label class="textarea">Popis: </label>
 			<textarea name="formdata[title_desc]" cols="50" rows="5"><?php if (isset($_POST['formdata']) && isset($_POST['formdata']['title_desc'])) echo $_POST['formdata']['title_desc']; ?></textarea>
 		</div>
+<?php
+			
+				if ($titles->isFormDataItem('title_id'))
+				{
+					$authors = $titles->getAuthors();
+					$is_authors = $titles->getIsAuthors();
+					
+					print
+<<< AUTHOR
+<div id="author_items">
+	<div>Autoři:</div>
+AUTHOR;
+					
+					$authors_counter = 1;
+					
+					if (isset($authors) && !empty($authors) && isset($is_authors) && !empty($is_authors))
+					{
+						foreach ($is_authors as $is_author)
+						{
+							$author_select = Form::form_list($authors, '', $is_author['author_id'], '', 'author', true);
+							
+							print
+<<< AUTHOR
+<div class="author_item">
+	<label>Autor <span class="author_number">$authors_counter</span>:</label>
+	$author_select
+	<input type="submit" class="author_edit" value="Editovat" />
+	<input type="submit" class="author_delete" value="Odstranit" />
+	<input type="hidden" class="author_id" value="{$is_author['author_id']}" />
+</div>
+AUTHOR;
+							
+							$authors_counter++;
+						}
+					}
+					
+					$author_select = Form::form_list($authors, '', '', '', 'author');
+					
+					print
+<<< AUTHOR
+	<div id="author_new" class="author_item">
+		<label>Autor <span class="author_number">$authors_counter</span>:</label>
+		$author_select
+		<input type="submit" class="author_add" value="Přidat" />
+	</div>
+	<input type="hidden" id="authors_counter" value="$authors_counter" />
+</div>
+AUTHOR;
+				}
+
+?>
+<?php
+			
+				if ($titles->isFormDataItem('title_id'))
+				{
+					$keywords = $titles->getKeywords();
+					$is_keywords = $titles->getIsKeywords();
+					
+					print
+<<< KEYWORD
+<div id="keyword_items">
+	<div>Klíčová slova:</div>
+KEYWORD;
+					
+					$keywords_counter = 1;
+					
+					if (isset($keywords) && !empty($keywords) && isset($is_keywords) && !empty($is_keywords))
+					{
+						foreach ($is_keywords as $is_keyword)
+						{
+							$keyword_select = Form::form_list($keywords, '', $is_keyword['keyword_id'], '', 'keyword', true);
+							
+							print
+<<< KEYWORD
+<div class="keyword_item">
+	<label>Klíčové slovo <span class="keyword_number">$keywords_counter</span>:</label>
+	$keyword_select
+	<input type="submit" class="keyword_edit" value="Editovat" />
+	<input type="submit" class="keyword_delete" value="Odstranit" />
+	<input type="hidden" class="keyword_id" value="{$is_keyword['keyword_id']}" />
+</div>
+KEYWORD;
+							
+							$keywords_counter++;
+						}
+					}
+					
+					$keyword_select = Form::form_list($keywords, '', '', '', 'keyword');
+					
+					print
+<<< KEYWORD
+	<div id="keyword_new" class="keyword_item">
+		<label>Klíčové slovo <span class="keyword_number">$keywords_counter</span>:</label>
+		$keyword_select
+		<input type="submit" class="keyword_add" value="Přidat" />
+	</div>
+	<input type="hidden" id="keywords_counter" value="$keywords_counter" />
+</div>
+KEYWORD;
+				}
+
+?>
 		<div class="tlacitka">
 			<input type="hidden" name="page" value="<?php
 				if (($_GET['page']))
@@ -80,7 +186,7 @@
 			
 				if ($titles->isFormDataItem('title_id'))
 				{
-					print '<input type="hidden" name="formdata[title_id]" value="' . $titles->getFormDataItem('title_id') . '" />';
+					print '<input type="hidden" id="title_id" name="formdata[title_id]" value="' . $titles->getFormDataItem('title_id') . '" />';
 					print '<input type="submit" name="formdata[btnUpdate]" value="Editovat" />';
 				}
 				else
