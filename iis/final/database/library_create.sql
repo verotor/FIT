@@ -426,5 +426,3 @@ insert into reservation values (
   NULL, '2010-12-01', '2010-12-15', '2011-12-16', 2, 1);
 insert into reservation values (
   NULL, '2011-09-04', '2011-09-04', '2011-10-04', 1, 3);
-
-# vim: set ft=mysql:

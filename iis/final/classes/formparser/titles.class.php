@@ -8,6 +8,9 @@
 		private $states;
 		private $conditions;
 		
+		private $reader;
+		private $librarian;
+		
 		public function __construct()
 		{
 			parent::__construct('title_title');
@@ -33,6 +36,9 @@
 				'p' => array('name' => 'Poškozený'),
 				'v' => array('name' => 'K vyřazení')
 			);
+			
+			$this->reader = 0;
+			$this->librarian = 0;
 		}
 		
 		public function getLangs()
@@ -48,6 +54,16 @@
 		public function getConditions()
 		{
 			return $this->conditions;
+		}
+		
+		public function setToReader($id)
+		{
+			$this->reader = $id;
+		}
+		
+		public function setToLibrarian($id)
+		{
+			$this->librarian = $id;
 		}
 
 		protected function validateData()
@@ -247,44 +263,41 @@
 
 			$this->result .= '<div id="titles_result">';
 
+			$this->result .= '<table>';
+			$this->result .= '<tr>';
+
+			$this->result .= '<th class="title_title">Titul</th>';
+			$this->result .= '<th class="title_year">Rok vydání</th>';
+			$this->result .= '<th class="title_isbn">ISBN</th>';
+			$this->result .= '<th class="title_issn">ISSN</th>';
+
 			if ($admin)
 			{
-				$this->result .= '<table>';
-				$this->result .= '<tr>';
-
-				$this->result .= '<th class="title_title">Titul</th>';
-				$this->result .= '<th class="title_year">Rok vydání</th>';
-				$this->result .= '<th class="title_isbn">ISBN</th>';
-				$this->result .= '<th class="title_issn">ISSN</th>';
-
 				$this->result .= '<th class="edit">Úpravy</th>';
-
-				$this->result .= '</tr>';
 			}
+
+			$this->result .= '</tr>';
 
 			foreach ($this->items as $row)
 			{	
 				$i++;
 
+				$this->result .= '<tr class="'.(($i % 2 != 0) ? 'odd' : 'even').'">';
+
+				$this->result .= '<td class="title_title"><a href="'.Common::$URI.'tituly.html?action=show&amp;id='.$row['title_id'].'">'.$row['title_title'].'</a></td>';
+				$this->result .= '<td class="title_year">'.$row['title_year'].'</td>';
+				$this->result .= '<td class="title_isbn">'.$row['title_isbn'].'</td>';
+				$this->result .= '<td class="title_issn">'.$row['title_issn'].'</td>';
+
 				if ($admin)
 				{
-					$this->result .= '<tr class="'.(($i % 2 != 0) ? 'odd' : 'even').'">';
-
-					$this->result .= '<td class="title_title"><a href="'.Common::$URI.'tituly.html?action=show&amp;id='.$row['title_id'].'">'.$row['title_title'].'</a></td>';
-					$this->result .= '<td class="title_year">'.$row['title_year'].'</td>';
-					$this->result .= '<td class="title_isbn">'.$row['title_isbn'].'</td>';
-					$this->result .= '<td class="title_issn">'.$row['title_issn'].'</td>';
-
 					$this->result .= '<td class="edit"><a href="'.Common::$URI.'tituly.html?action=edit&amp;id='.$row['title_id'].'">Editovat</a> ';
-
-					$this->result .= '</tr>';
 				}
+
+				$this->result .= '</tr>';
 			}
 
-			if ($admin)
-			{
-				$this->result .= '</table>';
-			}
+			$this->result .= '</table>';
 
 			$this->result .= '</div>';
 		}
@@ -403,8 +416,21 @@
 			
 			$this->result .= '<tr>';
 			$this->result .= '<td class="property">Výtisky</td>';
-			$this->result .= '<td class="value">'.$this->getCopiesOfTitle().'</td>';
+			$this->result .= '<td class="value">'.$this->getCopiesOfTitle($admin).'</td>';
 			$this->result .= '</tr>';
+			
+			$this->result .= '<tr>';
+			$this->result .= '<td class="property">Rezervace</td>';
+			$this->result .= '<td class="value">'.$this->getReservationsInfo($admin).'</td>';
+			$this->result .= '</tr>';
+			
+			if ($this->reader)
+			{
+				$this->result .= '<tr>';
+				$this->result .= '<td class="property">Rezervovat</td>';
+				$this->result .= '<td class="value"><a href="'.Common::$URI.'tituly.html?action=book&amp;id='.$this->getFormDataItem('title_id').'&amp;reader_id='.$this->reader.'" title="Rezervovat titul">Rezervovat</a></td>';
+				$this->result .= '</tr>';
+			}
 			
 			$this->result .= '</table>';
 			
@@ -422,10 +448,7 @@
 
 			if ($this->show_single)
 			{
-				if ($admin)
-				{
-					$this->result .= '<div id="back_link"><a href="'.Common::$URI.'tituly.html?action=show" title="Zobrazit tituly">Zpět</a></div>';
-				}
+				$this->result .= '<div id="back_link"><a href="'.Common::$URI.'tituly.html?action=show" title="Zobrazit tituly">Zpět</a></div>';
 			}
 
 			$this->result .= '</div>';
@@ -608,7 +631,19 @@
 			return $keywords_string;
 		}
 		
-		private function getCopiesOfTitle()
+		private function getBorrow($copy_id)
+		{
+			$borrow = null;
+			
+			if ($stmt = $this->dbc->query("SELECT * FROM borrow, reader WHERE borrow.reader_id = reader.reader_id AND copy_id = {$copy_id} ORDER BY borrow_to DESC LIMIT 1"))
+			{
+				$borrow = $stmt->fetch_row();
+			}
+			
+			return $borrow;
+		}
+		
+		private function getCopiesOfTitle($admin)
 		{
 			$copies_string = '';
 			
@@ -620,13 +655,20 @@
 				$conditions = $this->getConditions();
 				
 				$copies_string .= '<table>';
-				
 				$copies_string .= '<tr>';
 				
 				$copies_string .= '<th class="section_name">Sekce</th>';
 				$copies_string .= '<th class="copy_condition">Fyzický stav</th>';
-				$copies_string .= '<th class="copy_state">Dostupnost</th>';
 				$copies_string .= '<th class="copy_loanperiod">Výpůjční doba</th>';
+				$copies_string .= '<th class="copy_state">Dostupnost</th>';
+				$copies_string .= '<th class="borrow_from">Vypůjčeno od</th>';
+				$copies_string .= '<th class="borrow_to">Vypůjčeno do</th>';
+				
+				if ($admin)
+				{
+					$copies_string .= '<th class="borrower">Vypůjčeno kým</th>';
+					$copies_string .= '<th class="copy_action">Akce</th>';
+				}
 				
 				$copies_string .= '</tr>';
 				
@@ -656,8 +698,42 @@
 					
 					$copies_string .= '<td class="section_name">'.$row['section_name'].'</td>';
 					$copies_string .= '<td class="copy_condition">'.$conditions[$row['copy_condition']]['name'].'</td>';
-					$copies_string .= '<td class="copy_state">'.$states[$row['copy_state']]['name'].'</td>';
 					$copies_string .= '<td class="copy_loanperiod">'.$row['copy_loanperiod'].$days.'</td>';
+					$copies_string .= '<td class="copy_state">'.$states[$row['copy_state']]['name'].'</td>';
+					
+					$borrow_from = '';
+					$borrow_to = '';
+					$borower = '';
+					$action = '';
+					
+					if ($row['copy_state'] == 'n')
+					{
+						$borrow = $this->getBorrow($row['copy_id']);
+						
+						if ($borrow != null)
+						{
+							$borrow_from = Common::getStrDateFromDBDate($borrow['borrow_from']);
+							$borrow_to = Common::getStrDateFromDBDate($borrow['borrow_to']);
+							$borower = $borrow['reader_ticket'].' - '.$borrow['reader_surname'].', '.$borrow['reader_name'];
+						}
+						
+						$action = 'return';
+						$action_lang = 'Vrátit';
+					}
+					else
+					{
+						$action = 'borrow';
+						$action_lang = 'Vypůjčit';
+					}
+					
+					$copies_string .= '<td class="borrow_from">'.$borrow_from.'</td>';
+					$copies_string .= '<td class="borrow_to">'.$borrow_to.'</td>';
+					
+					if ($admin)
+					{
+						$copies_string .= '<td class="borrower">'.$borower.'</td>';
+						$copies_string .= '<td class="copy_action"><a href="'.Common::$URI.'tituly.html?action='.$action.'&amp;id='.$this->getFormDataItem('title_id').'&amp;copy_id='.$row['copy_id'].'" title="'.$action_lang.'">'.$action_lang.'</a></td>';
+					}
 					
 					$copies_string .= '</tr>';
 				}
@@ -666,6 +742,219 @@
 			}
 			
 			return $copies_string;
+		}
+		
+		private function getReservationsInfo($admin)
+		{
+			$info_string = '';
+			
+			// smazat stare rezervace
+			$this->dbc->execute("DELETE FROM reservation WHERE reservation_to < NOW()");
+			
+			if ($stmt = $this->dbc->query("SELECT * FROM reservation, reader WHERE reservation.reader_id = reader.reader_id AND title_id = ".$this->getFormDataItem('title_id')." ORDER BY reservation_to"))
+			{
+				$rows = $stmt->fetch_all_array();
+				
+				$info_string .= '<table>';
+				$info_string .= '<tr>';
+				
+				$info_string .= '<th class="reservation_from">Rezervováno od</th>';
+				$info_string .= '<th class="reservation_to">Rezervováno do</th>';
+				
+				if ($admin)
+				{
+					$info_string .= '<th class="reservator">Rezervováno kým</th>';
+				}
+				
+				if ($admin || $this->reader)
+				{
+					$info_string .= '<th class="reservation_action">Akce</th>';
+				}
+				
+				$info_string .= '</tr>';
+				
+				foreach ($rows as $row)
+				{
+					$info_string .= '<tr>';
+					
+					$info_string .= '<td class="reservation_from">'.Common::getStrDateFromDBDate($row['reservation_from']).'</td>';
+					$info_string .= '<td class="reservation_to">'.Common::getStrDateFromDBDate($row['reservation_to']).'</td>';
+					
+					if ($admin)
+					{
+						$reservator = $row['reader_ticket'].' - '.$row['reader_surname'].', '.$row['reader_name'];
+						
+						$info_string .= '<td class="reservator">'.$reservator.'</td>';
+					}
+					
+					if ($admin || $row['reader_id'] == $this->reader)
+					{
+						$cancel = '<a href="'.Common::$URI.'tituly.html?action=cancel&amp;id='.$this->getFormDataItem('title_id').'&amp;reservation_id='.$row['reservation_id'].'" title="Zrušit rezervaci">Zrušit</a>';
+					}
+					else
+					{
+						$cancel = 'nelze';
+					}
+					
+					$info_string .= '<td class="reservation_action">'.$cancel.'</td>';
+					
+					$info_string .= '</tr>';
+				}
+				
+				$info_string .= '</table>';
+			}
+			else
+			{
+				$info_string = 'žádné';
+			}
+			
+			return $info_string;
+		}
+		
+		public function borrowCopy()
+		{
+			if ($this->formdata['reader_ticket'] == '')
+			{
+				$this->error .= 'Nezadali jste číslo průkazu!<br />';
+			}
+			else if (!is_numeric($this->formdata['reader_ticket']))
+			{
+				$this->error .= 'Zadali jste neplatnou hodnotu čísla průkazu!<br />';
+			}
+			else if (intval($this->formdata['reader_ticket']) <= 0)
+			{
+				$this->error .= 'Zadali jste nepovolenou hodnotu čísla průkazu!<br />';
+			}
+			
+			if ($this->formdata['title_id'] == '' || $this->formdata['copy_id'] == '')
+			{
+				$this->error .= 'Nastala vnitřní chyba aplikace!<br />';
+			}
+			
+			if ($this->error != '')
+			{
+				return false;
+			}
+			
+			if (!($stmt = $this->dbc->query("SELECT copy_loanperiod FROM copy WHERE copy_id = {$this->formdata['copy_id']}")))
+			{
+				$this->error .= 'Nepodařilo se získat potřebná data z databáze!<br />';
+				
+				return false;
+			}
+			
+			$loanperiod = intval($stmt->fetch_single());
+			
+			if (!($stmt = $this->dbc->query("SELECT reader_id FROM reader WHERE reader_ticket = {$this->formdata['reader_ticket']}")))
+			{
+				$this->error .= 'Zadali jste číslo průkazu neexistujícího čtenáře!<br />';
+				
+				return false;
+			}
+			
+			$reader_id = $stmt->fetch_single();
+			
+			if ($stmt = $this->dbc->query("SELECT * FROM reservation WHERE title_id = {$this->formdata['title_id']} ORDER BY reservation_to LIMIT 1"))
+			{
+				$reservation = $stmt->fetch_row();
+				
+				if ($reservation['reader_id'] == $reader_id)
+				{
+					$reserved = true;
+				}
+				else
+				{
+					// TODO: ale mel by se kontrolovat i pocet dostupnych vitisku a toto pravidlo by melo platit az kdyz je pocet vytisku mensi nez pocet rezervaci
+					$this->error .= 'Titul má rezervovaný jiný čtenář!<br />';
+					
+					return false;
+				}
+			}
+			else
+			{
+				$reserved = false;
+			}
+			
+			if ($reserved)
+			{
+				if (!$this->dbc->execute("DELETE FROM reservation WHERE reservation_id = {$reservation['reservation_id']}"))
+				{
+					$this->error .= 'Nepodařilo se upravit data v databázi!<br />';
+					
+					return false;
+				}
+			}
+			
+			// TODO: jeste by tu melo byt prepocitavani terminu rezervaci
+			
+			if (!$this->dbc->execute("INSERT INTO borrow VALUES (NULL, NOW(), NOW() + INTERVAL $loanperiod DAY, {$this->formdata['copy_id']}, $reader_id, {$this->librarian})"))
+			{
+				$this->error .= 'Nepodařilo se vložit data do databáze!<br />';
+				
+				return false;
+			}
+			
+			if (!$this->dbc->execute("UPDATE copy SET copy_state = 'n' WHERE copy_id = {$this->formdata['copy_id']}"))
+			{
+				$this->error .= 'Nepodařilo se upravit data v databázi!<br />';
+				
+				return false;
+			}
+			
+			if (!$this->dbc->execute("UPDATE title SET title_copycountavail = IF(title_copycountavail > 0, (title_copycountavail - 1), 0) WHERE title_id = {$this->formdata['title_id']}"))
+			{
+				$this->error .= 'Nepodařilo se upravit data v databázi!<br />';
+				
+				return false;
+			}
+			
+			return true;
+		}
+		
+		public function returnCopy()
+		{
+			if (!$this->dbc->execute("UPDATE copy SET copy_state = 'y' WHERE copy_id = {$this->formdata['copy_id']}"))
+			{
+				$this->error .= 'Nepodařilo se upravit data v databázi!<br />';
+				
+				return false;
+			}
+			
+			if (!$this->dbc->execute("UPDATE title SET title_copycountavail = IF(title_copycountavail < title_copycount, (title_copycountavail + 1), title_copycountavail) WHERE title_id = {$this->formdata['title_id']}"))
+			{
+				$this->error .= 'Nepodařilo se upravit data v databázi!<br />';
+				
+				return false;
+			}
+			
+			return true;
+		}
+		
+		public function bookTitle()
+		{
+			if ($stmt = $this->dbc->query("SELECT * FROM reservation WHERE reader_id = {$this->formdata['title_id']} AND {$this->formdata['reader_id']}"))
+			{
+				$this->error .= 'Na tento titul už máte rezervaci!<br />';
+				
+				return false;
+			}
+			
+			// TODO: nejak lepe spocitat rezervaci do, melo by to byt 7 dnu az od posledni rezervace
+			// pak ale pri vypujceni titulu bude potreba posunout terminy vsech ostatnich rezervaci o loanperiod nebo je prepocitat
+			// to same pri vraceni
+			if (!$this->dbc->execute("INSERT INTO reservation VALUES (NULL, NOW(), NOW(), NOW() + INTERVAL 7 DAY, {$this->formdata['title_id']}, {$this->formdata['reader_id']})"))
+			{
+				$this->error .= 'Nepodařilo se vložit data do databáze!<br />';
+				
+				return false;
+			}
+			
+			return true;
+		}
+		
+		public function cancelReservation()
+		{
+			$this->dbc->execute("DELETE FROM reservation WHERE reservation_id = {$this->formdata['reservation_id']}");
 		}
 	}
 

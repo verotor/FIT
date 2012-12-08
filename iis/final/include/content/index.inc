@@ -6,12 +6,7 @@
   $search = new Search();
   $search->setDBC($dbc);
 
-	if ($loginform)
-	{
-		include_once 'include/form/loginform.inc';
-	}
-
-  $legend = 'Vyhledavani';
+  $legend = 'Vyhledávání';
   include_once 'include/form/searchform.inc';
 
   if (isset($_POST['formdata']))

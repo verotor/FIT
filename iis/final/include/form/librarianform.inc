@@ -46,11 +46,11 @@
 		</div>
 		<div class="tlacitka">
 			<input type="hidden" name="page" value="<?php
-				if (($_GET['page']))
+				if (isset($_GET['page']))
 				{
 					echo $_GET['page'];
 				}
-				else if (($_POST['page']))
+				else if (isset($_POST['page']))
 				{
 					echo $_POST['page'];
 				}

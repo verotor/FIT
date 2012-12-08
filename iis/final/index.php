@@ -52,11 +52,6 @@
 		$loginform = false;
 	}
 	
-  //FIXME debug
-  //print_r($_SESSION);
-  //print_r($_SERVER);
-  //print_r($GLOBALS);
-
 	if (isset($_SESSION['user_type'])) {
 		$user_type = $_SESSION['user_type'];
 	} else {
@@ -125,6 +120,10 @@
 				print '<a href="'.Common::$URI.'muj_ucet.php?user_type='.$_SESSION['user_type'].'&user_id='.$_SESSION['user_id'].'">Můj účet</a>';
 			}
 		}
+	}
+	else if ($loginform)
+	{
+		include_once 'include/form/loginform.inc';
 	}
 ?>
 		</div>

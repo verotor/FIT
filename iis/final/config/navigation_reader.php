@@ -4,8 +4,8 @@
 		'index'		=> array(
 			'page_name'		=> 'Vyhledávání',
 		),
-		'rezervace'		=> array(
-			'page_name'		=> 'Rezervace',
+		'tituly'			=> array(
+			'page_name'		=> 'Tituly',
 		),
 		'404'		=> array(
 			'page_name'		=> 'Stránka nenalezena'

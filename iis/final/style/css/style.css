@@ -20,7 +20,7 @@ body {
   float: right;
 }
 
-#login_form, #admin_menu {
+#admin_menu {
   position: absolute;
   top: 0;
   right: 0;
