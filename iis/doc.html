@@ -35,25 +35,39 @@
     <p>Uveďte prosím existující zástupce <strong>všech rolí uživatelů</strong>.</p>
     <table>
       <tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
-      <tr><td>admin</td><td>admin</td><td>Administrátor</td></tr>
-      <tr><td>prodavac</td><td>prodavac</td><td>Prodavač</td></tr>
-      <tr><td>franta</td><td>franta</td><td>Zákazník</td></tr>
+      <tr><td>verotor</td><td>admin</td><td>Administrátor</td></tr>
+      <tr><td>framal02</td><td>framal02pass</td><td>Knihovník</td></tr>
+      <tr><td>pmarsi00</td><td>pmarsi00pass</td><td>Čtenář</td></tr>
+      <tr><td></td><td></td><td>Náhodný návštěvník (může pouze vyhledávat a prohlížet)</td></tr>
     </table>
 
     <h2>Implementace</h2>
-    <p>Stručná dokumentace k implementaci, která popisuje, které PHP skripty implementují jednotlivé případy použití uvedené v use-case diagramu z IDS. V případě, že bylo nutno při implementaci učinit změny v návrhu, musí být v dokumentaci zdůvodněny.
-      <br>NEkontrolujeme prihlaseni uzivatele z vice mist (ale teoreticky by to melo chodit, protoze se _SESSION uchovava tusim v zavislosti na pripojeni ze sitoveho stacku, ne?).
+    <p>Pro implementaci byl zvolen objektový přístup v PHP. Aplikace je řešena jedinou skutečnou stránkou (index.php) a obsah se mění na základě parametrů získaných z URL adresy. Tomu odpovídá i rozčlenění zdrojového kódu na jednotlivé soubory. Hlavní stránka obsahuje všechny společné části (např. zachytávání parametrů z URL adresy; načtení hlavních tříd apod.) a na základě parametrů z URL adresy je do této stránky načteno zpracování odpovídající specifické části aplikace, ve které se volají metody odpovídající třídy.
+    <br>Např. případy užití z use-case diagramu vztahující se k titulům jsou zachyceny ve třídě titles.class.php (dostupné v classes/formparser/).
+    <br>Kvůli snadnějšímu zpracování byly do třídy titles.class.php přidány akce vztahující se k výpůjčkám, rezervacím a výtiskům, protože tyto akce s titulem přímo souvisí.
+    <br>Aplikace není optimalizačně doladěná (z časových důvodů) - např. stránkování chybí. Avšak funkčnost je úplná.
+    <br>Historie rezervací není uchovávána.
+    <br>Use-case diagram je starší a neodpovídá v případě udělování pokut stavu z IDS.
     </p>
 
     <h2>Instalace</h2>
     <ul>
-      <li>Stručně popište postup instalace na server</li>
-      <li>Softwarové požadavky (verze PHP apod.)</li>
-      <li>Jak rozbalit, konfigurovat, inicializovat databází, ...</li>
+      <li>postup instalace na server
+      <br>zkopíruji všechny soubory; spustím SQL skript v databázi; upravím níže popsané údaje
+      </li>
+      <li>Softwarové požadavky
+      <br>PHP 5.3, MySQL
+      </li>
+      <li>Jak rozbalit, konfigurovat, inicializovat databází, ...
+      <br>databáze je v jediném SQL souboru
+      <br>je nutné upravit cestu RewriteBase v .htaccess
+      <br>je nutné upravit přihlašovací údaje k databázi (v souboru config/db_connect.php; v tomto souboru lze též nastavit úroveň informačních a chybových výpisů databáze - např. výpis dotazů)
+      </li>
     </ul>
 
     <h2>Známé problémy</h2>
-    <p>Zde popište, které body zadání (IDS a IIS) nejsou implementovány a z jakého důvodu. Např. &bdquo;Z časových důvodů nebyla implementována správa uživatelů.&rdquo; Pomůžete tím zrychlit opravování, když neimplementované funkce nebudeme muset dlouze hledat.</p>
+    <p>Není implementována podpora automatizovaného zasílání emailů apod., protože nemáme v databázi reálná data (emaily) a protože tato funkcionalita není pro chod knihovny vůbec podstatná.
+    </p>
 
   </body>
 </html>
