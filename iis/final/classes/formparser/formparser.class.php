@@ -114,7 +114,14 @@
 		
 		public function getFormDataItem($item)
 		{
-			return $this->formdata[$item];
+			if (isset($this->formdata[$item]))
+			{
+				return $this->formdata[$item];
+			}
+			else
+			{
+				return '';
+			}
 		}
 		
 		public function setFormDataItem($key, $value)
