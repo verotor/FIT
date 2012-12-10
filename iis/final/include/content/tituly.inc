@@ -50,6 +50,8 @@
 	$reservationform = false;
 	$showtitles = false;
 	
+	$refreshed = false;
+	
 	if ($_GET['action'] == 'add')
 	{
 		$legend = 'Přidat titul';
@@ -74,17 +76,43 @@
 	}
 	else if ($_GET['action'] == 'return')
 	{
-		$titles->setFormDataItem('title_id', $_GET['id']);
-		$titles->setFormDataItem('copy_id', $_GET['copy_id']);
-		$titles->returnCopy();
+		if (isset($_SESSION['action']) && isset($_SESSION['action']['id']) && isset($_SESSION['action']['copy_id']))
+		{
+			if ($_SESSION['action']['id'] == $_GET['id'] && $_SESSION['action']['copy_id'] == $_GET['copy_id'])
+			{
+				$refreshed = true;
+			}
+		}
+		
+		if (!$refreshed)
+		{
+			$titles->setFormDataItem('title_id', $_GET['id']);
+			$titles->setFormDataItem('copy_id', $_GET['copy_id']);
+			$titles->returnCopy();
+		}
+		
+		$_SESSION['action'] = array('id' => $_GET['id'], 'copy_id' => $_GET['copy_id']);
 		
 		$showtitles = true;
 	}
 	else if ($_GET['action'] == 'book')
 	{
-		$titles->setFormDataItem('title_id', $_GET['id']);
-		$titles->setFormDataItem('reader_id', $_GET['reader_id']);
-		$titles->bookTitle();
+		if (isset($_SESSION['action']) && isset($_SESSION['action']['id']) && isset($_SESSION['action']['reader_id']))
+		{
+			if ($_SESSION['action']['id'] == $_GET['id'] && $_SESSION['action']['reader_id'] == $_GET['reader_id'])
+			{
+				$refreshed = true;
+			}
+		}
+		
+		if (!$refreshed)
+		{
+			$titles->setFormDataItem('title_id', $_GET['id']);
+			$titles->setFormDataItem('reader_id', $_GET['reader_id']);
+			$titles->bookTitle();
+		}
+		
+		$_SESSION['action'] = array('id' => $_GET['id'], 'reader_id' => $_GET['reader_id']);
 		
 		$showtitles = true;
 	}
