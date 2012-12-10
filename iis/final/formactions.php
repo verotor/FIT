@@ -300,6 +300,8 @@ KEYWORD;
 				{
 					$result['error'] = 'Nepodařilo se data uložit do databáze!\nZkuste prosím akci zopakovat.\n';
 				}
+				
+				$dbc->execute("UPDATE title SET title_copycount = (title_copycount + 1), title_copycountavail = (title_copycountavail + 1) WHERE title_id = {$_GET['title_id']}");
 			}
 			
 			if ($result['error'] == '')

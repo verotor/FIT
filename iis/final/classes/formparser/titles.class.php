@@ -845,6 +845,24 @@
 			
 			$loanperiod = intval($stmt->fetch_single());
 			
+			if (!($stmt = $this->dbc->query("SELECT title_copycountavail FROM title WHERE title_id = {$this->formdata['title_id']}")))
+			{
+				$this->error .= 'Nepodařilo se získat potřebná data z databáze!<br />';
+				
+				return false;
+			}
+			
+			$copycountavail = intval($stmt->fetch_single());
+			
+			if (!($stmt = $this->dbc->query("SELECT COUNT(*) FROM reservation WHERE title_id = {$this->formdata['title_id']}")))
+			{
+				$this->error .= 'Nepodařilo se získat potřebná data z databáze!<br />';
+				
+				return false;
+			}
+			
+			$reservation_count = intval($stmt->fetch_single());
+			
 			if (!($stmt = $this->dbc->query("SELECT reader_id FROM reader WHERE reader_ticket = {$this->formdata['reader_ticket']}")))
 			{
 				$this->error .= 'Zadali jste číslo průkazu neexistujícího čtenáře!<br />';
@@ -862,9 +880,8 @@
 				{
 					$reserved = true;
 				}
-				else
+				else if ($copycountavail <= $reservation_count)
 				{
-					// TODO: ale mel by se kontrolovat i pocet dostupnych vitisku a toto pravidlo by melo platit az kdyz je pocet vytisku mensi nez pocet rezervaci
 					$this->error .= 'Titul má rezervovaný jiný čtenář!<br />';
 					
 					return false;
