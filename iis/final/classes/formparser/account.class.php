@@ -63,7 +63,7 @@
 			{
 				$this->error .= 'Ověření nového hesla neodpovídá novému heslu!<br />';
 			}
-			else if (!($stmt = $this->dbc->query("SELECT * FROM {$this->user_tab} WHERE {$this->user_tab}_id = {$this->user_id} AND {$this->user_tab}_pass = PASSWORD({$this->formdata['pass_old']})")))
+			else if (!($stmt = $this->dbc->query("SELECT * FROM {$this->user_tab} WHERE {$this->user_tab}_id = {$this->user_id} AND {$this->user_tab}_pass = PASSWORD('{$this->formdata['pass_old']}')")))
 			{
 				$this->error .= 'Zadali jste nesprávné původní heslo!<br />';
 			}
@@ -86,7 +86,7 @@
 
 		protected function updateData()
 		{
-			if ($this->dbc->execute("UPDATE {$this->user_tab} SET {$this->user_tab}_pass = PASSWORD({$this->formdata['pass_new']}) WHERE {$this->user_tab}_id = {$this->user_id}"))
+			if ($this->dbc->execute("UPDATE {$this->user_tab} SET {$this->user_tab}_pass = PASSWORD('{$this->formdata['pass_new']}') WHERE {$this->user_tab}_id = {$this->user_id}"))
 			{
 				return true;
 			}

@@ -17,6 +17,16 @@
 			<input type="password" name="formdata[pass_again]" value="" />
 		</div>
 		<div class="tlacitka">
+			<input type="hidden" name="page" value="<?php
+				if (isset($_GET['page']))
+				{
+					echo $_GET['page'];
+				}
+				else if (isset($_POST['page']))
+				{
+					echo $_POST['page'];
+				}
+			?>" />
 			<input type="submit" name="formdata[btnChange]" value="Změnit" />
 		</div>
 	</fieldset>
