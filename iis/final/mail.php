@@ -1,5 +1,9 @@
 <?php
 
+require_once 'classes/utilities/common.class.php';
+Common::setNewLineEscape();
+require_once 'config/db_connect.php';
+require_once 'classes/db/db_connector.class.php';
 require_once 'classes/formparser/formparser.class.php';
 
 class MailInfo extends FormParser
@@ -7,6 +11,8 @@ class MailInfo extends FormParser
   public function __construct()
   {
     parent::__construct('MailInfo');
+    $this->setDBC(new DB_Connector());
+    //$this->dbc = ...
   }
 
   protected function validateData() {}
@@ -24,11 +30,16 @@ class MailInfo extends FormParser
   public function sendMails()
   {
     if ($stmt = $this->dbc->query(
-      "SELECT reader.reader_email, title.title_title, title.title_subtitle "
-      ."FROM reader, reservation, title "
-      ."WHERE reservation.reader_id = reader.reader_id"
-      ."  AND reservation.title_id = title.title_id"
-      ."  AND title.title_copycountavail > 0"))
+      //"SELECT reader.reader_email, title.title_title, title.title_subtitle "
+      //."FROM reader, reservation, title "
+      //."WHERE reservation.reader_id = reader.reader_id"
+      //."  AND reservation.title_id = title.title_id"
+      //."  AND title.title_copycountavail > 0"))
+      //"SELECT * "
+      //."FROM reader, reservation, title "
+      //."WHERE reservation.reader_id = reader.reader_id"
+      //."  AND reservation.title_id = title.title_id"))
+      "SELECT * FROM reader"))
     {
       //$this->langs = array('cz' => array('name' => 'Čeština'));
 
@@ -68,6 +79,8 @@ class MailInfo extends FormParser
     {
       print "<h1>No copies available (no mails send).</h1>";
     }
+
+    $this->dbc->databaseReport();
   }
 }
 
