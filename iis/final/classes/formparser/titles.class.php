@@ -902,15 +902,8 @@
 				}
 			}
 			
-			// TODO: jeste by tu melo byt prepocitavani terminu rezervaci
-			// vytahnu vsechny rezervace na titul serazene podle data jejich vytvoreni
-			// a cyklem vsem zmenim reservation_to
-			// prvnimu to bude NOW() + $loanperiod + 7
-			// dalsimu vzdy n * ($loanperiod + 7),
-			// protoze ten, kdo si vypujcil, mel na vraceni $loanperiod a dalsi ma na vypujceni 7 dnu
-			// lepsi algoritmus by byl, kdyby se to jeste rozdelovalo podle poctu dostupnych vytisku
-			// tzn. ze pri dvou dostupnych by pro prvni dve rezervace bylo reservation_to stejne,
-			// pak pro dalsi dva navysene n-krat atd.
+			// posunout terminy rezervaci
+			$this->shiftReservations($loanperiod);
 			
 			if (!$this->dbc->execute("INSERT INTO borrow VALUES (NULL, NOW(), NOW() + INTERVAL $loanperiod DAY, {$this->formdata['copy_id']}, $reader_id, {$this->librarian})"))
 			{
@@ -945,7 +938,8 @@
 				return false;
 			}
 			
-			// TODO: prepocitat rezervace, podobnym algoritmem, vlastne asi stejnym, jen je to interpretovano 7 + $loanperiod
+			// posunout terminy rezervaci
+			$this->shiftReservations($loanperiod);
 			
 			if (!$this->dbc->execute("UPDATE title SET title_copycountavail = IF(title_copycountavail < title_copycount, (title_copycountavail + 1), title_copycountavail) WHERE title_id = {$this->formdata['title_id']}"))
 			{
@@ -966,9 +960,16 @@
 				return false;
 			}
 			
-			// TODO: rezervace vzdy bude datum reservation_to posledniho + $loanperiod + 7
-			// takze si musim vytahnout datum reservation_to posledniho
-			if (!$this->dbc->execute("INSERT INTO reservation VALUES (NULL, NOW(), NOW(), NOW() + INTERVAL 7 DAY, {$this->formdata['title_id']}, {$this->formdata['reader_id']})"))
+			if ($stmt = $this->dbc->query("SELECT reservation_date FROM reservation WHERE title_id = {$this->formdata['title_id']} AND reader_id = {$this->formdata['reader_id']} ORDER BY reservation_date DESC LIMIT 1"))
+			{
+				$reservation_to = '\''.$stmt->fetch_single().'\' + INTERVAL 7 DAY';
+			}
+			else
+			{
+				$reservation_to = 'NOW() + INTERVAL 7 DAY';
+			}
+			
+			if (!$this->dbc->execute("INSERT INTO reservation VALUES (NULL, NOW(), NOW(), $reservation_to, {$this->formdata['title_id']}, {$this->formdata['reader_id']})"))
 			{
 				$this->error .= 'Nepodařilo se vložit data do databáze!<br />';
 				
@@ -981,6 +982,49 @@
 		public function cancelReservation()
 		{
 			$this->dbc->execute("DELETE FROM reservation WHERE reservation_id = {$this->formdata['reservation_id']}");
+		}
+		
+		private function shiftReservations($loanperiod)
+		{
+			// vytahnu vsechny rezervace na titul serazene podle data jejich vytvoreni
+			// a cyklem vsem zmenim reservation_to
+			// prvnimu to bude NOW() + $loanperiod + 7
+			// dalsimu vzdy NOW() + n * ($loanperiod + 7),
+			// protoze ten, kdo si vypujcil, mel na vraceni $loanperiod a dalsi ma na vypujceni 7 dnu
+			// lepsi algoritmus by byl, kdyby se to jeste rozdelovalo podle poctu dostupnych vytisku
+			// tzn. ze pri dvou dostupnych by pro prvni dve rezervace bylo reservation_to stejne,
+			// pak pro dalsi dva navysene n-krat atd.
+			
+			if (!($stmt = $this->dbc->query("SELECT title_copycount FROM title WHERE title_id = {$this->formdata['title_id']}")))
+			{
+				$this->error .= 'Nepodařilo se získat potřebná data z databáze!<br />';
+				
+				return false;
+			}
+			
+			$copycount = intval($stmt->fetch_single());
+			
+			if ($stmt = $this->dbc-query("SELECT * FROM reservation WHERE title_id = {$this->formdata['title_id']} ORDER BY reservation_date"))
+			{
+				$rows = $stmt->fetch_all_array();
+				
+				$i = 1;
+				$n = 1;
+				
+				foreach ($rows as $row)
+				{
+					$reservation_to = $n * ($loanperiod + 7);
+					
+					$this->dbc->execute("UPDATE reservation SET reservation_from = NOW(), reservation_to = (NOW() + $reservation_to) WHERE reservation_id = {$row['reservation_id']}");
+					
+					if (($i % $copycount) == 0)
+					{
+						$n++;
+					}
+					
+					$i++;
+				}
+			}
 		}
 	}
 
