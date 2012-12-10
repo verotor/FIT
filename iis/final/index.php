@@ -22,13 +22,39 @@
 	if (!isset($_GET['action'])) {
 		$_GET['action'] = 'show';
 	}
-	
-	// TODO: kontrola na pripadne identifikatory, ze jsou ciselne
 
 	// aktualni stranka
 	require_once 'classes/utilities/common.class.php';
 	Common::setNewLineEscape();
 	$page_part = Common::get_page_part($_APPLICATION['domain_path'] . $_APPLICATION['content_path'], $_APPLICATION['content_extension']);
+	
+	// kontrola parametru
+	$param_error = false;
+	
+	if (isset($_GET['id']) && !is_numeric($_GET['id']))
+	{
+		$param_error = true;
+	}
+	
+	if (isset($_GET['copy_id']) && !is_numeric($_GET['copy_id']))
+	{
+		$param_error = true;
+	}
+	
+	if (isset($_GET['reader_id']) && !is_numeric($_GET['reader_id']))
+	{
+		$param_error = true;
+	}
+	
+	if (isset($_GET['reservation_id']) && !is_numeric($_GET['reservation_id']))
+	{
+		$param_error = true;
+	}
+	
+	if ($param_error)
+	{
+		$page_part = '404';
+	}
 
 	// pripojeni k databazi
 	require_once 'config/db_connect.php';

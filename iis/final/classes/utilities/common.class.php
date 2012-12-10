@@ -184,38 +184,87 @@ class Common
 
 	private static $dateDelim = "([.:-])";
 
-	public static function checkStrDate($date)
+	public static function checkStrDate($date, $return_date_parts = false)
 	{
-		// funkce zkontroluje format a platnost data zadaneho v české tečkové notaci (tu bude předpokládat)
-		// nebo lomítkovou notaci apod.
-		// případné mezery nejdříve odstranit, pak funkcí explode() rozdělit datum na jednotlivé části
-		// tyto části nejlépe převést na celá čísla funkcí intval()
-		// a nakonec ověřit platnost přes funkci checkdate(), viz www.php.net
-		// pozor na možné nuly u dne a měsíce
-		// pro datum v DB formatu nebo anglickem vraci samozrejme false
-
-		//array preg_split ( string $pattern , string $subject [, int $limit = -1 [, int $flags = 0 ]] )
-		//x = preg_match("([1-2][0-9]|[1-9]|)", $date);
-		//int preg_match ( string $pattern , string $subject [, array &$matches [, int $flags = 0 [, int $offset = 0 ]]] )
-
-		return true;
+		$date = str_replace(' ', '', $date);
+		
+		if (strpos('.', $date))
+		{
+			$delimiter = '.';
+		}
+		else if (strpos('/', $date))
+		{
+			$delimiter = '/';
+		}
+		else if (strpos('\\', $date))
+		{
+			$delimiter = '\\';
+		}
+		else if (strpos('-', $date))
+		{
+			$delimiter = '-';
+		}
+		else
+		{
+			if ($return_date_parts)
+			{
+				return array();
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
+		$date_array = explode($delimiter, $date);
+		
+		if (count($date_array) != 3)
+		{
+			if ($return_date_parts)
+			{
+				return array();
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
+		$day = intval($date_array[0]);
+		$month = intval($date_array[1]);
+		$year = intval($date_array[2]);
+		
+		if ($return_date_parts)
+		{
+			return array($day, $month, $year);
+		}
+		else
+		{
+			return checkdate($month, $day, $year);
+		}
+	}
+	
+	public static function zeroPad($value, $length)
+	{
+		return str_pad(strval($value), $length, '0', STR_PAD_LEFT);
 	}
 
 	public static function getDBDateFromStrDate($date)
 	{
-		// provede obdobné jako předchozí funkce, akorát vrátí datum ve formátu pro DB yyyy-mm-dd
-		// pri prazdnem retezci vraci prazdny retezec
-
-		//x = preg_split ("[[:space:].:-]", $date);
-		return $date;
+		$date_array = self::checkStrDate($date, true);
+		
+		if (!empty($date_array))
+		{
+			return self::zeroPad($date_array[2], 4).'-'.self::zeroPad($date_array[1], 2).'-'.self::zeroPad($date_array[0], 2);
+		}
+		else
+		{
+			return '';
+		}
 	}
 
 	public static function getStrDateFromDBDate($date)
 	{
-		// z datumu v DB formatu udela datum ceskeho formatu (s teckama)
-		// pri prazdnem retezci nebo null, vraci prazdny retezec
-		// pokud uz datum je v ceskem formatu, vraci bez uprav
-		
 		if ($date == null || $date == '')
 		{
 			return '';
