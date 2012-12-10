@@ -886,6 +886,14 @@
 			}
 			
 			// TODO: jeste by tu melo byt prepocitavani terminu rezervaci
+			// vytahnu vsechny rezervace na titul serazene podle data jejich vytvoreni
+			// a cyklem vsem zmenim reservation_to
+			// prvnimu to bude NOW() + $loanperiod + 7
+			// dalsimu vzdy n * ($loanperiod + 7),
+			// protoze ten, kdo si vypujcil, mel na vraceni $loanperiod a dalsi ma na vypujceni 7 dnu
+			// lepsi algoritmus by byl, kdyby se to jeste rozdelovalo podle poctu dostupnych vytisku
+			// tzn. ze pri dvou dostupnych by pro prvni dve rezervace bylo reservation_to stejne,
+			// pak pro dalsi dva navysene n-krat atd.
 			
 			if (!$this->dbc->execute("INSERT INTO borrow VALUES (NULL, NOW(), NOW() + INTERVAL $loanperiod DAY, {$this->formdata['copy_id']}, $reader_id, {$this->librarian})"))
 			{
@@ -920,6 +928,8 @@
 				return false;
 			}
 			
+			// TODO: prepocitat rezervace, podobnym algoritmem, vlastne asi stejnym, jen je to interpretovano 7 + $loanperiod
+			
 			if (!$this->dbc->execute("UPDATE title SET title_copycountavail = IF(title_copycountavail < title_copycount, (title_copycountavail + 1), title_copycountavail) WHERE title_id = {$this->formdata['title_id']}"))
 			{
 				$this->error .= 'Nepodařilo se upravit data v databázi!<br />';
@@ -932,16 +942,15 @@
 		
 		public function bookTitle()
 		{
-			if ($stmt = $this->dbc->query("SELECT * FROM reservation WHERE reader_id = {$this->formdata['title_id']} AND {$this->formdata['reader_id']}"))
+			if ($stmt = $this->dbc->query("SELECT * FROM reservation WHERE title_id = {$this->formdata['title_id']} AND reader_id = {$this->formdata['reader_id']}"))
 			{
 				$this->error .= 'Na tento titul už máte rezervaci!<br />';
 				
 				return false;
 			}
 			
-			// TODO: nejak lepe spocitat rezervaci do, melo by to byt 7 dnu az od posledni rezervace
-			// pak ale pri vypujceni titulu bude potreba posunout terminy vsech ostatnich rezervaci o loanperiod nebo je prepocitat
-			// to same pri vraceni
+			// TODO: rezervace vzdy bude datum reservation_to posledniho + $loanperiod + 7
+			// takze si musim vytahnout datum reservation_to posledniho
 			if (!$this->dbc->execute("INSERT INTO reservation VALUES (NULL, NOW(), NOW(), NOW() + INTERVAL 7 DAY, {$this->formdata['title_id']}, {$this->formdata['reader_id']})"))
 			{
 				$this->error .= 'Nepodařilo se vložit data do databáze!<br />';

@@ -22,6 +22,8 @@
 	if (!isset($_GET['action'])) {
 		$_GET['action'] = 'show';
 	}
+	
+	// TODO: kontrola na pripadne identifikatory, ze jsou ciselne
 
 	// aktualni stranka
 	require_once 'classes/utilities/common.class.php';
@@ -117,7 +119,7 @@
 
 			if ($login->is_logged()) {
 				print '<a href="'.Common::$URI.'odhlasit.html">Odhlásit se</a>';
-				print '<a href="'.Common::$URI.'muj_ucet.php?user_type='.$_SESSION['user_type'].'&user_id='.$_SESSION['user_id'].'">Můj účet</a>';
+				print '<a href="'.Common::$URI.'muj_ucet.html">Můj účet</a>';
 			}
 		}
 	}
