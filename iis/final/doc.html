@@ -29,6 +29,7 @@
       </dd>
       <dt>URL aplikace</dt>
       <dd><a href="http://www.stud.fit.vutbr.cz/~xpacne00/IIS/">http://www.stud.fit.vutbr.cz/~xpacne00/IIS/</a></dd>
+      <dd><a href="http://www.stud.fit.vutbr.cz/~xpacne00/IIS/mail">http://www.stud.fit.vutbr.cz/~xpacne00/IIS/mail</a> (tento skript by byl spouštěn periodicky každý den pro informování uživatelů o případných změnách v rezervacích a upozorňování na končící výpůjčký)</dd>
     </dl>
 
     <h2>Uživatelé systému pro testování</h2>
@@ -45,9 +46,10 @@
     <p>Pro implementaci byl zvolen objektový přístup v PHP. Aplikace je řešena jedinou skutečnou stránkou (index.php) a obsah se mění na základě parametrů získaných z URL adresy. Tomu odpovídá i rozčlenění zdrojového kódu na jednotlivé soubory. Hlavní stránka obsahuje všechny společné části (např. zachytávání parametrů z URL adresy; načtení hlavních tříd apod.) a na základě parametrů z URL adresy je do této stránky načteno zpracování odpovídající specifické části aplikace, ve které se volají metody odpovídající třídy.
     <br>Např. případy užití z use-case diagramu vztahující se k titulům jsou zachyceny ve třídě titles.class.php (dostupné v classes/formparser/).
     <br>Kvůli snadnějšímu zpracování byly do třídy titles.class.php přidány akce vztahující se k výpůjčkám, rezervacím a výtiskům, protože tyto akce s titulem přímo souvisí.
-    <br>Aplikace není optimalizačně doladěná (z časových důvodů) - např. stránkování chybí. Avšak funkčnost je úplná.
+    <br>Aplikace není optimalizačně doladěná (z časových důvodů) - např. stránkování chybí. Avšak z hlediska IDS diagramů a zadání je úplná.
     <br>Historie rezervací není uchovávána.
     <br>Use-case diagram je starší a neodpovídá v případě udělování pokut stavu z IDS.
+    <br>Skript zajišťující zasílání mailu se musí spustit právě jednoukrát denně (kdykoliv v průběhu dne). Pokud bude spuštěn vícekrát, příjemci dostanou duplikovaný email.
     </p>
 
     <h2>Instalace</h2>
@@ -56,17 +58,17 @@
       <br>zkopíruji všechny soubory; spustím SQL skript v databázi; upravím níže popsané údaje
       </li>
       <li>Softwarové požadavky
-      <br>PHP 5.3, MySQL
+      <br>PHP 5.3, MySQL, nějaký periodický spouštěč (např. cron)
       </li>
       <li>Jak rozbalit, konfigurovat, inicializovat databází, ...
       <br>databáze je v jediném SQL souboru
       <br>je nutné upravit cestu RewriteBase v .htaccess
       <br>je nutné upravit přihlašovací údaje k databázi (v souboru config/db_connect.php; v tomto souboru lze též nastavit úroveň informačních a chybových výpisů databáze - např. výpis dotazů)
+      <br>nakonec je nutné nastavit spouštění skriptu mail.php periodicky každý den
       </li>
     </ul>
 
     <h2>Známé problémy</h2>
-    <p>Není implementována podpora automatizovaného zasílání emailů apod., protože nemáme v databázi reálná data (emaily) a protože tato funkcionalita není pro chod knihovny vůbec podstatná.
     </p>
 
   </body>

@@ -190,7 +190,7 @@
 			</p>
 		</div>
 		<div id="db_report">
-<?php print $dbc->databaseReport(); ?>
+<!--?php print $dbc->databaseReport(); ?-->
 		</div>
 	</div>
 </body>
