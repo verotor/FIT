@@ -188,19 +188,19 @@ class Common
 	{
 		$date = str_replace(' ', '', $date);
 		
-		if (strpos('.', $date))
+		if (strpos($date, '.'))
 		{
 			$delimiter = '.';
 		}
-		else if (strpos('/', $date))
+		else if (strpos($date, '/'))
 		{
 			$delimiter = '/';
 		}
-		else if (strpos('\\', $date))
+		else if (strpos($date, '\\'))
 		{
 			$delimiter = '\\';
 		}
-		else if (strpos('-', $date))
+		else if (strpos($date, '-'))
 		{
 			$delimiter = '-';
 		}
