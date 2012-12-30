@@ -14,7 +14,7 @@ $(function()
 			$.ajax(
 	        {
 	            type: 'GET',
-	            url: '/formactions.php',
+	            url: 'formactions.php',
 	            data: params,
 	            async: false,
 	            dataType: 'json',
